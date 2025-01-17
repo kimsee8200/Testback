@@ -1,7 +1,7 @@
 package org.example.plain.controller;
 
-import org.example.plain.dto.OrganDTO;
-import org.example.plain.service.OrganService;
+import org.example.plain.dto.GroupDTO;
+import org.example.plain.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,21 +9,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/group")
-public class OrganController {
+public class GroupController {
 
     @Autowired
-    private OrganService organService;
+    private GroupService groupService;
 
     @PostMapping("/new-group")
-    public void createGroup(@RequestBody OrganDTO organDTO) {
-        organService.createOrgan(organDTO);
+    public void createGroup(@RequestBody GroupDTO groupDTO) {
+        groupService.createGroup(groupDTO);
         System.out.println("그룹 생성");
     }
 
     @GetMapping("/")
-    public List<OrganDTO> readGroup() {
-        List<OrganDTO> organList = organService.readOrganAll();
-        return organList;
+    public List<GroupDTO> readGroup() {
+        List<GroupDTO> groupList = groupService.readGroupAll();
+        return groupList;
     }
 
     @GetMapping("/{organId}")

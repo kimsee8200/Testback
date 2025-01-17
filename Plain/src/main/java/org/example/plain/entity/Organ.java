@@ -1,9 +1,8 @@
 package org.example.plain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.example.plain.dto.OrganDTO;
 
 @Getter
 @Builder
@@ -12,9 +11,16 @@ import lombok.*;
 @Entity
 public class Organ {
     @Id
-    @Column(length=100, nullable = false)
-    private String o_id;
+    @Column(length = 100, nullable = false)
+    private String organId;
 
     @Column(columnDefinition = "tinytext", nullable = false)
-    private String o_name;
+    private String organName;
+
+    public OrganDTO toDTO() {
+        return OrganDTO.builder()
+                .organId(organId)
+                .organName(organName)
+                .build();
+    }
 }

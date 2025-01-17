@@ -1,11 +1,21 @@
 package org.example.plain.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.example.plain.entity.Organ;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrganDTO {
-    private String id;
-    private String name;
+    private String organId;
+    private String organName;
+
+    public Organ toEntity() {
+        return Organ.builder()
+                .organId(organId)
+                .organName(organName)
+                .build();
+    }
 }

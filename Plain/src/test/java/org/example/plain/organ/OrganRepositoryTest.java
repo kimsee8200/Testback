@@ -28,9 +28,9 @@ public class OrganRepositoryTest {
     @BeforeEach
     void setup() {
         // build() 키워드로 Group 객체 최종 반환
-        organ1 = Organ.builder().o_id("1").o_name("플레인").build();
-        organ2 = Organ.builder().o_id("2").o_name("심볼즈").build();
-        organ3 = Organ.builder().o_id("3").o_name("대마고").build();
+        organ1 = Organ.builder().organId("1").organName("플레인").build();
+        organ2 = Organ.builder().organId("2").organName("심볼즈").build();
+        organ3 = Organ.builder().organId("3").organName("대마고").build();
     }
 
     @Test
@@ -42,17 +42,17 @@ public class OrganRepositoryTest {
         organRepository.save(this.organ2);
 
         // when
-        Optional<Organ> test1 = organRepository.findById(this.organ1.getO_id()); // select로 가져오기
-        Optional<Organ> test2 = organRepository.findById(this.organ2.getO_id());
+        Optional<Organ> test1 = organRepository.findById(this.organ1.getOrganId()); // select로 가져오기
+        Optional<Organ> test2 = organRepository.findById(this.organ2.getOrganId());
 
         // then
         assertThat(test1.isPresent()).isTrue();
         assertThat(test2.isPresent()).isTrue();
 
-        assertThat(test1.get().getO_id()).isEqualTo(this.organ1.getO_id());
-        assertThat(test1.get().getO_name()).isEqualTo(this.organ1.getO_name());
-        assertThat(test2.get().getO_id()).isEqualTo(this.organ2.getO_id());
-        assertThat(test2.get().getO_name()).isEqualTo(this.organ2.getO_name());
+        assertThat(test1.get().getOrganId()).isEqualTo(this.organ1.getOrganId());
+        assertThat(test1.get().getOrganName()).isEqualTo(this.organ1.getOrganName());
+        assertThat(test2.get().getOrganId()).isEqualTo(this.organ2.getOrganId());
+        assertThat(test2.get().getOrganName()).isEqualTo(this.organ2.getOrganName());
     }
 
     @Test
@@ -66,15 +66,15 @@ public class OrganRepositoryTest {
         // when
         // id와 업데이트된 이름 받기
         String id = "1";
-        Organ updatedOrganData = Organ.builder().o_id("1").o_name("용암중").build();
-        Organ updatedOrgan = Organ.builder().o_id(id).o_name(updatedOrganData.getO_name()).build();
+        Organ updatedOrganData = Organ.builder().organId("1").organName("용암중").build();
+        Organ updatedOrgan = Organ.builder().organId(id).organName(updatedOrganData.getOrganName()).build();
         organRepository.save(updatedOrgan);
 
         // then
         Optional<Organ> test1 = organRepository.findById(id);
 
         assertThat(test1.isPresent()).isTrue();
-        assertThat(test1.get().getO_id()).isEqualTo(id);
-        assertThat(test1.get().getO_name()).isEqualTo(updatedOrganData.getO_name());
+        assertThat(test1.get().getOrganId()).isEqualTo(id);
+        assertThat(test1.get().getOrganName()).isEqualTo(updatedOrganData.getOrganName());
     }
 }

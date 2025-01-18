@@ -1,0 +1,51 @@
+package org.example.plain.domain.homework.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.example.plain.domain.homework.dto.WorkSubmitField;
+import org.example.plain.domain.user.entity.UserEntity;
+
+import java.io.Serializable;
+import java.util.List;
+
+@Entity
+@Data
+public class WorkSubmitFieldEntity {
+    @EmbeddedId
+    private WorkSubmitFieldId workSubmitFieldId;
+
+    @MapsId("user")
+    @OneToOne
+    @JoinColumn(name = "u_id", referencedColumnName = "u_id")
+    UserEntity userId;
+
+    @MapsId("work")
+    @OneToOne
+    @JoinColumn(name = "h_id",referencedColumnName = "h_id")
+    WorkEntity workId;
+
+    @OneToMany
+    List<FileEntity> fileEntities;
+
+    public static WorkSubmitFieldEntity createEntity(WorkSubmitField workSubmitField) {
+        WorkSubmitFieldEntity workSubmitFieldEntity = new WorkSubmitFieldEntity();
+        workSubmitFieldEntity.workSubmitFieldId = new WorkSubmitFieldId(workSubmitField.getUserId(), workSubmitField.getWorkId());
+        workSubmitFieldEntity.setFileEntities();
+    }
+}
+
+@Embeddable
+@EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor
+class WorkSubmitFieldId implements Serializable {
+    String user;
+    String work;
+
+    public WorkSubmitFieldId(String user, String work) {
+        this.user = user;
+        this.work = work;
+    }
+}

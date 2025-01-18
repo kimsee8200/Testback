@@ -15,7 +15,6 @@ public interface WorkService {
     void deleteWork(String workId);
     void submitWork(String id, String userId, WorkSubmitField workSubmitField);
 
-    WorkMember getSingleWorkMember(String id, String userId);
     List<WorkMember> getSubmitList(String workId);
     List<WorkMember> getMemberList(String workId);
 }

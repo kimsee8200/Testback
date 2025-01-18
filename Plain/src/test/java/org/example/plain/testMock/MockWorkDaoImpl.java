@@ -15,12 +15,12 @@ public class MockWorkDaoImpl implements WorkDao {
 
     @Override
     public void insertHomework(Work work) {
-        requests.put(work.getId(), work);
+        requests.put(work.getWorkId(), work);
     }
 
     @Override
     public void updateHomework(Work work, String id) {
-        requests.put(work.getId(), work);
+        requests.put(work.getWorkId(), work);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class MockWorkDaoImpl implements WorkDao {
     }
 
     @Override
-    public void deleteHomework(String id) {
-        requests.remove(id);
+    public void deleteHomework(Work id) {
+        requests.remove(id.getWorkId());
     }
 
     public void deleteAll(){

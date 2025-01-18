@@ -42,7 +42,7 @@ public class MockWorkServiceImpl implements WorkService {
 
     @Override
     public void deleteWork(String id) {
-        workDao.deleteHomework(id);
+        workDao.deleteHomework(workDao.selectHomework(id));
     }
 
     public void deleteAll(){

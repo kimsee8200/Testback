@@ -1,4 +1,4 @@
-package org.example.plain.organ;
+package org.example.plain.group;
 
 import org.example.plain.entity.Group;
 import org.example.plain.repository.GroupRepository;

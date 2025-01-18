@@ -1,12 +1,12 @@
 package org.example.plain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.example.plain.dto.GroupMemberDTO;
+import org.hibernate.Hibernate;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Builder
@@ -14,10 +14,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "\"group_member\"")
-public class GroupMember {
-    @Id
-    private String organId;
+public class GroupMember implements Serializable {
+    @EmbeddedId
+    private GroupMemberId id;
 
-    @Id
-    private String userId;
+    @MapsId("groupId")
+    @ManyToOne
+    @JoinColumn(name = "g_id")
+    private Group group;
+
+    @MapsId("userId")
+    @ManyToOne
+    @JoinColumn(name = "u_id")
+    private User user;
+
+    public GroupMember(Group group, User user) {
+        this.id = new GroupMemberId(group.getGroupId(), user.getUserId());
+        this.group = group;
+        this.user = user;
+    }
+
+    public GroupMemberDTO toDTO() {
+        return GroupMemberDTO.builder()
+                .group(group)
+                .user(user)
+                .build();
+    }
 }
+

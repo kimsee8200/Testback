@@ -3,10 +3,7 @@ package org.example.plain.dto;
 import lombok.*;
 import org.example.plain.entity.Group;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 public class GroupDTO {
     private String groupId;

@@ -1,9 +1,9 @@
-package org.example.plain.organ;
+package org.example.plain.group;
 
 import org.example.plain.dto.GroupDTO;
 import org.example.plain.entity.Group;
 import org.example.plain.repository.GroupRepository;
-import org.example.plain.service.GroupService;
+import org.example.plain.service.impl.GroupServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class GroupServiceTest {
+public class GroupServiceImplTest {
 
     @Autowired
-    private GroupService groupService;
+    private GroupServiceImpl groupServiceImpl;
     @Autowired
     private GroupRepository groupRepository;
 
@@ -42,8 +42,8 @@ public class GroupServiceTest {
         groupRepository.deleteAll();
 
         // when
-        groupService.createGroup(groupDTO1);
-        groupService.createGroup(groupDTO2);
+        groupServiceImpl.createGroup(groupDTO1);
+        groupServiceImpl.createGroup(groupDTO2);
 
         // then
         List<Group> groupList = groupRepository.findAll();
@@ -58,7 +58,7 @@ public class GroupServiceTest {
         groupRepository.save(group2);
 
         // when
-        List<GroupDTO> organList = groupService.readGroupAll();
+        List<GroupDTO> organList = groupServiceImpl.readGroupAll();
 
         // then
         assertThat(organList.size()).isEqualTo(2);
@@ -76,7 +76,7 @@ public class GroupServiceTest {
         groupRepository.save(group2);
 
         // when
-        GroupDTO organ = groupService.readGroup(group1.getGroupId());
+        GroupDTO organ = groupServiceImpl.readGroup(group1.getGroupId());
 
         // then
         assertThat(organ.getGroupId()).isEqualTo(group1.getGroupId());
@@ -92,11 +92,11 @@ public class GroupServiceTest {
 
         // when
         GroupDTO groupDTO = GroupDTO.builder().groupId(group2.getGroupId()).groupName("직화육포").build();
-        groupService.updateGroup(groupDTO);
+        groupServiceImpl.updateGroup(groupDTO);
 
         // then
         Optional<Group> updatedOrgan = groupRepository.findById(group2.getGroupId());
-        updatedOrgan.ifPresent(organ -> assertThat(organ.getGroupName()).isEqualTo(groupDTO.getGroupName()));
+        updatedOrgan.ifPresent(group -> assertThat(group.getGroupName()).isEqualTo(groupDTO.getGroupName()));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class GroupServiceTest {
         groupRepository.save(group2);
 
         // when
-        groupService.deleteGroup(group1.getGroupId());
+        groupServiceImpl.deleteGroup(group1.getGroupId());
 
         // then
         List<Group> groupList = groupRepository.findAll();

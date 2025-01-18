@@ -1,8 +1,9 @@
-package org.example.plain.service;
+package org.example.plain.service.impl;
 
 import org.example.plain.dto.GroupDTO;
 import org.example.plain.entity.Group;
 import org.example.plain.repository.GroupRepository;
+import org.example.plain.service.interfaces.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupService {
+public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupRepository groupRepository;

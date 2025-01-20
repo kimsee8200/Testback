@@ -1,4 +1,4 @@
-package org.example.plain.domain.canlender.Dao;
+package org.example.plain.domain.canlender.dao;
 
 import org.example.plain.domain.canlender.dto.Calender;
 

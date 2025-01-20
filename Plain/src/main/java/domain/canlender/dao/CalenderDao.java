@@ -1,4 +1,6 @@
-package Domain.Canlender;
+package domain.canlender.dao;
+
+import domain.canlender.dto.Calender;
 
 import java.sql.SQLException;
 

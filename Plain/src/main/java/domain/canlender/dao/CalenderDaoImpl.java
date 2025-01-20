@@ -1,7 +1,8 @@
-package Domain.Canlender;
+package domain.canlender.dao;
 
-import Domain.Member.DTO.Member;
-import Util.JdbcConnection;
+import domain.canlender.dto.Calender;
+import domain.member.DTO.Member;
+import util.JdbcConnection;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

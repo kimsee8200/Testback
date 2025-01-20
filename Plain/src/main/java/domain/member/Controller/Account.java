@@ -1,7 +1,7 @@
-package Domain.Member.Controller;
+package domain.member.Controller;
 
-import Domain.Member.DTO.Member;
-import Domain.Member.Service.MemberService;
+import domain.member.DTO.Member;
+import domain.member.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

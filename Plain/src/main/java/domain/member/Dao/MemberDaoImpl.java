@@ -1,7 +1,7 @@
-package Domain.Member.Dao;
+package domain.member.Dao;
 
-import Domain.Member.DTO.Member;
-import Util.JdbcConnection;
+import domain.member.DTO.Member;
+import util.JdbcConnection;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

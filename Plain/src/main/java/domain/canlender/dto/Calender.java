@@ -1,4 +1,4 @@
-package Domain.Canlender;
+package domain.canlender.dto;
 
 import lombok.Builder;
 import lombok.Getter;

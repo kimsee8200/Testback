@@ -1,6 +1,6 @@
-package Domain.Member.Dao;
+package domain.member.Dao;
 
-import Domain.Member.DTO.Member;
+import domain.member.DTO.Member;
 
 import java.util.ArrayList;
 

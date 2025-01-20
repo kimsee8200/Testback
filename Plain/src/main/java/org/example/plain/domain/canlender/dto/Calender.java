@@ -1,4 +1,4 @@
-package com.example.plain.domain.canlender.dto;
+package org.example.plain.domain.canlender.dto;
 
 import lombok.Builder;
 import lombok.Getter;

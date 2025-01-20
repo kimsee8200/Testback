@@ -1,4 +1,4 @@
-package Member.DTO;
+package Domain.Member.DTO;
 
 import lombok.Builder;
 import lombok.Getter;

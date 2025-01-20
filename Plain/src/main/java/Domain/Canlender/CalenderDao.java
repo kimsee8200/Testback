@@ -1,4 +1,4 @@
-package Canlender;
+package Domain.Canlender;
 
 import java.sql.SQLException;
 

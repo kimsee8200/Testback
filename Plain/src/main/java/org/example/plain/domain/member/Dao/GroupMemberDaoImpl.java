@@ -1,8 +1,8 @@
-package com.example.plain.domain.member.Dao;
+package org.example.plain.domain.member.Dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.example.plain.util.JdbcConnection;
+import org.example.plain.util.JdbcConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

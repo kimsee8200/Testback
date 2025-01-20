@@ -1,4 +1,4 @@
-package domain.member.DTO;
+package com.example.plain.domain.member.DTO;
 
 public class GroupMemberDTO {
     private String u_id;

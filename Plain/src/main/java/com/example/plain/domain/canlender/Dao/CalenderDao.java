@@ -1,6 +1,6 @@
-package domain.canlender.dao;
+package com.example.plain.domain.canlender.Dao;
 
-import domain.canlender.dto.Calender;
+import com.example.plain.domain.canlender.dto.Calender;
 
 import java.sql.SQLException;
 

@@ -1,8 +1,8 @@
-package domain.canlender.dao;
+package com.example.plain.domain.canlender.Dao;
 
-import domain.canlender.dto.Calender;
-import domain.member.DTO.Member;
-import util.JdbcConnection;
+import com.example.plain.domain.canlender.dto.Calender;
+import com.example.plain.domain.member.DTO.Member;
+import com.example.plain.util.JdbcConnection;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,5 +79,15 @@ public class CalenderDaoImpl implements CalenderDao {
     @Override
     public Boolean DeleteCalender(String c_id, String u_id) throws SQLException, ClassNotFoundException {
         Connection c = jdbcConnection.customgetConnection();
+        PreparedStatement ps = c.prepareStatement("delete from calender where c_id=? and u_id=?");
+        ps.setString(1, c_id);
+        ps.setString(2, u_id);
+
+        if(ps.executeUpdate()>0){
+            ps.close();
+            c.close();
+            return true;
+        }
+        return false;
     }
 }

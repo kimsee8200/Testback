@@ -1,4 +1,4 @@
-package domain.member.Dao;
+package com.example.plain.domain.member.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

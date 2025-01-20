@@ -1,8 +1,8 @@
-package domain.member.Service;
+package com.example.plain.domain.member.Service;
 
-import domain.member.DTO.Member;
-import domain.member.Dao.GroupMemberDaoImpl;
-import domain.member.Dao.MemberDao;
+import com.example.plain.domain.member.DTO.Member;
+import com.example.plain.domain.member.Dao.GroupMemberDaoImpl;
+import com.example.plain.domain.member.Dao.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class WorkSubmitFieldEntity {
     @EmbeddedId
     private WorkSubmitFieldId workSubmitFieldId;
@@ -33,19 +34,7 @@ public class WorkSubmitFieldEntity {
     public static WorkSubmitFieldEntity createEntity(WorkSubmitField workSubmitField) {
         WorkSubmitFieldEntity workSubmitFieldEntity = new WorkSubmitFieldEntity();
         workSubmitFieldEntity.workSubmitFieldId = new WorkSubmitFieldId(workSubmitField.getUserId(), workSubmitField.getWorkId());
-        workSubmitFieldEntity.setFileEntities();
+        return workSubmitFieldEntity;
     }
 }
 
-@Embeddable
-@EqualsAndHashCode(callSuper=false)
-@NoArgsConstructor
-class WorkSubmitFieldId implements Serializable {
-    String user;
-    String work;
-
-    public WorkSubmitFieldId(String user, String work) {
-        this.user = user;
-        this.work = work;
-    }
-}

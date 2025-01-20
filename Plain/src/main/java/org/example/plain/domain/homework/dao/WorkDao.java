@@ -7,4 +7,5 @@ import org.example.plain.domain.homework.entity.WorkEntity;
 import java.util.List;
 
 public interface WorkDao extends Dao<WorkEntity> {
+    List<Work> selectAllGroupWork(String groupId);
 }

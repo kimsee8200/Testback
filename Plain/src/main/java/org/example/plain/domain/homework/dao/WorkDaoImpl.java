@@ -1,10 +1,8 @@
 package org.example.plain.domain.homework.dao;
 
-import org.example.plain.domain.board.dto.Board;
 import org.example.plain.domain.board.entity.BoardEntity;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkEntity;
-import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.stereotype.Repository;
@@ -70,6 +68,7 @@ public class WorkDaoImpl implements WorkDao {
         boardRepository.delete(workEntity);
     }
 
+    @Override
     public List<Work> selectAllGroupWork(String groupId) {
         List<Work> works = new ArrayList<>();
         for(BoardEntity entity:boardRepository.findByGroupId(groupId)) {

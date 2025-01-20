@@ -3,6 +3,7 @@ package org.example.plain.domain.homework.Service.interfaces;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
+import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public interface WorkService {
     Work selectWork(String WorkId);
     List<Work> selectAllWork();
     void deleteWork(String workId);
-    void submitWork(String id, String userId, WorkSubmitField workSubmitField);
+    void submitWork(WorkSubmitField workSubmitField);
 
-    List<WorkMember> getSubmitList(String workId);
+    List<WorkSubmitFieldResponse> getSubmitList(String workId);
     List<WorkMember> getMemberList(String workId);
 }

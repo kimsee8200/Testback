@@ -41,15 +41,3 @@ public class WorkMemberEntity {
 
 }
 
-@Embeddable
-@EqualsAndHashCode(callSuper=false)
-@NoArgsConstructor
-class WorkMemberId implements Serializable {
-    private String work;
-    private String user;
-
-    public WorkMemberId(String work, String user) {
-        this.work = work;
-        this.user = user;
-    }
-}

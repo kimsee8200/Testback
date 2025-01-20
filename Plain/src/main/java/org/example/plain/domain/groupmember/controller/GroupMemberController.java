@@ -1,8 +1,7 @@
-package org.example.plain.controller;
+package org.example.plain.domain.groupmember.controller;
 
-import org.example.plain.dto.GroupMemberDTO;
-import org.example.plain.entity.Group;
-import org.example.plain.service.impl.GroupMemberServiceImpl;
+import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
+import org.example.plain.domain.groupmember.service.GroupMemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

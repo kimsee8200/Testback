@@ -1,8 +1,8 @@
-package org.example.plain.entity;
+package org.example.plain.domain.group.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.plain.dto.GroupDTO;
+import org.example.plain.domain.group.dto.GroupDTO;
 
 @Getter
 @Builder

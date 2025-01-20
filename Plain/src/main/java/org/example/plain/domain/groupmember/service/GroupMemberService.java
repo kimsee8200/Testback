@@ -1,8 +1,6 @@
-package org.example.plain.service.interfaces;
+package org.example.plain.domain.groupmember.service;
 
-import org.example.plain.dto.GroupMemberDTO;
-import org.example.plain.entity.Group;
-import org.example.plain.entity.User;
+import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
 
 import java.util.List;
 

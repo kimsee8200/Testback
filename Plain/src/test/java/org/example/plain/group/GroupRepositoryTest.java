@@ -1,6 +1,6 @@
 package org.example.plain.group;
 
-import org.example.plain.entity.Group;
+import org.example.plain.domain.group.entity.Group;
 import org.example.plain.repository.GroupRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

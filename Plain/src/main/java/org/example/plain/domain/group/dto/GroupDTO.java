@@ -1,7 +1,7 @@
-package org.example.plain.dto;
+package org.example.plain.domain.group.dto;
 
 import lombok.*;
-import org.example.plain.entity.Group;
+import org.example.plain.domain.group.entity.Group;
 
 @Data
 @Builder

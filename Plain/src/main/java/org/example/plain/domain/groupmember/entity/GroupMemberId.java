@@ -1,4 +1,4 @@
-package org.example.plain.entity;
+package org.example.plain.domain.groupmember.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

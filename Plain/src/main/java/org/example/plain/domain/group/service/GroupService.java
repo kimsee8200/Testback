@@ -1,6 +1,6 @@
-package org.example.plain.service.interfaces;
+package org.example.plain.domain.group.service;
 
-import org.example.plain.dto.GroupDTO;
+import org.example.plain.domain.group.dto.GroupDTO;
 
 import java.util.List;
 

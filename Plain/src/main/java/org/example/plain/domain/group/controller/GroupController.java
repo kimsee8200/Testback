@@ -1,7 +1,7 @@
-package org.example.plain.controller;
+package org.example.plain.domain.group.controller;
 
-import org.example.plain.dto.GroupDTO;
-import org.example.plain.service.impl.GroupServiceImpl;
+import org.example.plain.domain.group.dto.GroupDTO;
+import org.example.plain.domain.group.service.GroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

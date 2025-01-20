@@ -1,14 +1,13 @@
 package org.example.plain.group;
 
-import org.example.plain.dto.GroupMemberDTO;
-import org.example.plain.entity.Group;
-import org.example.plain.entity.GroupMember;
-import org.example.plain.entity.GroupMemberId;
-import org.example.plain.entity.User;
+import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
+import org.example.plain.domain.group.entity.Group;
+import org.example.plain.domain.groupmember.entity.GroupMember;
+import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.GroupRepository;
 import org.example.plain.repository.UserRepository;
-import org.example.plain.service.impl.GroupMemberServiceImpl;
+import org.example.plain.domain.groupmember.service.GroupMemberServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

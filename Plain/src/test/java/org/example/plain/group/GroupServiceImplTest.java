@@ -1,9 +1,9 @@
 package org.example.plain.group;
 
-import org.example.plain.dto.GroupDTO;
-import org.example.plain.entity.Group;
+import org.example.plain.domain.group.dto.GroupDTO;
+import org.example.plain.domain.group.entity.Group;
 import org.example.plain.repository.GroupRepository;
-import org.example.plain.service.impl.GroupServiceImpl;
+import org.example.plain.domain.group.service.GroupServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

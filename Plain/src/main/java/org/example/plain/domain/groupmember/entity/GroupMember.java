@@ -1,12 +1,12 @@
-package org.example.plain.entity;
+package org.example.plain.domain.groupmember.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.plain.dto.GroupMemberDTO;
-import org.hibernate.Hibernate;
+import org.example.plain.domain.group.entity.Group;
+import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
+import org.example.plain.domain.user.entity.User;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Builder

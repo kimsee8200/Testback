@@ -1,4 +1,4 @@
-package DTO.Calender;
+package Canlender;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,7 @@
-package Dao.Calender;
+package Canlender;
 
-import DTO.Calender.Calender;
-import DTO.Member.Member;
+import Member.DTO.Member;
 import Util.JdbcConnection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

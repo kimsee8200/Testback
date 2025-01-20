@@ -1,6 +1,4 @@
-package Dao.Calender;
-
-import DTO.Calender.Calender;
+package Canlender;
 
 import java.sql.SQLException;
 

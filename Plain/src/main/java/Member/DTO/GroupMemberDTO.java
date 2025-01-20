@@ -1,4 +1,4 @@
-package DTO.Group_Member;
+package Member.DTO;
 
 public class GroupMemberDTO {
     private String u_id;

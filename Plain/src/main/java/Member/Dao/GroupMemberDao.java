@@ -1,4 +1,4 @@
-package Dao.GroupMember;
+package Member.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -6,9 +6,11 @@ import org.example.plain.entity.GroupMember;
 import org.example.plain.entity.GroupMemberId;
 import org.example.plain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, GroupMemberId> {
     GroupMember findByGroupAndUser(Group group, User user);
     List<GroupMember> findAllByGroup(Group group);

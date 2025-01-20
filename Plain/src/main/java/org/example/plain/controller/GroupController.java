@@ -15,9 +15,9 @@ public class GroupController {
     private GroupServiceImpl groupServiceImpl;
 
     @PostMapping("/new-group")
-    public void createGroup(@RequestBody GroupDTO groupDTO) {
+    public String createGroup(@RequestBody GroupDTO groupDTO) {
         groupServiceImpl.createGroup(groupDTO);
-        System.out.println("그룹 생성");
+        return "그룹 생성";
     }
 
     @GetMapping("/")
@@ -26,18 +26,20 @@ public class GroupController {
         return groupList;
     }
 
-    @GetMapping("/{organId}")
-    public String readGroupById(String organId) { // OrganDTO
-        return "그룹 하나";
+    @GetMapping("/{groupId}")
+    public GroupDTO readGroupById(String groupId) {
+        return groupServiceImpl.readGroup(groupId);
     }
 
-    @PatchMapping("/{organId}")
-    public String updateGroupById(String organId) {
+    @PatchMapping("/{groupId}")
+    public String updateGroupById(@RequestBody GroupDTO groupDTO) {
+        groupServiceImpl.updateGroup(groupDTO);
         return "그룹 업데이트";
     }
 
-    @DeleteMapping("/{organId}")
-    public String deleteGroupById(String organId) {
+    @DeleteMapping("/{groupId}")
+    public String deleteGroupById(String groupId) {
+        groupServiceImpl.deleteGroup(groupId);
         return "그룹 삭제";
     }
 }

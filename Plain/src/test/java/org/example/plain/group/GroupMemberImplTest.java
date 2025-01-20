@@ -75,7 +75,7 @@ public class GroupMemberImplTest {
     @Test
     public void readGroupMemberAll() {
         // when
-        List<GroupMemberDTO> groupMember = groupMemberServiceImpl.readGroupMemberAll(group1);
+        List<GroupMemberDTO> groupMember = groupMemberServiceImpl.readGroupMemberAll(group1.getGroupId());
 
         // then
         assertThat(groupMember.size()).isEqualTo(2);
@@ -86,7 +86,8 @@ public class GroupMemberImplTest {
     @Test
     public void readGroupMember() {
         // when
-        GroupMemberDTO groupMemberDTO = groupMemberServiceImpl.readGroupMember(group1, user1);
+        GroupMemberDTO groupMemberDTO = groupMemberServiceImpl.readGroupMember(
+                group1.getGroupId(), user1.getUserId());
 
         // then
         assertThat(groupMemberDTO.getGroup().getGroupId()).isEqualTo(group1.getGroupId());
@@ -100,7 +101,8 @@ public class GroupMemberImplTest {
         userRepository.save(user4);
 
         // when
-        groupMemberServiceImpl.joinGroup(group1, user4);
+        groupMemberServiceImpl.joinGroup(
+                group1.getGroupId(), user4.getUserId());
 
         // then
         GroupMember groupMember = groupMemberRepository.findByGroupAndUser(group1, user4);
@@ -112,7 +114,8 @@ public class GroupMemberImplTest {
     @Test
     public void quitGroup() {
         // when
-        groupMemberServiceImpl.quitGroup(group2, user3);
+        groupMemberServiceImpl.quitGroup(
+                group2.getGroupId(), user3.getUserId());
 
         // then
         GroupMember groupMember = groupMemberRepository.findByGroupAndUser(group2, user3);

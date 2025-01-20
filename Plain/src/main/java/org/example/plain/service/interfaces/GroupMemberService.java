@@ -7,8 +7,8 @@ import org.example.plain.entity.User;
 import java.util.List;
 
 public interface GroupMemberService {
-    List<GroupMemberDTO> readGroupMemberAll(Group group);
-    GroupMemberDTO readGroupMember(Group group, User user);
-    void joinGroup(Group group, User user);
-    void quitGroup(Group group, User user);
+    List<GroupMemberDTO> readGroupMemberAll(String groupId);
+    GroupMemberDTO readGroupMember(String groupId, String userId);
+    void joinGroup(String groupId, String userId);
+    void quitGroup(String groupId, String userId);
 }

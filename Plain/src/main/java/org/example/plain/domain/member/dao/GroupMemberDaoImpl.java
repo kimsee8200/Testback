@@ -1,4 +1,4 @@
-package org.example.plain.domain.member.Dao;
+package org.example.plain.domain.member.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

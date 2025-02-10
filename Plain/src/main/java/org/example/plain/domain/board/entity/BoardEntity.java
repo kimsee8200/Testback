@@ -3,11 +3,9 @@ package org.example.plain.domain.board.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.plain.domain.user.User;
 import org.example.plain.domain.user.entity.UserEntity;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

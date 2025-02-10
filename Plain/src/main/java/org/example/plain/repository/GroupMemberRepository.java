@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.example.plain.domain.group.entity.Group;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.groupmember.entity.GroupMemberId;
-import org.example.plain.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

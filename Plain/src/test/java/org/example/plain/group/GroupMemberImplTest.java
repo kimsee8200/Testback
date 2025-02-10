@@ -3,7 +3,6 @@ package org.example.plain.group;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
 import org.example.plain.domain.group.entity.Group;
 import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.GroupRepository;
 import org.example.plain.repository.UserRepository;

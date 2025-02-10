@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.domain.group.entity.Group;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
-import org.example.plain.domain.user.entity.User;
 
 import java.io.Serializable;
 

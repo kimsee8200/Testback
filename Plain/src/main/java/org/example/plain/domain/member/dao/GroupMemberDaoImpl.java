@@ -2,7 +2,7 @@ package org.example.plain.domain.member.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.example.plain.util.JdbcConnection;
+import org.example.plain.common.util.JdbcConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

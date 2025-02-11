@@ -5,10 +5,12 @@ import org.example.plain.domain.member.dao.GroupMemberDaoImpl;
 import org.example.plain.domain.member.dao.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Component
+@Service
 public class MemberService {
     @Autowired MemberDao memberDao;
     @Autowired GroupMemberDaoImpl groupMemberDao;

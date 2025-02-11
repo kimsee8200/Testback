@@ -15,7 +15,7 @@ public class WorkDaoImpl implements WorkDao {
 
     private final BoardRepository boardRepository;
     private final WorkMemberRepository workMemberRepository;
-    private final GroupUserRepository groupUserRepository;
+//    private final GroupUserRepository groupUserRepository;
 
     public WorkDaoImpl(BoardRepository boardRepository, WorkMemberRepository workMemberRepository) {
         this.boardRepository = boardRepository;
@@ -78,7 +78,7 @@ public class WorkDaoImpl implements WorkDao {
         return works;
     }
 
-//    public List<Work> selectGroupAndWorkId(String userId, String workId, String groupId) {
+//    public List<Work> selectGroupAndWorkId(String user, String workId, String groupId) {
 //        groupUserRepository.findbyGroupAndWorkId();
 //        workMemberRepository.findByUser()
 //    }

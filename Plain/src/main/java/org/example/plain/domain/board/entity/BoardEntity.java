@@ -20,7 +20,7 @@ public class BoardEntity {
     @Column(name = "g_id")
     private String groupId;
 
-    @JoinColumn(name = "u_id", referencedColumnName = "id")
+    @JoinColumn(name = "u_id", referencedColumnName = "u_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
 

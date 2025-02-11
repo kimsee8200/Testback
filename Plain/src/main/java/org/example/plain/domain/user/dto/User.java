@@ -1,6 +1,7 @@
 package org.example.plain.domain.user.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import org.example.plain.common.enums.Role;
@@ -8,6 +9,7 @@ import org.example.plain.domain.user.entity.UserEntity;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class User {
     private String id;
     private String username;

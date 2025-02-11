@@ -1,6 +1,7 @@
 package org.example.plain.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.ResponseBody;
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.user.dto.User;
 import org.example.plain.domain.user.entity.UserEntity;
@@ -50,4 +51,6 @@ public class UserServiceImpl implements UserService {
     public User getUser(String id) {
         return new User(userRepository.findById(id).orElseThrow());
     }
+
+
 }

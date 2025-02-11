@@ -1,19 +1,20 @@
 package org.example.plain.domain.user.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.user.dto.User;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
     @Id
+    @Column(name = "u_id")
     private String id;
     private Role role;
     private String username;

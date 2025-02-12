@@ -29,7 +29,8 @@ public class ClassLectureRepositoryAdapter implements ClassLectureRepositoryPort
     }
 
     @Override
-    public void delete(ClassLecture classLecture) {
+    public void delete(Long id) {
+        ClassLecture classLecture = findById(id);
         classLectureRepository.delete(classLecture);
     }
 }

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.plain.domain.user.entity.User;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -26,6 +28,10 @@ public class ClassLecture {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User instructor;
 
+    public void updateClass(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

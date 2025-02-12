@@ -11,5 +11,5 @@ public interface ClassLectureRepositoryPort {
 
     List<ClassLecture> findAll();
 
-    void delete(ClassLecture classLecture);
+    void delete(Long id);
 }

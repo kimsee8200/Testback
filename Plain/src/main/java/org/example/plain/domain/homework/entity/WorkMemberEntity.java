@@ -2,14 +2,7 @@ package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.example.plain.domain.group.entity.GroupUserEntity;
-import org.example.plain.domain.homework.dto.Work;
-import org.example.plain.domain.user.User;
-import org.example.plain.domain.user.entity.UserEntity;
-
-import java.io.Serializable;
 
 @Entity
 @Data

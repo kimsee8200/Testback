@@ -1,7 +1,8 @@
 package org.example.plain.domain.member.service;
 
+import lombok.RequiredArgsConstructor;
+import org.example.plain.domain.member.dao.GroupMemberDao;
 import org.example.plain.domain.member.dto.Member;
-import org.example.plain.domain.member.dao.GroupMemberDaoImpl;
 import org.example.plain.domain.member.dao.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,9 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
+@RequiredArgsConstructor
 public class MemberService {
     @Autowired MemberDao memberDao;
-    @Autowired GroupMemberDaoImpl groupMemberDao;
+    private final GroupMemberDao groupMemberDao;
 
     public ArrayList<Member> GetMembers(String g_id) throws Exception {
 

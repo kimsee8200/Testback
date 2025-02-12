@@ -12,9 +12,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
+@DiscriminatorValue("work")
 public class WorkEntity extends BoardEntity {
-    @Id
-    @GeneratedValue
+
+    @Column(name = "h_id")
     private String workId;
 
     @Column(name = "submit_date", nullable = false)

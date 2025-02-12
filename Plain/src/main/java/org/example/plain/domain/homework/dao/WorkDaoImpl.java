@@ -4,6 +4,7 @@ import org.example.plain.domain.board.entity.BoardEntity;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.repository.BoardRepository;
+import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +16,12 @@ public class WorkDaoImpl implements WorkDao {
 
     private final BoardRepository boardRepository;
     private final WorkMemberRepository workMemberRepository;
-    private final GroupUserRepository groupUserRepository;
+    private final GroupMemberRepository groupUserRepository;
 
-    public WorkDaoImpl(BoardRepository boardRepository, WorkMemberRepository workMemberRepository) {
+    public WorkDaoImpl(BoardRepository boardRepository, WorkMemberRepository workMemberRepository, GroupMemberRepository groupUserRepository) {
         this.boardRepository = boardRepository;
         this.workMemberRepository = workMemberRepository;
+        this.groupUserRepository = groupUserRepository;
     }
 
     private WorkEntity transportWork(Work work) {

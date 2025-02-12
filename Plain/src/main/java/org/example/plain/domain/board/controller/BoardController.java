@@ -2,7 +2,7 @@ package org.example.plain.domain.board.controller;
 
 import org.example.plain.domain.board.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
-import org.example.plain.domain.user.User;
+import org.example.plain.domain.user.dto.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

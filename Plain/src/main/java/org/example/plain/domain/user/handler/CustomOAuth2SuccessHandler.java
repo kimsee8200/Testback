@@ -33,7 +33,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             response.setContentType("application/json");
             response.getWriter().write(body);
             response.setStatus(HttpServletResponse.SC_FOUND);
-            response.sendRedirect("/sign_in");
+            response.sendRedirect("/sign_up");
         }else{
             String token = jwtUtil.makeJwtToken(customOAuth2User.getUser().getId());
             String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUser().getId());

@@ -61,7 +61,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         {
                             // sing_in은 회원가입 페이지로 이동.
-                            authorizeRequests.requestMatchers("/account/create","/login","/","/sign_in").permitAll();
+                            authorizeRequests.requestMatchers("/account/create","/login","/","/sign_up").permitAll();
                             authorizeRequests.anyRequest().authenticated();
                         }
                 )

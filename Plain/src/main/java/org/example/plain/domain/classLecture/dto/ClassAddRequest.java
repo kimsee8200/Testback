@@ -15,7 +15,7 @@ public record ClassAddRequest(
         public ClassLecture toEntity(User user,String code) {
             return ClassLecture.builder()
                     .id(id)
-                    .user(user)
+                    .instructor(user)
                     .title(title)
                     .description(description)
                     .code(code)

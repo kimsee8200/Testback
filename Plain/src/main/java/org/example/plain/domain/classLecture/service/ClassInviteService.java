@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class ClassInviteService {
 
     private final ClassLectureRepositoryPort classLectureRepositoryPort;
+
     private final UserRepository userRepository;
 
     public String joinByCode(Long id) {

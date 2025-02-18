@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class registerController {
 
-    @GetMapping("/sign_in")
+    @GetMapping("/sign_up")
     public String singUp(){
         return "hello";
     }

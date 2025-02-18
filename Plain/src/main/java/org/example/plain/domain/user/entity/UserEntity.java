@@ -1,8 +1,6 @@
 package org.example.plain.domain.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.user.dto.User;
@@ -12,11 +10,14 @@ import org.example.plain.domain.user.dto.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "user")
 public class UserEntity {
     @Id
-    @Column(name = "u_id")
+    @Column(name = "user_id")
     private String id;
+    @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "name")
     private String username;
     private String password;
     private String email;

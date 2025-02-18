@@ -26,7 +26,7 @@ public class GroupMember implements Serializable {
 
     @MapsId("userId")
     @ManyToOne
-    @JoinColumn(name = "u_id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public GroupMember(Group group, UserEntity user) {

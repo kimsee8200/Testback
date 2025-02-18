@@ -20,7 +20,7 @@ public class WorkSubmitFieldEntity {
 
     @MapsId("user")
     @OneToOne
-    @JoinColumn(name = "u_id", referencedColumnName = "u_id")
+    @JoinColumn(name = "u_id", referencedColumnName = "user_id")
     UserEntity userId;
 
     @MapsId("work")

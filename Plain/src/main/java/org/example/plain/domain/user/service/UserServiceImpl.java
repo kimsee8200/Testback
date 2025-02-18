@@ -1,12 +1,14 @@
 package org.example.plain.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
 import org.example.plain.common.enums.Role;
+import org.example.plain.domain.user.dto.CustomOAuth2User;
+import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.dto.User;
 import org.example.plain.domain.user.entity.UserEntity;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.repository.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,9 @@ public class UserServiceImpl implements UserService {
     public boolean updateUser(User user) {
         userRepository.findById(user.getId()).ifPresent(userEntity -> {
                 userEntity.setUsername(user.getUsername());
-                userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                if (user.getPassword() != null) {
+                    userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                }
                 userEntity.setEmail(user.getEmail());
                 userRepository.save(userEntity);
         });
@@ -50,6 +54,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String id) {
         return new User(userRepository.findById(id).orElseThrow());
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        return new User(user);
     }
 
 

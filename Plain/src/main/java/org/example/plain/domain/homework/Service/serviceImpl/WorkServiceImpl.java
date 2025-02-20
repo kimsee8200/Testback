@@ -38,7 +38,7 @@ public class WorkServiceImpl implements WorkService {
     public void insertWork(Work work) {
         if(!work.getBoardId().isEmpty()) return;
         WorkEntity workEntity = WorkEntity.workToWorkEntity(work);
-        //UserEntity userEntity = userService.findByUserId(userId);
+        //UserEntity userEntity = userService.findByUserId(user);
         //workEntity.setUser(user);
         workDao.save(workEntity);
     }
@@ -67,7 +67,7 @@ public class WorkServiceImpl implements WorkService {
         return selectGroupWork(groupId);
     }
 
-//    public List<Work> selectGroupAndUserWork(String groupId, String userId){
+//    public List<Work> selectGroupAndUserWork(String groupId, String user){
 //        List<Work> workList = new ArrayList<>();
 //        for(WorkEntity work : workDao.findAll()){
 //

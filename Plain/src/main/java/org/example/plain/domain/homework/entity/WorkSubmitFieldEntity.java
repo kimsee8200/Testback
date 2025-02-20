@@ -1,20 +1,17 @@
 package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.user.entity.UserEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 public class WorkSubmitFieldEntity {
+
     @EmbeddedId
     private WorkSubmitFieldId workSubmitFieldId;
 

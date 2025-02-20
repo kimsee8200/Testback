@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
 public class BoardEntity {
     @Id
     @Column(name = "b_id", unique = true, nullable = false)

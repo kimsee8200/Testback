@@ -2,12 +2,13 @@ package org.example.plain.domain.homework.dao;
 
 import org.example.plain.domain.Dao;
 import org.example.plain.domain.homework.dto.WorkMember;
+import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 
 import java.util.List;
 
 public interface WorkMemberDao{
-    List<WorkMemberEntity> findByWorkId(String workId);
+    List<WorkMemberEntity> findByWorkId(WorkEntity workId);
 
     List<WorkMemberEntity> findAll();
 

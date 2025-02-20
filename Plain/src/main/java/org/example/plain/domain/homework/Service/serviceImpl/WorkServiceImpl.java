@@ -9,6 +9,7 @@ import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.Service.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
+import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.example.plain.repository.WorkSubmitFieldRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -125,7 +126,8 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<WorkSubmitFieldResponse> getSubmitList(String workId) {
        List<WorkSubmitFieldResponse> workSubmitFields = new ArrayList<>();
-       for (WorkSubmitFieldEntity workSubmitFieldEntity:workSubmitFieldRepository.findByWorkId(workId)){
+       WorkEntity workEntity = WorkEntity.workToWorkEntity(selectWork(workId));
+       for (WorkSubmitFieldEntity workSubmitFieldEntity:workSubmitFieldRepository.findByWorkId(workEntity)){
            WorkSubmitFieldResponse workSubmitField = WorkSubmitFieldResponse.changeEntity(workSubmitFieldEntity);
            workSubmitField.setFile(getFiles(workSubmitFieldEntity.getFileEntities()));
            workSubmitFields.add(workSubmitField);
@@ -141,7 +143,7 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<WorkMember> getMemberList(String workId) {
         List<WorkMember> workMemberList = new ArrayList<>();
-        for (WorkMemberEntity workMemberEntity:workMemberDao.findByWorkId(workId)){
+        for (WorkMemberEntity workMemberEntity:workMemberDao.findByWorkId(workDao.findById(workId))){
             workMemberList.add(WorkMember.changeEntity(workMemberEntity));
         }
         return workMemberList;

@@ -3,7 +3,7 @@ package org.example.plain.domain.board.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -19,9 +19,9 @@ public class BoardEntity {
     @Column(name = "g_id")
     private String groupId;
 
-    @JoinColumn(name = "u_id", referencedColumnName = "u_id")
+    @JoinColumn(name = "u_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity user;
+    private User user;
 
     private String userId;
 

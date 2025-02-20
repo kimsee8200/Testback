@@ -16,5 +16,9 @@ public class ResponseMaker<T> {
         return new ResponseEntity<>(responseBody, responseBody.getStatus());
     }
 
+    public static ResponseEntity<ResponseBody> internalServerError(String message){
+        ResponseBody responseBody = new ResponseBody<>(message, HttpStatus.INTERNAL_SERVER_ERROR, null);
+        return new ResponseEntity<>(responseBody, responseBody.getStatus());
+    }
 
 }

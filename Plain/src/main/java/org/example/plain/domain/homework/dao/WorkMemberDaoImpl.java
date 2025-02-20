@@ -1,5 +1,6 @@
 package org.example.plain.domain.homework.dao;
 
+import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.stereotype.Repository;
@@ -15,8 +16,9 @@ public class WorkMemberDaoImpl implements WorkMemberDao {
     }
 
     @Override
-    public List<WorkMemberEntity> findByWorkId(String workId) {
-        return workMemberRepository.findByWorkId(workId);
+    public List<WorkMemberEntity> findByWorkId(WorkEntity workId) {
+
+        return workMemberRepository.findByWork(workId);
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 public class WorkSubmitFieldEntity {
+
     @EmbeddedId
     private WorkSubmitFieldId workSubmitFieldId;
 

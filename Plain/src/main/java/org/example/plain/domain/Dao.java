@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface Dao<T> {
     List<T> findAll();
     T findById(String id);

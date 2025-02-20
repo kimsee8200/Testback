@@ -1,5 +1,6 @@
 package org.example.plain.domain.user.entity;
 
+<<<<<<<< HEAD:Plain/src/main/java/org/example/plain/domain/user/entity/User.java
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.common.enums.Role;
@@ -21,14 +22,21 @@ public class User {
     private String username;
     private String password;
     private String email;
+========
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-    // 프록시로 null 검증.
-    public void setId(String id) {
-        if (id != null) {
-            this.id = id;
-        }
+@Entity
+public class UserEntity {
+    @Id
+    private Long id;
+>>>>>>>> ac8f6e4fce3e8c277335e1edd553d20f04bfd299:Plain/src/main/java/org/example/plain/domain/user/entity/UserEntity.java
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
+<<<<<<<< HEAD:Plain/src/main/java/org/example/plain/domain/user/entity/User.java
     public void setRole(Role role) {
         if (role != null) {
             this.role = role;
@@ -58,5 +66,9 @@ public class User {
        this.email = userRequestResponse.getEmail();
        this.username = userRequestResponse.getUsername();
        this.password = userRequestResponse.getPassword();
+========
+    public Long getId() {
+        return id;
+>>>>>>>> ac8f6e4fce3e8c277335e1edd553d20f04bfd299:Plain/src/main/java/org/example/plain/domain/user/entity/UserEntity.java
     }
 }

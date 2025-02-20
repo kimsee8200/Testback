@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.domain.group.entity.Group;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
-import org.example.plain.domain.user.dto.User;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.entity.User;
 
 import java.io.Serializable;
 
@@ -27,9 +27,9 @@ public class GroupMember implements Serializable {
     @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
-    public GroupMember(Group group, UserEntity user) {
+    public GroupMember(Group group, User user) {
         this.id = new GroupMemberId(group.getGroupId(), user.getId());
         this.group = group;
         this.user = user;
@@ -38,7 +38,7 @@ public class GroupMember implements Serializable {
     public GroupMemberDTO toDTO() {
         return GroupMemberDTO.builder()
                 .group(group)
-                .user(new User(user))
+                .userRequestResponse(new UserRequestResponse(user))
                 .build();
     }
 }

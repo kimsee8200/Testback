@@ -1,9 +1,7 @@
 package org.example.plain.domain.user.service;
 
 import org.example.plain.domain.user.dto.*;
-import org.example.plain.domain.user.entity.UserEntity;
 import org.example.plain.domain.user.interfaces.UserService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -55,12 +53,12 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                 throw new IllegalStateException("Unexpected value: " + comeFrom);
         };
 
-        User user = userService.getUserByEmail(oAuth2Response.getEmail());
-        if(user == null){
-            user = new User(oAuth2Response.getUsername(),oAuth2Response.getEmail());
-            return new CustomOAuth2User(user);
+        UserRequestResponse userRequestResponse = userService.getUserByEmail(oAuth2Response.getEmail());
+        if(userRequestResponse == null){
+            userRequestResponse = new UserRequestResponse(oAuth2Response.getUsername(),oAuth2Response.getEmail());
+            return new CustomOAuth2User(userRequestResponse);
         }else{
-            return new CustomOAuth2User(user);
+            return new CustomOAuth2User(userRequestResponse);
         }
     }
 }

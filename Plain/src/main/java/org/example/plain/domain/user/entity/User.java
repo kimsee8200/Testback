@@ -3,7 +3,7 @@ package org.example.plain.domain.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.common.enums.Role;
-import org.example.plain.domain.user.dto.User;
+import org.example.plain.domain.user.dto.UserRequestResponse;
 
 @Entity
 @Getter
@@ -11,7 +11,7 @@ import org.example.plain.domain.user.dto.User;
 @AllArgsConstructor
 @Builder
 @Table(name = "user")
-public class UserEntity {
+public class User {
     @Id
     @Column(name = "user_id")
     private String id;
@@ -53,10 +53,10 @@ public class UserEntity {
         }
     }
 
-    public UserEntity (User user) {
-       this.id = user.getId();
-       this.email = user.getEmail();
-       this.username = user.getUsername();
-       this.password = user.getPassword();
+    public User(UserRequestResponse userRequestResponse) {
+       this.id = userRequestResponse.getId();
+       this.email = userRequestResponse.getEmail();
+       this.username = userRequestResponse.getUsername();
+       this.password = userRequestResponse.getPassword();
     }
 }

@@ -3,8 +3,7 @@ package org.example.plain.domain.groupmember.service;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
 import org.example.plain.domain.group.entity.Group;
 import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.user.dto.User;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.GroupRepository;
@@ -40,7 +39,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     @Override
     public GroupMemberDTO readGroupMember(String groupId, String userId) {
         Group group = groupRepository.findById(groupId).orElse(null);
-        UserEntity user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         GroupMember groupMember = groupMemberRepository.findByGroupAndUser(group, user);
         return groupMember.toDTO();
     }
@@ -48,7 +47,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     @Override
     public void joinGroup(String groupId, String userId) {
         Group group = groupRepository.findById(groupId).orElse(null);
-        UserEntity user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         GroupMember groupMember = new GroupMember(group, user);
         groupMemberRepository.save(groupMember);
     }
@@ -56,7 +55,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     @Override
     public void quitGroup(String groupId, String userId) {
         Group group = groupRepository.findById(groupId).orElse(null);
-        UserEntity user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         groupMemberRepository.deleteByGroupAndUser(group, user);
     }
 }

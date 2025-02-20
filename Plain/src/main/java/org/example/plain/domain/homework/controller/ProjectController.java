@@ -1,16 +1,14 @@
 package org.example.plain.domain.homework.controller;
 
-import org.apache.coyote.Response;
-import org.example.plain.domain.board.BoardService;
+import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.board.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
-import org.example.plain.domain.homework.Service.interfaces.WorkService;
 import org.example.plain.domain.homework.Service.serviceImpl.WorkServiceImpl;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,28 +26,28 @@ public class ProjectController {
     @PostMapping("/new_project")
     public ResponseEntity<?> projectInsert(Work work){
         workService.insertWork(work);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{board_id}")
     public ResponseEntity<?> projectUpdate(Work work, @PathVariable String board_id){
         workService.updateWork(work,board_id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{work_id}")
     public ResponseEntity<?> projectDelete(@PathVariable String work_id){
         workService.deleteWork(work_id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{board_id}/details")
-    public ResponseEntity<Work> getWorkDetail(@PathVariable String board_id) throws Exception {
+    public ResponseEntity<ResponseBody<Work>> getWorkDetail(@PathVariable String board_id) throws Exception {
         Board board = boardService.getBoard(board_id);
         if(!(board instanceof Work)){
             throw new Exception();
         }
-        return ResponseEntity.ok().body((Work) board);
+        return new ResponseMaker<Work>().ok((Work) board);
     }
 
     @GetMapping("/{work_id}/members")

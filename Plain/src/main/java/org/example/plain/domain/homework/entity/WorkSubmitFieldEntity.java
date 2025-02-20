@@ -1,14 +1,10 @@
 package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.entity.User;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -21,7 +17,7 @@ public class WorkSubmitFieldEntity {
     @MapsId("user")
     @OneToOne
     @JoinColumn(name = "u_id", referencedColumnName = "user_id")
-    UserEntity userId;
+    User userId;
 
     @MapsId("work")
     @OneToOne

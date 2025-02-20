@@ -3,17 +3,14 @@ package org.example.plain.user.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.plain.common.ResponseBody;
 import org.example.plain.domain.user.dto.CustomOAuth2User;
-import org.example.plain.domain.user.dto.User;
+import org.example.plain.domain.user.dto.UserRequestResponse;
 import org.example.plain.domain.user.handler.CustomOAuth2SuccessHandler;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.TestPropertySource;
@@ -48,15 +45,15 @@ public class CustomOAuth2SuccessHandlerTest {
         response = Mockito.mock(HttpServletResponse.class);
         users = new ArrayList<>();
 
-        User user = new User("kimsee","박근택","go@email.com","1234");
-        User user2 = new User("김주호","ju@email");
-        User user3 = new User("rkedx","김갑든","kimgap@gmail.com","1234");
-        User user4 = new User("김주호","opt@email.com");
+        UserRequestResponse userRequestResponse = new UserRequestResponse("kimsee","박근택","go@email.com","1234");
+        UserRequestResponse userRequestResponse2 = new UserRequestResponse("김주호","ju@email");
+        UserRequestResponse userRequestResponse3 = new UserRequestResponse("rkedx","김갑든","kimgap@gmail.com","1234");
+        UserRequestResponse userRequestResponse4 = new UserRequestResponse("김주호","opt@email.com");
 
-        users.add(new CustomOAuth2User(user));
-        users.add(new CustomOAuth2User(user2));
-        users.add(new CustomOAuth2User(user3));
-        users.add(new CustomOAuth2User(user4));
+        users.add(new CustomOAuth2User(userRequestResponse));
+        users.add(new CustomOAuth2User(userRequestResponse2));
+        users.add(new CustomOAuth2User(userRequestResponse3));
+        users.add(new CustomOAuth2User(userRequestResponse4));
 
         authentication = new UsernamePasswordAuthenticationToken(users.getFirst(), "password");
     }

@@ -7,16 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.user.dto.CustomOAuth2User;
-import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.service.JWTUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizationSuccessHandler;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
@@ -27,7 +22,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-        if(customOAuth2User.getUser().getId() == null) {
+        if(customOAuth2User.getUserRequestResponse().getId() == null) {
             String body = objectMapper.writeValueAsString(customOAuth2User);
 
             response.setContentType("application/json");
@@ -35,8 +30,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             response.setStatus(HttpServletResponse.SC_FOUND);
             response.sendRedirect("/sign_up");
         }else{
-            String token = jwtUtil.makeJwtToken(customOAuth2User.getUser().getId());
-            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUser().getId());
+            String token = jwtUtil.makeJwtToken(customOAuth2User.getUserRequestResponse().getId());
+            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUserRequestResponse().getId());
 
             Cookie cookie = makeCookie(refresh);
             response.addHeader("Authorization",token);

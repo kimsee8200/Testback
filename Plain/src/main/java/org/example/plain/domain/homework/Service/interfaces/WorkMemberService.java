@@ -7,8 +7,8 @@ import java.util.List;
 
 @Service
 public interface WorkMemberService {
-    public void addHomeworkMember(String homeworkId, String memberId);
-    public void removeHomeworkMember(String homeworkId, String memberId);
-    public WorkMember getSingleMembers(String homeworkId, String memberId);
-    public List<WorkMember> homeworkMembers(String homeworkId);
+    public void addHomeworkMember(String workId, String memberId);
+    public void removeHomeworkMember(String workId, String memberId);
+    public WorkMember getSingleMembers(String workId, String memberId);
+    public List<WorkMember> homeworkMembers(String workId);
 }

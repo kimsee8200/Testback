@@ -1,6 +1,6 @@
 package org.example.plain.domain.board.controller;
 
-import org.example.plain.domain.board.BoardServiceImpl;
+import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
 import org.example.plain.domain.user.dto.UserRequestResponse;
 import org.springframework.http.ResponseEntity;

@@ -2,40 +2,101 @@ package org.example.plain.domain.board.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.relational.core.sql.In;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "board_type", discriminatorType = DiscriminatorType.STRING)
+@Table(name = "board")
 public class BoardEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "b_id", unique = true, nullable = false)
     private String boardId;
 
-    @Column(name = "g_id")
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private String userId;
+
+    @Column(name = "g_id", insertable = false, updatable = false)
     private String groupId;
 
-    @JoinColumn(name = "u_id", referencedColumnName = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "g_id", referencedColumnName = "g_id")
+    private ClassLecture group;
+
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-    private String userId;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "context")
     private String content;
 
-    @Column
-    private int type;
+    @Column(name = "board_type", insertable = false, updatable = false)
+    private Integer type;
 
     @Column(name = "create_date")
     @CreatedDate
     private LocalDateTime createDate;
 
+    public void setBoardId(String boardId) {
+        if (boardId != null) {
+            this.boardId = boardId;
+        }
+    }
+
+    public void setGroup(ClassLecture group) {
+        if (group != null) {
+            this.group = group;
+        }
+    }
+
+    public void setGroupId(String groupId) {
+        if (group != null) {
+            this.groupId = groupId;
+        }
+    }
+
+    public void setUser(User user) {
+        if (user != null) {
+            this.user = user;
+        }
+    }
+
+    public void setUserId(String userId) {
+        if (userId != null) {
+            this.userId = userId;
+        }
+    }
+
+    public void setTitle(String title) {
+        if (title != null) {
+            this.title = title;
+        }
+    }
+
+    public void setContent(String content) {
+        if (content != null) {
+            this.content = content;
+        }
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        if (createDate != null) {
+            this.createDate = createDate;
+        }
+    }
 }

@@ -2,14 +2,17 @@ package org.example.plain.domain.homework.controller;
 
 import org.example.plain.common.ResponseBody;
 import org.example.plain.common.ResponseMaker;
-import org.example.plain.domain.board.BoardServiceImpl;
+import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
+import org.example.plain.domain.homework.Service.serviceImpl.WorkMemberServiceImpl;
 import org.example.plain.domain.homework.Service.serviceImpl.WorkServiceImpl;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
+import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,17 +24,19 @@ import java.util.List;
 public class ProjectController {
 
     WorkServiceImpl workService;
+    WorkMemberServiceImpl workMemberService;
     BoardServiceImpl boardService;
 
     @PostMapping("/new_project")
-    public ResponseEntity<?> projectInsert(Work work){
-        workService.insertWork(work);
+    public ResponseEntity<?> projectInsert(Work work, String groupId, Authentication authentication){
+        workService.insertWork(work, groupId, authentication);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{board_id}")
-    public ResponseEntity<?> projectUpdate(Work work, @PathVariable String board_id){
-        workService.updateWork(work,board_id);
+    public ResponseEntity<?> projectUpdate(Work work, @PathVariable String board_id, Authentication auth){
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        workService.updateWork(work,board_id, userDetails.getUser().getId());
         return ResponseEntity.noContent().build();
     }
 
@@ -52,7 +57,7 @@ public class ProjectController {
 
     @GetMapping("/{work_id}/members")
     public ResponseEntity<List<WorkMember>> getWorkMembers(@PathVariable String work_id) throws Exception {
-        return ResponseEntity.ok().body(workService.getMemberList(work_id));
+        return ResponseEntity.ok().body(workMemberService.homeworkMembers(work_id));
     }
 
     @GetMapping("/{work_id}/submits")

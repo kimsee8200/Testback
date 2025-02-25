@@ -48,7 +48,7 @@ public class CustomOauth2UserRequestResponseServiceTest {
         google.put("sub",1212);
 
         oAuth2User.add(new DefaultOAuth2User(null,google,"name"));
-        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.getFirst());
+        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.get(0));
         customOauth2UserService = new CustomOauth2UserService(userService, oauthLoadUser);
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
@@ -70,7 +70,7 @@ public class CustomOauth2UserRequestResponseServiceTest {
         google.put("sub",1212);
 
         oAuth2User.add(new DefaultOAuth2User(null,google,"name"));
-        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.getFirst());
+        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.get(0));
         customOauth2UserService = new CustomOauth2UserService(userService, oauthLoadUser);
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
@@ -94,7 +94,7 @@ public class CustomOauth2UserRequestResponseServiceTest {
         kakao.put("kakao_account",kakaoAttrebute);
 
         oAuth2User.add(new DefaultOAuth2User(null,kakao,"id"));
-        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.getFirst());
+        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.get(0));
         customOauth2UserService = new CustomOauth2UserService(userService, oauthLoadUser);
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
@@ -119,7 +119,7 @@ public class CustomOauth2UserRequestResponseServiceTest {
         naver.put("response",naverAttrebute);
 
         oAuth2User.add(new DefaultOAuth2User(null,naver,"id"));
-        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.getFirst());
+        Mockito.when(oauthLoadUser.loadUser(oAuth2UserRequest)).thenReturn(oAuth2User.get(0));
         customOauth2UserService = new CustomOauth2UserService(userService, oauthLoadUser);
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);

@@ -1,8 +1,9 @@
-package org.example.plain.domain.board;
+package org.example.plain.domain.board.service;
 
 import org.example.plain.domain.board.dao.BoardDao;
 import org.example.plain.domain.board.dto.Board;
 import org.example.plain.domain.board.entity.BoardEntity;
+import org.example.plain.domain.board.interfaces.BoardService;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.repository.BoardRepository;

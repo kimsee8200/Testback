@@ -51,7 +51,7 @@ public class LoginFilterTest {
         objectMapper = Mockito.mock(ObjectMapper.class);
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
-        userRequestResponse = new UserRequestResponse("test","test1234");
+        userRequestResponse = new UserRequestResponse("test","park","park@gmail.com","test1234");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class LoginFilterTest {
         Mockito.verify(authenticationManager).authenticate(chapter.capture());
 
 
-        assertThat(chapter.getValue().getPrincipal()).isEqualTo(userRequestResponse.getUsername());
+        assertThat(chapter.getValue().getPrincipal()).isEqualTo(userRequestResponse.getId());
     }
 
     @Test

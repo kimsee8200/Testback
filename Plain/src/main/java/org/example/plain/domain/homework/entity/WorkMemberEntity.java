@@ -2,10 +2,12 @@ package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.plain.domain.group.entity.GroupUserEntity;
+import org.example.plain.domain.groupmember.entity.GroupMember;
+import org.example.plain.domain.user.entity.User;
 
 @Entity
 @Data
+@Table(name = "homework_member")
 public class WorkMemberEntity {
     @EmbeddedId
     private WorkMemberId workMemberId;
@@ -15,10 +17,10 @@ public class WorkMemberEntity {
     @JoinColumn(name = "h_id")
     private WorkEntity work;
 
-    @MapsId("user")
+    @MapsId("memberUser")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "u_id", nullable = false)
-    private GroupUserEntity user;
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
+    private User user;
 
     @Column(name = "is_submit")
     private boolean isSubmited = false;

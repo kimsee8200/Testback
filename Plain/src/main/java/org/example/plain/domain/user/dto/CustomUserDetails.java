@@ -1,11 +1,9 @@
 package org.example.plain.domain.user.dto;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,9 +11,9 @@ import java.util.Collections;
 @Data
 public class CustomUserDetails implements UserDetails {
 
-    private UserEntity user;
+    private User user;
 
-    public CustomUserDetails(UserEntity user) {
+    public CustomUserDetails(User user) {
         this.user = user;
     }
 

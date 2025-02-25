@@ -2,24 +2,24 @@ package org.example.plain.domain.groupmember.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.example.plain.domain.groupmember.entity.Group;
+import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.groupmember.entity.GroupMemberId;
-import org.example.plain.domain.user.dto.User;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.entity.User;
 
 @Data
 @Builder
 public class GroupMemberDTO {
-    private Group group;
-    private User user;
+    private ClassLecture group;
+    private UserRequestResponse userRequestResponse;
 
     public GroupMember toEntity() {
-        GroupMemberId id = new GroupMemberId(group.getGroupId(), user.getId());
+        GroupMemberId id = new GroupMemberId(group.getId(), userRequestResponse.getId());
         return GroupMember.builder()
                 .id(id)
                 .group(group)
-                .user(new UserEntity(user))
+                .user(new User(userRequestResponse))
                 .build();
     }
 }

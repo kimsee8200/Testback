@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.plain.domain.board.entity.BoardEntity;
 
+
 import java.time.LocalDateTime;
 
 @Data

@@ -3,7 +3,7 @@ package org.example.plain.domain.homework.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.user.entity.UserEntity;
+import org.example.plain.domain.user.entity.User;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ public class WorkSubmitFieldEntity {
 
     @MapsId("user")
     @OneToOne
-    @JoinColumn(name = "u_id", referencedColumnName = "u_id")
-    UserEntity userId;
+    @JoinColumn(name = "u_id", referencedColumnName = "user_id")
+    User userId;
 
     @MapsId("work")
     @OneToOne

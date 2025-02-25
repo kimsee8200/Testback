@@ -1,8 +1,8 @@
 package org.example.plain.domain.board.controller;
 
-import org.example.plain.domain.board.BoardServiceImpl;
+import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
-import org.example.plain.domain.user.dto.User;
+import org.example.plain.domain.user.dto.UserRequestResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +32,14 @@ public class BoardController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<?> updateBoard(@RequestBody Board board, @RequestParam String board_id, User user) {
-        boardService.updateBoard(board, board_id, user.getId());
+    public ResponseEntity<?> updateBoard(@RequestBody Board board, @RequestParam String board_id, UserRequestResponse userRequestResponse) {
+        boardService.updateBoard(board, board_id, userRequestResponse.getId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{board_id}")
-    public ResponseEntity<?> deleteBoard(@PathVariable String board_id, User user) {
-        boardService.deleteBoard(board_id,user.getId());
+    public ResponseEntity<?> deleteBoard(@PathVariable String board_id, UserRequestResponse userRequestResponse) {
+        boardService.deleteBoard(board_id, userRequestResponse.getId());
         return ResponseEntity.ok().build();
     }
 }

@@ -49,7 +49,7 @@ public class UserServiceTest {
     @Test
     public void testSave() {
         userService = new UserServiceImpl(userRepository,bCryptPasswordEncoder);
-        boolean result = userService.createUser(userRequestResponses.getFirst());
+        boolean result = userService.createUser(userRequestResponses.get(0));
         assertThat(result).isTrue();
     }
 

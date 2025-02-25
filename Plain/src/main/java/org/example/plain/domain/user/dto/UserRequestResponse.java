@@ -24,4 +24,5 @@ public class UserRequestResponse {
         this.username = username;
         this.email = email;
     }
+
 }

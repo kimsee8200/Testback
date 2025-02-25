@@ -1,6 +1,5 @@
 package org.example.plain.domain.user.entity;
 
-<<<<<<<< HEAD:Plain/src/main/java/org/example/plain/domain/user/entity/User.java
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.common.enums.Role;
@@ -23,10 +22,6 @@ public class User {
     private String password;
     private String email;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
     public void setRole(Role role) {
         if (role != null) {
             this.role = role;

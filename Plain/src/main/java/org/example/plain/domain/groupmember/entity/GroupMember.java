@@ -2,7 +2,8 @@ package org.example.plain.domain.groupmember.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.plain.domain.group.entity.Group;
+import org.example.plain.common.enums.Role;
+import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
 import org.example.plain.domain.user.dto.UserRequestResponse;
 import org.example.plain.domain.user.entity.User;
@@ -22,15 +23,16 @@ public class GroupMember implements Serializable {
     @MapsId("groupId")
     @ManyToOne
     @JoinColumn(name = "g_id")
-    private Group group;
+    private ClassLecture group;
 
-    @MapsId("user")
+    @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public GroupMember(Group group, User user) {
-        this.id = new GroupMemberId(group.getGroupId(), user.getId());
+
+    public GroupMember(ClassLecture group, User user) {
+        this.id = new GroupMemberId(group.getId(), user.getId());
         this.group = group;
         this.user = user;
     }

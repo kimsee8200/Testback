@@ -1,4 +1,4 @@
-package org.example.plain.domain.board;
+package org.example.plain.domain.board.interfaces;
 
 import org.example.plain.domain.board.dto.Board;
 import org.springframework.stereotype.Service;

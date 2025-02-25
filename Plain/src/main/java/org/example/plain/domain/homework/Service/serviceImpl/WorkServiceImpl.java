@@ -1,20 +1,25 @@
 package org.example.plain.domain.homework.Service.serviceImpl;
 
-import org.example.plain.domain.homework.dao.WorkDao;
-import org.example.plain.domain.board.BoardService;
-import org.example.plain.domain.homework.dao.WorkMemberDao;
+import lombok.RequiredArgsConstructor;
+import org.example.plain.domain.groupmember.entity.GroupMember;
+import org.example.plain.domain.groupmember.entity.GroupMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.Service.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
+import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.repository.BoardRepository;
+import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.example.plain.repository.WorkSubmitFieldRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -22,63 +27,74 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class WorkServiceImpl implements WorkService {
-    private WorkDao workDao;
-    private WorkMemberDao workMemberDao;
    // private UserService userService;
-    private BoardService boardService;
-    private WorkSubmitFieldRepository workSubmitFieldRepository;
-    private WorkMemberRepository workMemberRepository;
+    private final BoardRepository boardRepository;
+    private final WorkSubmitFieldRepository workSubmitFieldRepository;
+    private final WorkMemberRepository workMemberRepository;
+    private final GroupMemberRepository groupMemberRepository;
 
     @Value("${file.path}")
     private String filepath;
 
+    public String makeUUID(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+
     @Override
-    public void insertWork(Work work) {
-        if(!work.getBoardId().isEmpty()) return;
+    public void insertWork(Work work, String groupId, Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(groupId,userDetails.getUser().getId())).orElseThrow();
+
+        if (!groupMember.getGroup().getInstructor().getId().equals(userDetails.getUser().getId())) {
+            throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
+        }
+
         WorkEntity workEntity = WorkEntity.workToWorkEntity(work);
-        //UserEntity userEntity = userService.findByUserId(user);
-        //workEntity.setUser(user);
-        workDao.save(workEntity);
+       // workEntity.setBoardId(makeUUID()); // 임시 설정.
+        workEntity.setWorkId(makeUUID());
+        workEntity.setUserId(userDetails.getUser().getId());
+        workEntity.setGroupId(groupId);
+        workEntity.setUser(groupMember.getUser());
+        workEntity.setGroup(groupMember.getGroup());
+        boardRepository.save(workEntity);
     }
 
     @Override
-    public void updateWork(Work work, String workId) {
-        // work 존재 확인.
-        // 선생님인지 확인 -> spring secuirty
-        // or 선생님 한명만 수정할 수 있게 userId로 판단.
-        // work null 값 판단.
+    @Transactional
+    public void updateWork(Work work, String workId, String userId) {
+        WorkEntity workEntity = boardRepository.findByWorkId(workId).orElseThrow(NullPointerException::new);
+        if(!workEntity.getUser().getId().equals(userId)) throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"작성자가 아닙니다.");
         work.setWorkId(workId);
-        workDao.update(WorkEntity.workToWorkEntity(work));
+        boardRepository.save(WorkEntity.chaingeWorkEntitytoWork(work,workEntity));
     }
 
     @Override
-    public Work selectWork(String WorkId) {
-        return Work.changeWorkEntity(workDao.findById(WorkId));
+    public Work selectWork(String workId) {
+        return Work.changeWorkEntity(boardRepository.findByWorkId(workId).orElseThrow());
     }
+
+
+    public List<Work> selectGroupWorks(String groupId){
+        List<Work> works = new ArrayList<>();
+        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId);
+        for (WorkEntity work:workEntities){
+            works.add(Work.changeWorkEntity(work));
+        }
+        return works;
+    }
+
 
     @Override
-    public List<Work> selectAllWork() {
-        return List.of();
-    }
-
-    public List<Work> selectGroupWork(String groupId){
-        return selectGroupWork(groupId);
-    }
-
-//    public List<Work> selectGroupAndUserWork(String groupId, String user){
-//        List<Work> workList = new ArrayList<>();
-//        for(WorkEntity work : workDao.findAll()){
-//
-//        }
-//    }
-
-    @Override
+    @Transactional
     public void deleteWork(String workId) {
-        WorkEntity work = workDao.findById(workId);
-        workDao.delete(work);
+        WorkEntity work = boardRepository.findByWorkId(workId).orElseThrow();
+        boardRepository.delete(work);
     }
 
     @Override
@@ -108,8 +124,6 @@ public class WorkServiceImpl implements WorkService {
                 workMemberEntity.setLate(true);
             workMemberRepository.save(workMemberEntity);
         }
-
-
     }
 
     public List<File> getWorkResults(String workId, String userid){
@@ -140,19 +154,7 @@ public class WorkServiceImpl implements WorkService {
         return file;
     }
 
-    @Override
-    public List<WorkMember> getMemberList(String workId) {
-        List<WorkMember> workMemberList = new ArrayList<>();
-        for (WorkMemberEntity workMemberEntity:workMemberDao.findByWorkId(workDao.findById(workId))){
-            workMemberList.add(WorkMember.changeEntity(workMemberEntity));
-        }
-        return workMemberList;
-    }
 
-    public void addWorkMember(String workId, String memberId) throws Exception {
-        WorkMemberEntity workMemberEntity = WorkMemberEntity.makeWorkMemberEntity(memberId, workId);
-        workMemberDao.save(workMemberEntity);
-    }
 
     private String makeFilename (String originalFilename, String userId){
         Integer count = 1;

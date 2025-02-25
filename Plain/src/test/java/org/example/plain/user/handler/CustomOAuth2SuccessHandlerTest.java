@@ -55,7 +55,7 @@ public class CustomOAuth2SuccessHandlerTest {
         users.add(new CustomOAuth2User(userRequestResponse3));
         users.add(new CustomOAuth2User(userRequestResponse4));
 
-        authentication = new UsernamePasswordAuthenticationToken(users.getFirst(), "password");
+        authentication = new UsernamePasswordAuthenticationToken(users.get(0), "password");
     }
 
     @Test

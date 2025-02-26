@@ -1,53 +1,37 @@
-package org.example.plain.domain.classLecture.service;
+package org.example.plain.domain.notice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.classLecture.dto.ClassAddRequest;
-import org.example.plain.domain.classLecture.dto.ClassRequest;
-import org.example.plain.domain.classLecture.dto.ClassResponse;
-import org.example.plain.domain.classLecture.entity.ClassLecture;
-import org.example.plain.domain.classLecture.repository.ClassLectureRepositoryPort;
-import org.example.plain.domain.classLecture.util.CodeGenerator;
+import org.example.plain.domain.notice.dto.NoticeRequest;
+import org.example.plain.domain.notice.dto.NoticeResponse;
+import org.example.plain.domain.notice.entity.NoticeEntity;
+import org.example.plain.domain.notice.repository.NoticeRepository;
 import org.example.plain.domain.user.entity.User;
-import org.example.plain.domain.user.repository.UserRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@service
 @RequiredArgsConstructor
-public class ClassLectureService {
+public class NoticeService {
 
-    private final ClassLectureRepositoryPort classLectureRepositoryPort;
-    private final UserRepository userRepository;
+    private final NoticeRepository noticeRepository;
 
-    /**
-     * 클래스 생성
-     * @param classAddRequest
-     * @return
-     */
-    public ClassResponse createClass(ClassAddRequest classAddRequest) {
-        User user = userRepository.getReferenceById(classAddRequest.user().getUserId());
+    public NoticeResponse createNotice(NoticeRequest noticeRequest) {
 
-        String title = classAddRequest.title();
-        String description = classAddRequest.description();
-        String code = generateCode();
+        String title = noticeRequest.title();
+        String content = noticeRequest.content();
+        String userId = noticeRequest.userId();
 
-        ClassLecture classLecture = classAddRequest.toEntity(user, code);
-        classLectureRepositoryPort.save(classLecture);
+        NoticeEntity createNotice = noticeRequest.toEntity(user);
+        noticeRepository.save(createNotice);
 
-        return ClassResponse.builder()
-                .id(classLecture.getId())
+        return NoticeResponse.builder()
+                .noticeId(noticeRepository.getId())
                 .title(title)
-                .description(description)
-                .code(code)
+                .content(content)
+                .userId(userId)
                 .build();
     }
 
-    /**
-     * 특정 클래스 조회
-     * @param classId
-     * @return
-     */
     public ClassResponse getClass(Long classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
 
@@ -59,10 +43,6 @@ public class ClassLectureService {
                 .build();
     }
 
-    /**
-     * 클래스 전체 조회
-     * @return
-     */
     public List<ClassResponse> getAllClass(){
         List<ClassLecture> classes = classLectureRepositoryPort.findAll();
         return classes.stream()
@@ -123,17 +103,4 @@ public class ClassLectureService {
                 .build();
     }
 
-//    public List<User> getClassMembers(Long classId) {
-//        ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
-//        return classLecture.getUser()
-//    }
-
-    /**
-     * 코드 생성기
-     * @return
-     */
-    public String generateCode() {
-        return CodeGenerator.generateCode();
-    }
 }
-

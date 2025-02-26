@@ -18,7 +18,8 @@ import java.util.List;
 public class ClassLecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    private Long id;
+    private String id;
 
     private String title;
 

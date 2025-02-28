@@ -7,9 +7,9 @@ import java.util.List;
 public interface ClassLectureRepositoryPort {
     ClassLecture save(ClassLecture classLecture);
 
-    ClassLecture findById(Long id);
+    ClassLecture findById(String id);
 
     List<ClassLecture> findAll();
 
-    void delete(Long id);
+    void delete(String id);
 }

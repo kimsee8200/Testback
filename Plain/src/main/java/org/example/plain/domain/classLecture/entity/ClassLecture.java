@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.plain.domain.user.entity.User;
 
-import java.util.List;
-
-
 @Entity
 @Getter
 @Builder
@@ -18,7 +15,8 @@ import java.util.List;
 public class ClassLecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "g_id")
+    private String id;
 
     private String title;
 

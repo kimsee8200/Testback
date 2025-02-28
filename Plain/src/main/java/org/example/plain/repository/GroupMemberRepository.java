@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, GroupMemberId> {
-    GroupMember findByGroupAndUser(ClassLecture group, User user);
-    List<GroupMember> findAllByGroup(ClassLecture group);
+    GroupMember findByClassLectureAndUser(ClassLecture group, User user);
+    List<GroupMember> findAllByClassLecture(ClassLecture group);
     @Transactional
-    void deleteByGroupAndUser(ClassLecture group, User user);
+    void deleteByClassLectureAndUser(ClassLecture group, User user);
 }

@@ -7,7 +7,7 @@ import org.example.plain.domain.user.entity.User;
 
 @Builder
 public record ClassAddRequest(
-        Long id,
+        String id,
         User user,
         String title,
         String description

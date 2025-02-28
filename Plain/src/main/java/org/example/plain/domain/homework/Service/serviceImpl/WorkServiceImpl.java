@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.groupmember.entity.GroupMemberId;
 import org.example.plain.domain.homework.dto.Work;
-import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.Service.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
@@ -51,7 +50,7 @@ public class WorkServiceImpl implements WorkService {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(groupId,userDetails.getUser().getId())).orElseThrow();
 
-        if (!groupMember.getGroup().getInstructor().getId().equals(userDetails.getUser().getId())) {
+        if (!groupMember.getClassLecture().getInstructor().getId().equals(userDetails.getUser().getId())) {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
         }
 
@@ -61,7 +60,7 @@ public class WorkServiceImpl implements WorkService {
         workEntity.setUserId(userDetails.getUser().getId());
         workEntity.setGroupId(groupId);
         workEntity.setUser(groupMember.getUser());
-        workEntity.setGroup(groupMember.getGroup());
+        workEntity.setGroup(groupMember.getClassLecture());
         boardRepository.save(workEntity);
     }
 

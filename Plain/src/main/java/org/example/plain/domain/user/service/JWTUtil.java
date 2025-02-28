@@ -20,7 +20,7 @@ public class JWTUtil {
     private long expiresRefresh;
 
 
-    public JWTUtil(@Value("${spring.jwt.screat}")String key) {
+    public JWTUtil(@Value("${spring.jwt.secret}")String key) {
         tokenScreat = new SecretKeySpec(key.getBytes(), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 

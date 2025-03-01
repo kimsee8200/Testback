@@ -6,15 +6,15 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Data
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class GroupMemberId implements Serializable {
+public class ClassMemberId implements Serializable {
 
-    @Column(name = "g_id")
-    private String groupId;
+    @Column(name = "class_id")
+    private String classId;
 
     @Column(name = "user_id")
     private String userId;

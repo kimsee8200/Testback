@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.plain.common.enums.ClassType;
 import org.example.plain.domain.user.entity.User;
 
 @Entity
@@ -12,10 +13,11 @@ import org.example.plain.domain.user.entity.User;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "class")
 public class ClassLecture {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "g_id")
+    @Column(name = "c_id")
     private String id;
 
     private String title;
@@ -23,6 +25,15 @@ public class ClassLecture {
     private String description;
 
     private String code;
+
+    private String classImg;
+
+    private Long price;
+
+    @Enumerated(EnumType.STRING)
+    private ClassType classType;
+
+    private Long maxMember;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

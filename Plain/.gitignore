@@ -37,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/java/org/example/plain/resources/application.yaml
+/src/main/java/resources/application.yaml
+/src/main/resources/application.yaml

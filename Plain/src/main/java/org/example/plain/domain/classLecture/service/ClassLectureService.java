@@ -27,20 +27,12 @@ public class ClassLectureService {
      */
     public ClassResponse createClass(ClassAddRequest classAddRequest) {
         User user = userRepository.getReferenceById(classAddRequest.user().getId());
-
-        String title = classAddRequest.title();
-        String description = classAddRequest.description();
         String code = generateCode();
 
         ClassLecture classLecture = classAddRequest.toEntity(user, code);
         classLectureRepositoryPort.save(classLecture);
 
-        return ClassResponse.builder()
-                .id(classLecture.getId())
-                .title(title)
-                .description(description)
-                .code(code)
-                .build();
+        return ClassResponse.from(classLecture);
     }
 
     /**
@@ -51,12 +43,7 @@ public class ClassLectureService {
     public ClassResponse getClass(String classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
 
-        return ClassResponse.builder()
-                .id(classLecture.getId())
-                .title(classLecture.getTitle())
-                .description(classLecture.getDescription())
-                .code(classLecture.getCode())
-                .build();
+        return ClassResponse.from(classLecture);
     }
 
     /**
@@ -64,14 +51,8 @@ public class ClassLectureService {
      * @return
      */
     public List<ClassResponse> getAllClass(){
-        List<ClassLecture> classes = classLectureRepositoryPort.findAll();
-        return classes.stream()
-                .map(c -> ClassResponse.builder()
-                        .id(c.getId())
-                        .title(c.getTitle())
-                        .description(c.getDescription())
-                        .build())
-                .toList();
+        return classLectureRepositoryPort.findAll()
+                .stream().map(ClassResponse::from).toList();
     }
 
     /**
@@ -116,11 +97,7 @@ public class ClassLectureService {
         classLecture.updateClass(title, description);
         classLectureRepositoryPort.save(classLecture);
 
-        return ClassResponse.builder()
-                .id(classLecture.getId())
-                .title(classLecture.getTitle())
-                .description(classLecture.getDescription())
-                .build();
+        return ClassResponse.from(classLecture);
     }
 
 //    public List<User> getClassMembers(Long classId) {

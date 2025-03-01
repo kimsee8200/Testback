@@ -14,14 +14,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "\"group_member\"")
-public class GroupMember implements Serializable {
+@Table(name = "\"class_member\"")
+public class ClassMember implements Serializable {
     @EmbeddedId
-    private GroupMemberId id;
+    private ClassMemberId id;
 
-    @MapsId("groupId")
+    @MapsId("classId")
     @ManyToOne
-    @JoinColumn(name = "g_id")
+    @JoinColumn(name = "c_id")
     private ClassLecture classLecture;
 
     @MapsId("userId")

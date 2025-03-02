@@ -1,18 +1,22 @@
 package org.example.plain.common.handler;
 
 import org.example.plain.common.ResponseBody;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
 
 
 @ControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({SQLException.class})
     public ResponseEntity<ResponseBody> handleException(Exception e) {
@@ -36,5 +40,17 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ResponseBody> handleHttpClientErrorException(HttpClientErrorException e){
         ResponseBody responseBody = new ResponseBody(e.getMessage(), (HttpStatus) e.getStatusCode(),null);
         return new ResponseEntity<>(responseBody, e.getStatusCode());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseBody> handlerOtherException(Exception e) {
+        ResponseBody responseBody = new ResponseBody(e.getMessage(), HttpStatus.valueOf(400),null);
+        return new ResponseEntity<>(responseBody, HttpStatus.valueOf(400));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+        ResponseBody responseBody = new ResponseBody(ex.getMessage(), (HttpStatus) statusCode, body);
+        return new ResponseEntity<>(responseBody, statusCode);
     }
 }

@@ -42,7 +42,7 @@ public class BoardEntity {
     private String content;
 
     @Column(name = "board_type", insertable = false, updatable = false)
-    private Integer type;
+    private String type;
 
     @Column(name = "create_date")
     @CreatedDate
@@ -90,7 +90,7 @@ public class BoardEntity {
         }
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

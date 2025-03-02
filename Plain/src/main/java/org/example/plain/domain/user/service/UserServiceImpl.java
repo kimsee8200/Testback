@@ -8,6 +8,7 @@ import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public boolean createUser(UserRequestResponse userRequestResponse) {
         User user = new User(userRequestResponse);
         user.setPassword(bCryptPasswordEncoder.encode(userRequestResponse.getPassword()));

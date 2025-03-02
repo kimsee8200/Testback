@@ -18,8 +18,8 @@ public class ClassLectureRepositoryAdapter implements ClassLectureRepositoryPort
     }
 
     @Override
-    public ClassLecture findById(Long id) {
-        return classLectureRepository.findById(Long.valueOf(id))
+    public ClassLecture findById(String id) {
+        return classLectureRepository.findById(id)
                 .orElseThrow();
     }
 
@@ -29,7 +29,7 @@ public class ClassLectureRepositoryAdapter implements ClassLectureRepositoryPort
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         ClassLecture classLecture = findById(id);
         classLectureRepository.delete(classLecture);
     }

@@ -3,6 +3,7 @@ package org.example.plain.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
+import org.example.plain.common.exception.filter.SecurityExceptionHandler;
 import org.example.plain.domain.user.dto.OAuth2Response;
 import org.example.plain.domain.user.filters.JwtFilter;
 import org.example.plain.domain.user.filters.LoginFilter;
@@ -37,6 +38,7 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final JWTUtil jwtUtil;
     private final CustomOauth2UserService oauth2UserService;
+    private final SecurityExceptionHandler securityExceptionHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -77,6 +79,9 @@ public class SecurityConfig {
                                 ).successHandler(new CustomOAuth2SuccessHandler(jwtUtil,objectMapper)
                         )
 
+                )
+                .exceptionHandling(ex ->
+                        ex.authenticationEntryPoint(securityExceptionHandler)
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

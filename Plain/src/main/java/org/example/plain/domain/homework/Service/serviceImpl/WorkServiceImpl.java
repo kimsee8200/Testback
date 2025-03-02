@@ -46,6 +46,7 @@ public class WorkServiceImpl implements WorkService {
         return uuid.toString();
     }
 
+    @Transactional
     @Override
     public void insertWork(Work work, String groupId, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -75,6 +76,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    @Transactional
     public Work selectWork(String workId) {
         return Work.changeWorkEntity(boardRepository.findByWorkId(workId).orElseThrow());
     }
@@ -82,9 +84,11 @@ public class WorkServiceImpl implements WorkService {
 
     public List<Work> selectGroupWorks(String groupId){
         List<Work> works = new ArrayList<>();
-        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId);
-        for (WorkEntity work:workEntities){
-            works.add(Work.changeWorkEntity(work));
+        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId).orElse(null);
+        if (workEntities != null) {
+            for (WorkEntity work:workEntities){
+                works.add(Work.changeWorkEntity(work));
+            }
         }
         return works;
     }

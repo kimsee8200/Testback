@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
+import org.example.plain.domain.user.entity.User;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkMember {
-    //private User user;
+    private User user;
     private Work work;
     private boolean isSubmit;
     private boolean isLate;
@@ -17,7 +18,7 @@ public class WorkMember {
     public static WorkMember changeEntity(WorkMemberEntity entity) {
         WorkMember workMember = new WorkMember();
         workMember.setWork(Work.changeWorkEntity(entity.getWork()));
-        //workMember.setUser(entity.getUser());
+        workMember.setUser(entity.getUser());
         return workMember;
     }
 }

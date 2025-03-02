@@ -68,7 +68,7 @@ public class WorkServiceTest {
         users.add(new User("parkdea", Role.LEADER_CLASS,"박대철","1111","park@gmail.com"));
 
         classLectures = new ArrayList<>();
-        classLectures.add(new ClassLecture("class1","로동 랜드","로동을 배우는 클래스","1212",users.get(1)));
+        classLectures.add(new ClassLecture("class1","로동 랜드",null,"로동을 배우는 클래스","1212",users.get(1)));
 
         Mockito.when(groupMemberRepository.findById(new GroupMemberId("class1","parkdea"))).thenReturn(Optional.of(new GroupMember(classLectures.get(0), users.get(1))));
     }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.plain.domain.lecture.entity.Lecture;
 import org.example.plain.domain.user.entity.User;
 
 import java.util.List;
@@ -15,19 +16,27 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "groupclass")
 public class ClassLecture {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "g_id")
+    private String id;
 
+    @Column(name = "g_name")
     private String title;
 
+    @Column(name = "lecture_id", nullable = true)
+    private String lecture;
+
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "g_code")
     private String code;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "creator", nullable = false)
     private User instructor;
 
     public void updateClass(String title, String description) {

@@ -1,7 +1,7 @@
 package org.example.plain.domain.classLecture.dto;
 
 public record ClassRequest(
-        Long id,
+        String id,
         String title,
         String description
 

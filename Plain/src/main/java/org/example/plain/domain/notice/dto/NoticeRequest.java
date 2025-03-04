@@ -9,11 +9,11 @@ public record NoticeRequest(String userId,
                             String title,
                             String content) {
 
-    public NoticeEntity toEntity(User instructor) {
+    public NoticeEntity toEntity(User user) {
         return NoticeEntity.builder()
-                .instructor(instructor) // User 객체 (instructor) 전달
                 .title(title)           // Title 필드 매핑
                 .content(content)       // Content 필드 매핑
+                .user(user) // User 객체 (instructor) 전달
                 .build();
     }
 }

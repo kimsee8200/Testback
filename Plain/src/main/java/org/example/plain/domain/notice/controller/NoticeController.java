@@ -29,11 +29,10 @@ public class NoticeController {
     @PatchMapping("/notice/{notice_id}")
     public ResponseEntity<noticeResponse> updateNotice(
             @PathVariable Long noticeId,
-            @RequestHeader(value = "userId") Long userId,
-            @RequestBody ClassRequest classRequest
+            @RequestBody NoticeRequest noticeRequest
     ) {
         return ResponseEntity.ok()
-                .body(noticeService.updateNotice(userId, noticeId, classRequest));
+                .body(noticeService.updateNotice(noticeId, noticeRequest));
     }
 
     @GetMapping

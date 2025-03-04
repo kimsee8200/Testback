@@ -6,44 +6,62 @@ import org.example.plain.domain.notice.dto.NoticeResponse;
 import org.example.plain.domain.notice.entity.NoticeEntity;
 import org.example.plain.domain.notice.repository.NoticeRepository;
 import org.example.plain.domain.user.entity.User;
+import org.example.plain.domain.user.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@service
+@Service
 @RequiredArgsConstructor
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final UserRepository userRepository;
 
     public NoticeResponse createNotice(NoticeRequest noticeRequest) {
-
-        String title = noticeRequest.title();
-        String content = noticeRequest.content();
-        String userId = noticeRequest.userId();
+        User user =  userRepository.getReferenceById(noticeRequest.getUserId()).orElseThrow();
 
         NoticeEntity createNotice = noticeRequest.toEntity(user);
         noticeRepository.save(createNotice);
 
         return NoticeResponse.builder()
-                .noticeId(noticeRepository.getId())
-                .title(title)
-                .content(content)
-                .userId(userId)
+                .noticeId(createNotice.getNoticeId())
+                .title(noticeRequest.title())
+                .content(noticeRequest.content())
+                .userId(noticeRequest.userId())
                 .build();
     }
 
-    public ClassResponse getClass(Long classId){
-        ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
 
-        return ClassResponse.builder()
-                .id(classLecture.getId())
-                .title(classLecture.getTitle())
-                .description(classLecture.getDescription())
-                .code(classLecture.getCode())
+    /**
+     * 공지사항 수정
+     * @param userId
+     * @param classId
+     * @param classRequest
+     * @return
+     */
+    public NoticeResponse updateNotice(String noticeId, NoticeRequest noticeRequest) {
+        NoticeEntity noticeEntity = .findById(noticeId);
+        User user = noticeRepository.findById(userId).orElseThrow();
+
+        if (noticeEntity.getUserId().equals(user.getUserId())) {
+            throw new RuntimeException("수정 할 수 없습니다");
+        }
+        String title = classRequest.title();
+        String description = classRequest.description();
+
+        noticeEntity.updateClass(title, description);
+        classLectureRepositoryPort.save(noticeEntity);
+
+        return NoticeResponse.builder()
+                .noticeId(noticeEntity.getNoticeId())
+                .title(noticeEntity.getTitle())
+                .content(noticeEntity.getContent())
+                .userId(noticeEntity.getUserId())
                 .build();
     }
 
-    public List<ClassResponse> getAllClass(){
+    public List<ClassResponse> getAllNotice(){
         List<ClassLecture> classes = classLectureRepositoryPort.findAll();
         return classes.stream()
                 .map(c -> ClassResponse.builder()
@@ -54,20 +72,9 @@ public class NoticeService {
                 .toList();
     }
 
-    /**
-     * 클래스 삭제
-     * @param userId
-     * @param classId
-     */
-    public ClassResponse deleteClass(Long userId, Long classId){
+    public NoticeResponse getNotice(Long classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
-        User user = userRepository.findById(userId).orElseThrow();
 
-        if (classLecture.getInstructor().getUserId().equals(user.getUserId())) {
-            throw new RuntimeException("삭제 할 수 없습니다");
-        }
-
-        classLectureRepositoryPort.delete(classId);
         return ClassResponse.builder()
                 .id(classLecture.getId())
                 .title(classLecture.getTitle())
@@ -76,31 +83,29 @@ public class NoticeService {
                 .build();
     }
 
+
+
     /**
-     * 클래스 수정
+     * 클래스 삭제
      * @param userId
      * @param classId
-     * @param classRequest
-     * @return
      */
-    public ClassResponse modifiedClass(Long userId, Long classId, ClassRequest classRequest) {
+    public NoticeResponse deleteNotice(Long userId, Long classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 
         if (classLecture.getInstructor().getUserId().equals(user.getUserId())) {
-            throw new RuntimeException("수정 할 수 없습니다");
+            throw new RuntimeException("삭제 할 수 없습니다");
         }
-        String title = classRequest.title();
-        String description = classRequest.description();
 
-        classLecture.updateClass(title, description);
-        classLectureRepositoryPort.save(classLecture);
-
-        return ClassResponse.builder()
+        classLectureRepositoryPort.delete(classId);
+        return NoticeResponse.builder()
                 .id(classLecture.getId())
                 .title(classLecture.getTitle())
                 .description(classLecture.getDescription())
+                .code(classLecture.getCode())
                 .build();
     }
+
 
 }

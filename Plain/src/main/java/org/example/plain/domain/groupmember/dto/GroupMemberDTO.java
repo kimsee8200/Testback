@@ -18,7 +18,7 @@ public class GroupMemberDTO {
         GroupMemberId id = new GroupMemberId(group.getId(), userRequestResponse.getId());
         return GroupMember.builder()
                 .id(id)
-                .group(group)
+                .classLecture(group)
                 .user(new User(userRequestResponse))
                 .build();
     }

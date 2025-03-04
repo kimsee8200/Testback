@@ -28,7 +28,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     @Override
     public List<GroupMemberDTO> readGroupMemberAll(String groupId) {
         ClassLecture group = groupRepository.findById(groupId);
-        List<GroupMember> groupMembers = groupMemberRepository.findAllByGroup(group);
+        List<GroupMember> groupMembers = groupMemberRepository.findAllByClassLecture(group);
         List<GroupMemberDTO> groupMembersDTO = new ArrayList<>();
         for (GroupMember groupMember : groupMembers) {
             groupMembersDTO.add(groupMember.toDTO());
@@ -40,7 +40,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     public GroupMemberDTO readGroupMember(String groupId, String userId) {
         ClassLecture group = groupRepository.findById(groupId);
         User user = userRepository.findById(userId).orElse(null);
-        GroupMember groupMember = groupMemberRepository.findByGroupAndUser(group, user);
+        GroupMember groupMember = groupMemberRepository.findByClassLectureAndUser(group, user);
         return groupMember.toDTO();
     }
 
@@ -48,7 +48,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     public void joinGroup(String groupId, String userId) {
         ClassLecture group = groupRepository.findById(groupId);
         User user = userRepository.findById(userId).orElse(null);
-        GroupMember groupMember = new GroupMember(group, user);
+        GroupMember groupMember = new GroupMember(null,group, user);
         groupMemberRepository.save(groupMember);
     }
 
@@ -56,6 +56,6 @@ public class GroupMemberServiceImpl implements GroupMemberService {
     public void quitGroup(String groupId, String userId) {
         ClassLecture group = groupRepository.findById(groupId);
         User user = userRepository.findById(userId).orElse(null);
-        groupMemberRepository.deleteByGroupAndUser(group, user);
+        groupMemberRepository.deleteByClassLectureAndUser(group, user);
     }
 }

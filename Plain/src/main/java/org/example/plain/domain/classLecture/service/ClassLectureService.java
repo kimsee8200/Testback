@@ -26,7 +26,7 @@ public class ClassLectureService {
      * @return
      */
     public ClassResponse createClass(ClassAddRequest classAddRequest) {
-        User user = userRepository.getReferenceById(classAddRequest.user().getUserId());
+        User user = userRepository.getReferenceById(classAddRequest.user().getId());
 
         String title = classAddRequest.title();
         String description = classAddRequest.description();
@@ -48,7 +48,7 @@ public class ClassLectureService {
      * @param classId
      * @return
      */
-    public ClassResponse getClass(Long classId){
+    public ClassResponse getClass(String classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
 
         return ClassResponse.builder()
@@ -79,11 +79,11 @@ public class ClassLectureService {
      * @param userId
      * @param classId
      */
-    public ClassResponse deleteClass(Long userId, Long classId){
+    public ClassResponse deleteClass(String userId, String classId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 
-        if (classLecture.getInstructor().getUserId().equals(user.getUserId())) {
+        if (classLecture.getInstructor().getId().equals(user.getId())) {
             throw new RuntimeException("삭제 할 수 없습니다");
         }
 
@@ -103,11 +103,11 @@ public class ClassLectureService {
      * @param classRequest
      * @return
      */
-    public ClassResponse modifiedClass(Long userId, Long classId, ClassRequest classRequest) {
+    public ClassResponse modifiedClass(String userId, String classId, ClassRequest classRequest) {
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 
-        if (classLecture.getInstructor().getUserId().equals(user.getUserId())) {
+        if (classLecture.getInstructor().getId().equals(user.getId())) {
             throw new RuntimeException("수정 할 수 없습니다");
         }
         String title = classRequest.title();

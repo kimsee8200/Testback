@@ -27,7 +27,7 @@ public class ClassLectureController {
 
     @GetMapping("/{classId}")
     public ResponseEntity<ClassResponse> getClass(
-            @PathVariable Long classId
+            @PathVariable String classId
     ) {
         return ResponseEntity.ok()
                 .body(classLectureService.getClass(classId));
@@ -43,8 +43,8 @@ public class ClassLectureController {
 
     @PatchMapping("/{classId}")
     public ResponseEntity<ClassResponse> updateClass(
-            @PathVariable Long classId,
-            @RequestHeader(value = "userId") Long userId,
+            @PathVariable String classId,
+            @RequestHeader(value = "userId") String userId,
             @RequestBody ClassRequest classRequest
     ) {
         return ResponseEntity.ok()
@@ -53,8 +53,8 @@ public class ClassLectureController {
 
     @DeleteMapping("/{classId}")
     public ResponseEntity<ClassResponse> deleteClass(
-            @PathVariable Long classId,
-            @RequestHeader(value = "userId") Long userId
+            @PathVariable String classId,
+            @RequestHeader(value = "userId") String userId
     ) {
         ClassResponse deleteClass = classLectureService.deleteClass(userId, classId);
         return ResponseEntity.ok().body(deleteClass);
@@ -62,7 +62,7 @@ public class ClassLectureController {
 
     @PostMapping("/{classId}/invite-member")
     public ResponseEntity<String> joinCode(
-            @PathVariable Long classId
+            @PathVariable String classId
     ) {
         return ResponseEntity.ok()
                 .body(classInviteService.joinByCode(classId));

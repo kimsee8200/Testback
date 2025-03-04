@@ -14,7 +14,7 @@ public class ClassInviteService {
 
     private final UserRepository userRepository;
 
-    public String joinByCode(Long id) {
+    public String joinByCode(String id) {
         ClassLecture classLecture = classLectureRepositoryPort.findById(id);
         String code = classLecture.getCode();
 

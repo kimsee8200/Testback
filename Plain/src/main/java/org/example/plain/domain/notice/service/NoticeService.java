@@ -3,6 +3,7 @@ package org.example.plain.domain.notice.service;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.notice.dto.NoticeRequest;
 import org.example.plain.domain.notice.dto.NoticeResponse;
+import org.example.plain.domain.notice.dto.NoticeUpdateRequest;
 import org.example.plain.domain.notice.entity.NoticeEntity;
 import org.example.plain.domain.notice.repository.NoticeRepository;
 import org.example.plain.domain.user.entity.User;
@@ -19,17 +20,22 @@ public class NoticeService {
     private final UserRepository userRepository;
 
     public NoticeResponse createNotice(NoticeRequest noticeRequest) {
-        User user =  userRepository.getReferenceById(noticeRequest.getUserId()).orElseThrow();
+        // User ID로 User 조회
+        User user = userRepository.findById(noticeRequest.getUser().getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        NoticeEntity createNotice = noticeRequest.toEntity(user);
-        noticeRepository.save(createNotice);
+        // NoticeEntity 생성 (User 포함)
+        NoticeEntity createNotice = NoticeEntity.create(
+                noticeRequest.getTitle(),
+                noticeRequest.getContent(),
+                user
+        );
 
-        return NoticeResponse.builder()
-                .noticeId(createNotice.getNoticeId())
-                .title(noticeRequest.title())
-                .content(noticeRequest.content())
-                .userId(noticeRequest.userId())
-                .build();
+        // 저장
+        NoticeEntity noticeEntity = noticeRepository.save(createNotice);
+
+        // NoticeResponse 생성 및 반환
+        return NoticeResponse.from(noticeEntity);
     }
 
 
@@ -40,34 +46,32 @@ public class NoticeService {
      * @param classRequest
      * @return
      */
-    public NoticeResponse updateNotice(String noticeId, NoticeRequest noticeRequest) {
-        NoticeEntity noticeEntity = .findById(noticeId);
-        User user = noticeRepository.findById(userId).orElseThrow();
+    public NoticeResponse updateNotice(NoticeUpdateRequest noticeUpdateRequest) {
 
-        if (noticeEntity.getUserId().equals(user.getUserId())) {
-            throw new RuntimeException("수정 할 수 없습니다");
-        }
-        String title = classRequest.title();
-        String description = classRequest.description();
+        NoticeEntity noticeEntity = NoticeRepository.findById(noticeUpdateRequest.getNoticeId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        noticeEntity.updateClass(title, description);
-        classLectureRepositoryPort.save(noticeEntity);
 
-        return NoticeResponse.builder()
-                .noticeId(noticeEntity.getNoticeId())
-                .title(noticeEntity.getTitle())
-                .content(noticeEntity.getContent())
-                .userId(noticeEntity.getUserId())
-                .build();
+        NoticeEntity updateNotice = NoticeEntity.update(
+                noticeUpdateRequest.getNoticeId(),
+                noticeUpdateRequest.getTitle(),
+                noticeUpdateRequest.getContent(),
+                user
+
+        );
+
+        return NoticeResponse.from(updateNotice);
     }
 
-    public List<ClassResponse> getAllNotice(){
-        List<ClassLecture> classes = classLectureRepositoryPort.findAll();
-        return classes.stream()
-                .map(c -> ClassResponse.builder()
-                        .id(c.getId())
+    public List<NoticeResponse> getAllNotice(){
+        List<NoticeEntity> allNotice = NoticeRepository.findAll();
+        return allNotice.stream()
+                .map(c -> NoticeResponse.builder()
+                        .userId(c.getUser().getId())
                         .title(c.getTitle())
-                        .description(c.getDescription())
+                        .content(c.getContent())
+                        .createDate(c.getCreateDate())
+                        .modifiedAt(c.getModifiedAt())
                         .build())
                 .toList();
     }

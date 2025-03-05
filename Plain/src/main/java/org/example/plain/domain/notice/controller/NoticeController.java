@@ -15,11 +15,9 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeService noticeService;
-    private final NoticeResponse noticeResponse;
-
 
     @PostMapping("/{notice}")
-    public ResponseEntity<noticeResponse> createNotice(
+    public ResponseEntity<NoticeResponse> createNotice(
             @RequestBody NoticeRequest noticeRequest
     ) {
         return ResponseEntity.ok()
@@ -27,7 +25,7 @@ public class NoticeController {
     }
 
     @PatchMapping("/notice/{notice_id}")
-    public ResponseEntity<noticeResponse> updateNotice(
+    public ResponseEntity<NoticeResponse> updateNotice(
             @PathVariable Long noticeId,
             @RequestBody NoticeRequest noticeRequest
     ) {
@@ -36,13 +34,13 @@ public class NoticeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<noticeResponse>> getAllNotice(){
+    public ResponseEntity<List<NoticeResponse>> getAllNotice(){
         return ResponseEntity.ok()
                 .body(noticeService.getAllNotice());
     }
 
     @GetMapping("/notice/{notice_id}")
-    public ResponseEntity<noticeResponse> getNotice(
+    public ResponseEntity<NoticeResponse> getNotice(
             @PathVariable Long noticeId
     ) {
         return ResponseEntity.ok()
@@ -51,7 +49,7 @@ public class NoticeController {
 
 
     @DeleteMapping("/{notice_id}")
-    public ResponseEntity<noticeResponse> deleteNotice(
+    public ResponseEntity<NoticeResponse> deleteNotice(
             @PathVariable Long noticeId,
             @RequestHeader(value = "userId") Long userId
     ) {
@@ -61,14 +59,15 @@ public class NoticeController {
 
     @PostMapping("/notice/{notice_id}/comments")
     public ResponseEntity<String> createNoticeComments(
-            @PathVariable Long noticeId
+            @PathVariable Long noticeId,
+            @RequestBody NoticeRequest noticeRequest
     ) {
         return ResponseEntity.ok()
-                .body(classInviteService.createNoticeComments(noticeId));
+                .body(noticeService.createNoticeComments(noticeId, noticeRequest));
     }
 
     @PutMapping("/notice/{notice_id}/comments/{comment_id}")
-    public ResponseEntity<noticeResponse> updateNoticeComments(
+    public ResponseEntity<NoticeResponse> updateNoticeComments(
             @PathVariable Long noticeId,
             @RequestHeader(value = "userId") Long userId
     ) {
@@ -77,7 +76,7 @@ public class NoticeController {
     }
 
     @DeleteMapping("/notice/{notice_id}/comments/{comment_id}")
-    public ResponseEntity<noticeResponse> deleteNoticeComments(
+    public ResponseEntity<NoticeResponse> deleteNoticeComments(
             @PathVariable Long noticeId,
             @RequestHeader(value = "userId") Long userId
     ) {

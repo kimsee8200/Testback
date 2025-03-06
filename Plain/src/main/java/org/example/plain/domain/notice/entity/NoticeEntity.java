@@ -55,11 +55,10 @@ public class NoticeEntity {
         return noticeEntity;
     }
 
-    public void update(Long noticeId, String title, String content, User user) {
+    public void  update(Long noticeId, String title, String content) {
         this.noticeId = noticeId;
         this.title = title;
         this.content = content;
-        this.user = user;
         modifiedAt = LocalDateTime.now();
     }
 

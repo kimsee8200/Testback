@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.example.plain.domain.notice.entity.NoticeEntity;
+import org.example.plain.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 
@@ -12,19 +13,23 @@ import java.time.LocalDateTime;
 @Builder
 public class NoticeResponse{
 
-    private String noticeId;
+    private Long noticeId;
     private String title;
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime modifiedAt;
-    private String userId;
+    private User user;
+
+    public NoticeResponse() {
+
+    }
 
     public static NoticeResponse from(NoticeEntity noticeEntity) {
         NoticeResponse response = new NoticeResponse();
         response.noticeId = noticeEntity.getNoticeId();
         response.title = noticeEntity.getTitle();
         response.content = noticeEntity.getContent();
-        response.userId = noticeEntity.getUser().getId();
+        response.user = noticeEntity.getUser();
         response.createDate = noticeEntity.getCreateDate();
         response.modifiedAt = noticeEntity.getModifiedAt();
         return response;

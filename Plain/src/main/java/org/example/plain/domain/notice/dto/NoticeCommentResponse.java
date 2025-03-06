@@ -11,22 +11,24 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Builder
-public class NoticeResponse{
+public class NoticeCommentResponse {
 
     private Long noticeId;
+    private Long commentId;
     private String title;
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime modifiedAt;
     private User user;
 
-    public NoticeResponse() {
+    public NoticeCommentResponse() {
 
     }
 
-    public static NoticeResponse from(NoticeEntity noticeEntity) {
-        NoticeResponse response = new NoticeResponse();
+    public static NoticeCommentResponse from(NoticeEntity noticeEntity) {
+        NoticeCommentResponse response = new NoticeCommentResponse();
         response.noticeId = noticeEntity.getNoticeId();
+        response.commentId = noticeEntity.getNoticeId();
         response.title = noticeEntity.getTitle();
         response.content = noticeEntity.getContent();
         response.user = noticeEntity.getUser();

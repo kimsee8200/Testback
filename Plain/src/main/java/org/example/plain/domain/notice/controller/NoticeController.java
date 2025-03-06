@@ -3,6 +3,7 @@ package org.example.plain.domain.notice.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.notice.dto.NoticeRequest;
 import org.example.plain.domain.notice.dto.NoticeResponse;
+import org.example.plain.domain.notice.dto.NoticeUpdateRequest;
 import org.example.plain.domain.notice.service.NoticeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +27,10 @@ public class NoticeController {
 
     @PatchMapping("/notice/{notice_id}")
     public ResponseEntity<NoticeResponse> updateNotice(
-            @PathVariable Long noticeId,
-            @RequestBody NoticeRequest noticeRequest
+            @RequestBody NoticeUpdateRequest noticeUpdateRequest
     ) {
         return ResponseEntity.ok()
-                .body(noticeService.updateNotice(noticeId, noticeRequest));
+                .body(noticeService.updateNotice(noticeUpdateRequest));
     }
 
     @GetMapping
@@ -49,14 +49,12 @@ public class NoticeController {
 
 
     @DeleteMapping("/{notice_id}")
-    public ResponseEntity<NoticeResponse> deleteNotice(
-            @PathVariable Long noticeId,
-            @RequestHeader(value = "userId") Long userId
+    public void deleteNotice(
+            @PathVariable Long noticeId
     ) {
-        NoticeResponse deleteNotice = noticeService.deleteNotice(userId, noticeId);
-        return ResponseEntity.ok().body(deleteNotice);
+        noticeService.deleteNotice(noticeId);
     }
-
+    // 댓글
     @PostMapping("/notice/{notice_id}/comments")
     public ResponseEntity<String> createNoticeComments(
             @PathVariable Long noticeId,

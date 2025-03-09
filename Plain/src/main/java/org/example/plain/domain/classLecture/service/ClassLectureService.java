@@ -25,8 +25,11 @@ public class ClassLectureService {
      * @param classAddRequest
      * @return
      */
-    public ClassResponse createClass(ClassAddRequest classAddRequest) {
-        User user = userRepository.getReferenceById(classAddRequest.user().getId());
+    public ClassResponse createClass(ClassAddRequest classAddRequest, String userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         String code = generateCode();
 
         ClassLecture classLecture = classAddRequest.toEntity(user, code);
@@ -60,7 +63,7 @@ public class ClassLectureService {
      * @param userId
      * @param classId
      */
-    public ClassResponse deleteClass(String userId, String classId){
+    public ClassResponse deleteClass(String classId, String userId){
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 
@@ -84,7 +87,7 @@ public class ClassLectureService {
      * @param classRequest
      * @return
      */
-    public ClassResponse modifiedClass(String userId, String classId, ClassRequest classRequest) {
+    public ClassResponse modifiedClass(ClassRequest classRequest, String classId, String userId) {
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 

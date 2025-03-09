@@ -1,6 +1,7 @@
 package org.example.plain.domain.classLecture.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classLecture.dto.ClassRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
@@ -21,16 +22,14 @@ public class ClassLectureController {
 
     @GetMapping
     public ResponseEntity<List<ClassResponse>> getAllClass(){
-        return ResponseEntity.ok()
-                .body(classLectureService.getAllClass());
+        return ResponseEntity.ok().body(classLectureService.getAllClass());
     }
 
     @GetMapping("/{classId}")
     public ResponseEntity<ClassResponse> getClass(
             @PathVariable String classId
     ) {
-        return ResponseEntity.ok()
-                .body(classLectureService.getClass(classId));
+        return ResponseEntity.ok().body(classLectureService.getClass(classId));
     }
 
     @PostMapping
@@ -38,25 +37,23 @@ public class ClassLectureController {
             @RequestBody ClassAddRequest classAddRequest
     ) {
         return ResponseEntity.ok()
-                .body(classLectureService.createClass(classAddRequest));
+                .body(classLectureService.createClass(classAddRequest, SecurityUtils.getUserId()));
     }
 
     @PatchMapping("/{classId}")
     public ResponseEntity<ClassResponse> updateClass(
             @PathVariable String classId,
-            @RequestHeader(value = "userId") String userId,
             @RequestBody ClassRequest classRequest
     ) {
         return ResponseEntity.ok()
-                .body(classLectureService.modifiedClass(userId, classId, classRequest));
+                .body(classLectureService.modifiedClass(classRequest, classId, SecurityUtils.getUserId()));
     }
 
     @DeleteMapping("/{classId}")
     public ResponseEntity<ClassResponse> deleteClass(
-            @PathVariable String classId,
-            @RequestHeader(value = "userId") String userId
+            @PathVariable String classId
     ) {
-        ClassResponse deleteClass = classLectureService.deleteClass(userId, classId);
+        ClassResponse deleteClass = classLectureService.deleteClass(classId, SecurityUtils.getUserId());
         return ResponseEntity.ok().body(deleteClass);
     }
 

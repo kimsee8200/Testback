@@ -17,6 +17,7 @@ import org.example.plain.domain.user.entity.User;
 public class ClassLecture {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "c_id")
     private String id;
 

@@ -8,7 +8,7 @@ import org.example.plain.domain.user.entity.User;
 @Builder
 public record ClassResponse(
         String id,
-        User user,
+        String nickname,
         String title,
         String classImg,
         Long maxMember,
@@ -16,11 +16,11 @@ public record ClassResponse(
         ClassType classType,
         String code,
         String description
-        ) {
+) {
     public static ClassResponse from(ClassLecture classLecture) {
             return new ClassResponse(
                     classLecture.getId(),
-                    classLecture.getInstructor(),
+                    classLecture.getInstructor().getUsername(),
                     classLecture.getTitle(),
                     classLecture.getClassImg(),
                     classLecture.getMaxMember(),

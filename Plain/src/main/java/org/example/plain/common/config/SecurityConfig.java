@@ -61,6 +61,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         {
                             // sing_in은 회원가입 페이지로 이동.
+                            authorizeRequests.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+                                    "/swagger-resources/**", "/webjars/**", "/api-docs/**").permitAll();
                             authorizeRequests.requestMatchers("/account/create","/login","/","/sign_up").permitAll();
                             authorizeRequests.anyRequest().authenticated();
                         }

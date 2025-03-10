@@ -2,10 +2,9 @@ package org.example.plain.domain.userManage.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
-import org.example.plain.domain.classLecture.repository.ClassLectureRepository;
 import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.lecture.entity.Lecture;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.lecture.normal.entity.Lecture;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.domain.userManage.interfaces.UserManageService;
@@ -24,10 +23,10 @@ public class UserManageServiceImpl implements UserManageService {
     private final GroupMemberRepository groupMemberRepository;
 
     @Override
-    public UserRequestResponse userSingleInfo(String userId) {
+    public UserRequest userSingleInfo(String userId) {
         User user = userRepository.findById(userId).orElseThrow();
-        UserRequestResponse userRequestResponse = new UserRequestResponse(user);
-        return userRequestResponse;
+        UserRequest userRequest = new UserRequest(user);
+        return userRequest;
     }
 
     @Override

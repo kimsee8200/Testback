@@ -1,7 +1,9 @@
 package org.example.plain.user.service;
 
 import org.example.plain.domain.user.dto.CustomOAuth2User;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.dto.UserResponse;
+import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.service.CustomOauth2UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +20,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringJUnitConfig
-public class CustomOauth2UserRequestResponseServiceTest {
+public class CustomOauth2UserRequestServiceTest {
 
     @MockitoBean
     private UserService userService;
@@ -53,16 +55,16 @@ public class CustomOauth2UserRequestResponseServiceTest {
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
 
-        assertThat(result.getUserRequestResponse().getId()).isEqualTo(null);
-        assertThat(result.getUserRequestResponse().getEmail()).isEqualTo("email@email.com");
-        assertThat(result.getUserRequestResponse().getUsername()).isEqualTo("name");
+        assertThat(result.getUserRequest().getId()).isEqualTo(null);
+        assertThat(result.getUserRequest().getEmail()).isEqualTo("email@email.com");
+        assertThat(result.getUserRequest().getUsername()).isEqualTo("name");
     }
 
     @Test
     public void isGoogleUserExist(){
         Mockito.when(oAuth2UserRequest.getClientRegistration()).thenReturn(Mockito.mock(ClientRegistration.class));
         Mockito.when(oAuth2UserRequest.getClientRegistration().getRegistrationId()).thenReturn("google");
-        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserRequestResponse("park","name2232","email@email.com","1234"));
+        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserResponse("park","name2232","email@email.com"));
 
         Map<String, Object> google = new HashMap<>();
         google.put("name", "name");
@@ -75,16 +77,16 @@ public class CustomOauth2UserRequestResponseServiceTest {
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
 
-        assertThat(result.getUserRequestResponse().getId()).isEqualTo("park");
-        assertThat(result.getUserRequestResponse().getEmail()).isEqualTo("email@email.com");
-        assertThat(result.getUserRequestResponse().getUsername()).isEqualTo("name2232");
+        assertThat(result.getUserRequest().getId()).isEqualTo("park");
+        assertThat(result.getUserRequest().getEmail()).isEqualTo("email@email.com");
+        assertThat(result.getUserRequest().getUsername()).isEqualTo("name2232");
     }
 
     @Test
     public void isKakaoUserExist(){
         Mockito.when(oAuth2UserRequest.getClientRegistration()).thenReturn(Mockito.mock(ClientRegistration.class));
         Mockito.when(oAuth2UserRequest.getClientRegistration().getRegistrationId()).thenReturn("kakao");
-        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserRequestResponse("park","name2232","email@email.com","1234"));
+        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserResponse("park","name2232","email@email.com"));
 
         Map<String, Object> kakao = new HashMap<>();
         Map<String, Object> kakaoAttrebute = new HashMap<>();
@@ -99,16 +101,16 @@ public class CustomOauth2UserRequestResponseServiceTest {
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
 
-        assertThat(result.getUserRequestResponse().getId()).isEqualTo("park");
-        assertThat(result.getUserRequestResponse().getEmail()).isEqualTo("email@email.com");
-        assertThat(result.getUserRequestResponse().getUsername()).isEqualTo("name2232");
+        assertThat(result.getUserRequest().getId()).isEqualTo("park");
+        assertThat(result.getUserRequest().getEmail()).isEqualTo("email@email.com");
+        assertThat(result.getUserRequest().getUsername()).isEqualTo("name2232");
     }
 
     @Test
     public void isNaverUserExist(){
         Mockito.when(oAuth2UserRequest.getClientRegistration()).thenReturn(Mockito.mock(ClientRegistration.class));
         Mockito.when(oAuth2UserRequest.getClientRegistration().getRegistrationId()).thenReturn("naver");
-        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserRequestResponse("park","name2232","email@email.com","1234"));
+        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(new UserResponse("park","name2232","email@email.com"));
 
         Map<String, Object> naver = new HashMap<>();
         Map<String, Object> naverAttrebute = new HashMap<>();
@@ -124,8 +126,8 @@ public class CustomOauth2UserRequestResponseServiceTest {
 
         CustomOAuth2User result = (CustomOAuth2User) customOauth2UserService.loadUser(oAuth2UserRequest);
 
-        assertThat(result.getUserRequestResponse().getId()).isEqualTo("park");
-        assertThat(result.getUserRequestResponse().getEmail()).isEqualTo("email@email.com");
-        assertThat(result.getUserRequestResponse().getUsername()).isEqualTo("name2232");
+        assertThat(result.getUserRequest().getId()).isEqualTo("park");
+        assertThat(result.getUserRequest().getEmail()).isEqualTo("email@email.com");
+        assertThat(result.getUserRequest().getUsername()).isEqualTo("name2232");
     }
 }

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.ResponseBody;
 import org.example.plain.domain.user.dto.CustomUserDetails;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,8 +32,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserRequestResponse userRequestResponse = objectMapper.readValue(request.getInputStream(), UserRequestResponse.class);
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userRequestResponse.getId(), userRequestResponse.getPassword());
+            UserRequest userRequest = objectMapper.readValue(request.getInputStream(), UserRequest.class);
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userRequest.getId(), userRequest.getPassword());
             return authenticationManager.authenticate(token);
         } catch (IOException e) {
             throw new RuntimeException(e);

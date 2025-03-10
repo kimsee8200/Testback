@@ -4,21 +4,19 @@ import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
 import org.example.plain.domain.classLecture.service.ClassLectureService;
 import org.example.plain.domain.groupmember.service.GroupMemberService;
-import org.example.plain.domain.homework.Service.interfaces.WorkMemberService;
-import org.example.plain.domain.homework.Service.interfaces.WorkService;
+import org.example.plain.domain.homework.interfaces.WorkMemberService;
+import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.user.dto.CustomUserDetails;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.repository.BoardRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -63,21 +61,21 @@ public class HomeworkTest {
 
 
     @BeforeEach
-    public void init(){
+    public void init() throws InterruptedException {
         boardRepository.deleteAll();
         userRepository.deleteAll();
 
-        UserRequestResponse userRequestResponse = new UserRequestResponse();
-        userRequestResponse.setId("adminGo");
-        userRequestResponse.setUsername("admin");
-        userRequestResponse.setPassword("admin");
-        userRequestResponse.setEmail("admin@example.com");
+        UserRequest userRequest = new UserRequest();
+        userRequest.setId("adminGo");
+        userRequest.setUsername("admin");
+        userRequest.setPassword("admin");
+        userRequest.setEmail("admin@example.com");
 
-        UserRequestResponse userRequestResponse2 = new UserRequestResponse();
-        userRequestResponse2.setId("adminGo2");
-        userRequestResponse2.setUsername("admin");
-        userRequestResponse2.setPassword("admin");
-        userRequestResponse2.setEmail("admin@example.com");
+        UserRequest userRequest2 = new UserRequest();
+        userRequest2.setId("adminGo2");
+        userRequest2.setUsername("admin");
+        userRequest2.setPassword("admin");
+        userRequest2.setEmail("admin@example.com");
 
         User user = new User();
         user.setId("adminGo");
@@ -88,14 +86,14 @@ public class HomeworkTest {
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         CustomUserDetails customUserDetails2 = new CustomUserDetails(user2);
 
-        userService.createUser(userRequestResponse);
-        userService.createUser(userRequestResponse2);
+        userService.createUser(userRequest);
+        userService.createUser(userRequest2);
 
         authUser2 = new UsernamePasswordAuthenticationToken(customUserDetails2, "admin");
         authUser = new UsernamePasswordAuthenticationToken(customUserDetails, "admin");
 
         lectureService.createClass(new ClassAddRequest(null,user,"makeClass","클래스 만들기.")); // 클래스 인원 추가.
-
+        Thread.sleep(300);
         lectureService.createClass(new ClassAddRequest(null,user2,"deleteClass","클래스 없에기."));
 
         classResponse = lectureService.getAllClass();
@@ -122,7 +120,6 @@ public class HomeworkTest {
     }
 
     @Test
-    @Rollback(value = true)
     public void WorkMemberInsertAndFind(){
         Work work = new Work();
         work.setTitle("Work Title");
@@ -137,7 +134,7 @@ public class HomeworkTest {
 
         CustomUserDetails username = (CustomUserDetails) authUser.getPrincipal();
 
-        workMemberService.addHomeworkMember(work1.getWorkId(),username.getUser().getId());
+        workMemberService.addHomeworkMember(work1.getWorkId(),username.getUser().getId(),authUser2);
 
         List<WorkMember> workMember = workMemberService.homeworkMembers(work1.getWorkId());
 

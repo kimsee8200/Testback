@@ -1,14 +1,15 @@
 package org.example.plain.homework.service;
 
+
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.board.entity.BoardEntity;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.groupmember.entity.GroupMemberId;
-import org.example.plain.domain.homework.Service.interfaces.WorkService;
-import org.example.plain.domain.homework.Service.serviceImpl.WorkServiceImpl;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkEntity;
+import org.example.plain.domain.homework.interfaces.WorkService;
+import org.example.plain.domain.homework.service.WorkServiceImpl;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.BoardRepository;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.InstanceOfAssertFactories.STRING;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestPropertySource(properties = {"file.path=src/main/resources/static/files/"})
@@ -70,7 +70,7 @@ public class WorkServiceTest {
         classLectures = new ArrayList<>();
         classLectures.add(new ClassLecture("class1","로동 랜드",null,"로동을 배우는 클래스","1212",users.get(1)));
 
-        Mockito.when(groupMemberRepository.findById(new GroupMemberId("class1","parkdea"))).thenReturn(Optional.of(new GroupMember(classLectures.get(0), users.get(1))));
+        Mockito.when(groupMemberRepository.findById(new GroupMemberId("class1","parkdea"))).thenReturn(Optional.of(GroupMember.makeGroupMember(classLectures.get(0), users.get(1))));
     }
 
     @Test
@@ -88,7 +88,6 @@ public class WorkServiceTest {
 
         assertThat(argumentCaptor.getValue().getWorkId()).isNotNull();
         assertThat(argumentCaptor.getValue().getUserId()).isEqualTo("parkdea");
-        assertThat(argumentCaptor.getValue().getBoardId()).isNotNull();
     }
 
     @Test

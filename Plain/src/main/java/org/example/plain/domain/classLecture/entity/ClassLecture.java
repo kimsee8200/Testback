@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.plain.domain.lecture.entity.Lecture;
 import org.example.plain.domain.user.entity.User;
-
-import java.util.List;
 
 
 @Entity

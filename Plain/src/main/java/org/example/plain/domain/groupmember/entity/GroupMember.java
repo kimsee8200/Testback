@@ -2,15 +2,14 @@ package org.example.plain.domain.groupmember.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.plain.common.enums.Role;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.groupmember.dto.GroupMemberDTO;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
 
 import java.io.Serializable;
 
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,17 +29,27 @@ public class GroupMember implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private String authority;
 
-    public GroupMember(ClassLecture group, User user) {
-        this.id = new GroupMemberId(group.getId(), user.getId());
-        this.group = group;
+    public static GroupMember makeGroupMember(ClassLecture group, User user){
+        return new GroupMember(user.getId(),group.getId(),group,user,"USER");
+    }
+
+    public static GroupMember makeGroupLeader(ClassLecture group, User user){
+        return new GroupMember(user.getId(),group.getId(),group,user,"LEADER");
+    }
+
+    public GroupMember(String userId, String classId, ClassLecture classLecture, User user, String role ) {
+        this.id = new GroupMemberId(userId, classId);
+        this.group = classLecture;
         this.user = user;
+        this.authority = role;
     }
 
     public GroupMemberDTO toDTO() {
         return GroupMemberDTO.builder()
                 .group(group)
-                .userRequestResponse(new UserRequestResponse(user))
+                .userRequest(new UserRequest(user))
                 .build();
     }
 }

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.plain.common.ResponseBody;
 import org.example.plain.domain.user.dto.CustomUserDetails;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.filters.LoginFilter;
 import org.example.plain.domain.user.service.JWTUtil;
@@ -43,7 +43,7 @@ public class LoginFilterTest {
     private ObjectMapper objectMapper;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private UserRequestResponse userRequestResponse;
+    private UserRequest userRequest;
 
     @BeforeEach
     public void init(){
@@ -51,13 +51,13 @@ public class LoginFilterTest {
         objectMapper = Mockito.mock(ObjectMapper.class);
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
-        userRequestResponse = new UserRequestResponse("test","park","park@gmail.com","test1234");
+        userRequest = new UserRequest("test","park","park@gmail.com","test1234");
     }
 
     @Test
     @DisplayName("authentication manager까지의 과정 진행 검증.")
     public void passToAuthenticationManager() throws Exception{
-        Mockito.doReturn(userRequestResponse).when(objectMapper).readValue(Mockito.any(InputStream.class), Mockito.any(Class.class));
+        Mockito.doReturn(userRequest).when(objectMapper).readValue(Mockito.any(InputStream.class), Mockito.any(Class.class));
         Mockito.doReturn(Mockito.mock(ServletInputStream.class)).when(request).getInputStream();
 
         ArgumentCaptor<UsernamePasswordAuthenticationToken> chapter = ArgumentCaptor.forClass(UsernamePasswordAuthenticationToken.class);
@@ -69,7 +69,7 @@ public class LoginFilterTest {
         Mockito.verify(authenticationManager).authenticate(chapter.capture());
 
 
-        assertThat(chapter.getValue().getPrincipal()).isEqualTo(userRequestResponse.getId());
+        assertThat(chapter.getValue().getPrincipal()).isEqualTo(userRequest.getId());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class LoginFilterTest {
         FilterChain chain = Mockito.mock(FilterChain.class);
         Authentication authentication = Mockito.mock(Authentication.class);
 
-        Mockito.when(authentication.getPrincipal()).thenReturn(new CustomUserDetails(new User(userRequestResponse)));
+        Mockito.when(authentication.getPrincipal()).thenReturn(new CustomUserDetails(new User(userRequest)));
 
         ReflectionTestUtils.invokeMethod(loginFilter, "successfulAuthentication", request, response, chain, authentication);
 

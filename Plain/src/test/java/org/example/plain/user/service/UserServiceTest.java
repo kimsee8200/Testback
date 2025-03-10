@@ -1,6 +1,7 @@
 package org.example.plain.user.service;
 
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.dto.UserResponse;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.repository.UserRepository;
@@ -26,54 +27,53 @@ public class UserServiceTest {
     @MockitoBean
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserService userService;
-    private List<UserRequestResponse> userRequestResponses;
+    private List<UserRequest> userRequestRespons;
 
     @BeforeEach
     public void setUp() {
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(null);
 
 
-        userRequestResponses = new ArrayList<>();
+        userRequestRespons = new ArrayList<>();
 
-        UserRequestResponse userRequestResponse = new UserRequestResponse("kimsee","박근택","go@email.com","1234");
-        UserRequestResponse userRequestResponse2 = new UserRequestResponse("김주호","ju@email");
-        UserRequestResponse userRequestResponse3 = new UserRequestResponse("rkedx","김갑든","kimgap@gmail.com","1234");
-        UserRequestResponse userRequestResponse4 = new UserRequestResponse("김주호","opt@email.com");
+        UserRequest userRequest = new UserRequest("kimsee","박근택","go@email.com","1234");
+        UserRequest userRequest2 = new UserRequest("김주호","ju@email");
+        UserRequest userRequest3 = new UserRequest("rkedx","김갑든","kimgap@gmail.com","1234");
+        UserRequest userRequest4 = new UserRequest("김주호","opt@email.com");
 
-        userRequestResponses.add(userRequestResponse);
-        userRequestResponses.add(userRequestResponse2);
-        userRequestResponses.add(userRequestResponse3);
-        userRequestResponses.add(userRequestResponse4);
+        userRequestRespons.add(userRequest);
+        userRequestRespons.add(userRequest2);
+        userRequestRespons.add(userRequest3);
+        userRequestRespons.add(userRequest4);
     }
 
     @Test
     public void testSave() {
         userService = new UserServiceImpl(userRepository,bCryptPasswordEncoder);
-        boolean result = userService.createUser(userRequestResponses.get(0));
+        boolean result = userService.createUser(userRequestRespons.get(0));
         assertThat(result).isTrue();
     }
 
     @Test
     public void testGet(){
-        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
-        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
+        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
+        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
 
         userService = new UserServiceImpl(userRepository,bCryptPasswordEncoder);
-        UserRequestResponse userRequestResponse = userService.getUserByEmail("go@email.com");
-        UserRequestResponse userRequestResponse2 = userService.getUser("kimsee");
+        UserResponse userRequest = userService.getUserByEmail("go@email.com");
+        UserResponse userRequest2 = userService.getUser("kimsee");
 
-        assertThat(userRequestResponse).isNotNull();
-        assertThat(userRequestResponse2).isNotNull();
-        assertThat(userRequestResponse).isEqualTo(userRequestResponse2);
-        assertThat(userRequestResponse.getEmail()).isEqualTo("go@email.com");
-        assertThat(userRequestResponse.getUsername()).isEqualTo("박근택");
-        assertThat(userRequestResponse.getPassword()).isEqualTo("1234");
+        assertThat(userRequest).isNotNull();
+        assertThat(userRequest2).isNotNull();
+        assertThat(userRequest).isEqualTo(userRequest2);
+        assertThat(userRequest.email()).isEqualTo("go@email.com");
+        assertThat(userRequest.username()).isEqualTo("박근택");
     }
 
     @Test
     public void testRemove(){
-        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
-        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
+        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
+        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
 
         userService = new UserServiceImpl(userRepository,bCryptPasswordEncoder);
         boolean result = userService.deleteUser("kimsee");
@@ -83,11 +83,11 @@ public class UserServiceTest {
 
     @Test
     public void testUpdate(){
-        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
-        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestResponses.get(0))));
+        Mockito.when(userRepository.findById(Mockito.eq("kimsee"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
+        Mockito.when(userRepository.findByEmail(Mockito.eq("go@email.com"))).thenReturn(Optional.of(new User(userRequestRespons.get(0))));
 
         userService = new UserServiceImpl(userRepository,bCryptPasswordEncoder);
-        boolean result = userService.updateUser(new UserRequestResponse("kimsee","kim@email.com",null,null));
+        boolean result = userService.updateUser(new UserRequest("kimsee","kim@email.com",null,null));
 
         assertThat(result).isTrue();
     }

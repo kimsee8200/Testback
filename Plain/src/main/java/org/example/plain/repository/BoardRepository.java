@@ -18,6 +18,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity, String> {
 
     List<BoardEntity> findAllByGroupId(String groupId);
 
-    BoardEntity findByBoardId(String id);
+    Optional<BoardEntity> findByBoardId(String id);
 
 }

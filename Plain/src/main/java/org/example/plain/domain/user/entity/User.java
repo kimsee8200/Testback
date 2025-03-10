@@ -3,7 +3,7 @@ package org.example.plain.domain.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.plain.common.enums.Role;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 
 @Entity
 @Getter
@@ -50,10 +50,10 @@ public class User {
         }
     }
 
-    public User(UserRequestResponse userRequestResponse) {
-       this.id = userRequestResponse.getId();
-       this.email = userRequestResponse.getEmail();
-       this.username = userRequestResponse.getUsername();
-       this.password = userRequestResponse.getPassword();
+    public User(UserRequest userRequest) {
+       this.id = userRequest.getId();
+       this.email = userRequest.getEmail();
+       this.username = userRequest.getUsername();
+       this.password = userRequest.getPassword();
     }
 }

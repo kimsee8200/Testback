@@ -1,12 +1,11 @@
-package org.example.plain.domain.homework.Service.serviceImpl;
+package org.example.plain.domain.homework.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.groupmember.entity.GroupMemberId;
 import org.example.plain.domain.homework.dto.Work;
-import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.homework.Service.interfaces.WorkService;
+import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
 import org.example.plain.domain.user.dto.CustomUserDetails;
@@ -32,6 +31,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class WorkServiceImpl implements WorkService {
+    // 리팩토링 요망.
    // private UserService userService;
     private final BoardRepository boardRepository;
     private final WorkSubmitFieldRepository workSubmitFieldRepository;

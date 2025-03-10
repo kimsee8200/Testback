@@ -2,7 +2,8 @@ package org.example.plain.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.enums.Role;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.dto.UserResponse;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.example.plain.domain.user.repository.UserRepository;
@@ -22,9 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean createUser(UserRequestResponse userRequestResponse) {
-        User user = new User(userRequestResponse);
-        user.setPassword(bCryptPasswordEncoder.encode(userRequestResponse.getPassword()));
+    public boolean createUser(UserRequest userRequest) {
+        User user = new User(userRequest);
+        user.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
         user.setRole(Role.NORMAL);
         Objects.requireNonNull(user);
         userRepository.save(user);
@@ -32,13 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUser(UserRequestResponse userRequestResponse) {
-        userRepository.findById(userRequestResponse.getId()).ifPresent(userEntity -> {
-                userEntity.setUsername(userRequestResponse.getUsername());
-                if (userRequestResponse.getPassword() != null) {
-                    userEntity.setPassword(bCryptPasswordEncoder.encode(userRequestResponse.getPassword()));
+    public boolean updateUser(UserRequest userRequest) {
+        userRepository.findById(userRequest.getId()).ifPresent(userEntity -> {
+                userEntity.setUsername(userRequest.getUsername());
+                if (userRequest.getPassword() != null) {
+                    userEntity.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
                 }
-                userEntity.setEmail(userRequestResponse.getEmail());
+                userEntity.setEmail(userRequest.getEmail());
                 userRepository.save(userEntity);
         });
         return true;
@@ -51,17 +52,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRequestResponse getUser(String id) {
-        return new UserRequestResponse(userRepository.findById(id).orElseThrow());
+    public UserResponse getUser(String id) {
+        return UserResponse.chaingeUsertoUserResponse(userRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public UserRequestResponse getUserByEmail(String email) {
+    public UserResponse getUserByEmail(String email) {
         User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
             return null;
         }
-        return new UserRequestResponse(user);
+        return UserResponse.chaingeUsertoUserResponse(user);
     }
 
 

@@ -13,6 +13,7 @@ import org.example.plain.domain.user.service.CustomOauth2UserService;
 import org.example.plain.domain.user.service.CustomUserDetailsService;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.example.plain.domain.user.service.UserServiceImpl;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -25,7 +26,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserRepository userRepository;
@@ -59,6 +60,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         {
                             // sing_in은 회원가입 페이지로 이동.
+                            authorizeRequests.requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**").permitAll();
                             authorizeRequests.requestMatchers("/account/create","/login","/","/sign_up").permitAll();
                             authorizeRequests.anyRequest().authenticated();
                         }

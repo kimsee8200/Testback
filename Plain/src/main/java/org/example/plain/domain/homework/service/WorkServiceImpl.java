@@ -62,7 +62,7 @@ public class WorkServiceImpl implements WorkService {
         workEntity.setUserId(userDetails.getUser().getId());
         workEntity.setGroupId(groupId);
         workEntity.setUser(groupMember.getUser());
-        workEntity.setGroup(groupMember.getGroup());
+        workEntity.setGroup(groupMember.getClassLecture());
         boardRepository.save(workEntity);
     }
 

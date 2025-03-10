@@ -1,6 +1,8 @@
 package org.example.plain.domain.notice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.ResponseBody;
+import org.example.plain.common.enums.Message;
 import org.example.plain.domain.notice.dto.NoticeRequest;
 import org.example.plain.domain.notice.dto.NoticeResponse;
 import org.example.plain.domain.notice.dto.NoticeUpdateRequest;
@@ -8,6 +10,7 @@ import org.example.plain.domain.notice.entity.NoticeEntity;
 import org.example.plain.domain.notice.repository.NoticeRepository;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +25,7 @@ public class NoticeService {
     private final UserRepository userRepository;
 
     @Transactional
-    public NoticeResponse createNotice(NoticeRequest noticeRequest) {
+    public ResponseBody<NoticeResponse> createNotice(NoticeRequest noticeRequest) {
         // User ID로 User 조회
         User user = userRepository.findById(noticeRequest.getUser().getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -38,7 +41,7 @@ public class NoticeService {
         NoticeEntity noticeEntity = noticeRepository.save(createNotice);
 
         // NoticeResponse 생성 및 반환
-        return NoticeResponse.from(noticeEntity);
+        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, NoticeResponse.from(noticeEntity));
     }
 
 
@@ -91,24 +94,6 @@ public class NoticeService {
         noticeRepository.delete(noticeEntity);
     }
 
-    @Transactional
-    public NoticeResponse createNotice(NoticeRequest noticeRequest) {
-        // User ID로 User 조회
-        User user = userRepository.findById(noticeRequest.getUser().getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
-        // NoticeEntity 생성 (User 포함)
-        NoticeEntity createNotice = NoticeEntity.create(
-                noticeRequest.getTitle(),
-                noticeRequest.getContent(),
-                user
-        );
-
-        // 저장
-        NoticeEntity noticeEntity = noticeRepository.save(createNotice);
-
-        // NoticeResponse 생성 및 반환
-        return NoticeResponse.from(noticeEntity);
-    }
 
 }

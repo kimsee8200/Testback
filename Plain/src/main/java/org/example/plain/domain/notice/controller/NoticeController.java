@@ -1,10 +1,13 @@
 package org.example.plain.domain.notice.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.ResponseBody;
 import org.example.plain.domain.notice.dto.NoticeRequest;
 import org.example.plain.domain.notice.dto.NoticeResponse;
 import org.example.plain.domain.notice.dto.NoticeUpdateRequest;
 import org.example.plain.domain.notice.service.NoticeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +21,13 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping("/{notice}")
-    public ResponseEntity<NoticeResponse> createNotice(
+    public ResponseEntity<ResponseBody<NoticeResponse>> createNotice(
             @RequestBody NoticeRequest noticeRequest
     ) {
-        return ResponseEntity.ok()
-                .body(noticeService.createNotice(noticeRequest));
+
+        ResponseBody<NoticeResponse> responseBody = noticeService.createNotice(noticeRequest);
+
+        return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
     @PatchMapping("/notice/{notice_id}")

@@ -44,7 +44,7 @@ public class NoticeCommentEntity {
 
     private static final AtomicLong counter = new AtomicLong();
 
-    public static NoticeCommentEntity create(String title, String content,Long noticeId){
+    public static NoticeCommentEntity create(String title, String content,Long noticeId,User user){
         NoticeCommentEntity  noticeCommentEntity = new NoticeCommentEntity();
         noticeCommentEntity.commentId = counter.incrementAndGet();
         noticeCommentEntity.noticeId = noticeId;
@@ -56,7 +56,7 @@ public class NoticeCommentEntity {
         return noticeCommentEntity;
     }
 
-    public void  update(Long commentId, String title, String content, Long noticeId) {
+    public void  update(Long commentId, Long noticeId, String title, String content ) {
         this.commentId = commentId;
         this.noticeId = noticeId;
         this.title = title;

@@ -21,7 +21,6 @@ public class NoticeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_id", unique = true, nullable = false)
-    // jpa에서 작동되지 않는다고하여 넣음
     private Long noticeId;
 
     @Column(name = "title")

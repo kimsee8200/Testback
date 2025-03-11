@@ -3,10 +3,10 @@ package org.example.plain.domain.notice.service;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.ResponseBody;
 import org.example.plain.common.enums.Message;
-import org.example.plain.domain.notice.dto.NoticeRequest;
-import org.example.plain.domain.notice.dto.NoticeResponse;
-import org.example.plain.domain.notice.dto.NoticeUpdateRequest;
+import org.example.plain.domain.notice.dto.*;
+import org.example.plain.domain.notice.entity.NoticeCommentEntity;
 import org.example.plain.domain.notice.entity.NoticeEntity;
+import org.example.plain.domain.notice.repository.NoticeCommentRepository;
 import org.example.plain.domain.notice.repository.NoticeRepository;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
@@ -22,6 +22,7 @@ import java.util.Optional;
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final NoticeCommentRepository noticeCommentRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -51,7 +52,7 @@ public class NoticeService {
      * @return
      */
     @Transactional
-    public NoticeResponse updateNotice(NoticeUpdateRequest noticeUpdateRequest) {
+    public ResponseBody<NoticeResponse> updateNotice(NoticeUpdateRequest noticeUpdateRequest) {
 
         NoticeEntity noticeEntity = noticeRepository.findById(noticeUpdateRequest.getNoticeId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -63,12 +64,13 @@ public class NoticeService {
 
         );
 
-        return NoticeResponse.from(noticeEntity);
+        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, NoticeResponse.from(noticeEntity));
     }
 
-    public List<NoticeResponse> getAllNotice(){
+    public ResponseBody<List<NoticeResponse>> getAllNotice(){
         List<NoticeEntity> allNotice = noticeRepository.findAll();
-        return allNotice.stream()
+
+        List<NoticeResponse> noticeResponses = allNotice.stream()
                 .map(c -> NoticeResponse.builder()
                         .user(c.getUser())
                         .title(c.getTitle())
@@ -77,10 +79,12 @@ public class NoticeService {
                         .modifiedAt(c.getModifiedAt())
                         .build())
                 .toList();
+
+        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, noticeResponses);
     }
 
-    public NoticeResponse getNotice(Long noticeId){
-       return NoticeResponse.from(noticeRepository.findById(noticeId).orElseThrow());
+    public ResponseBody<NoticeResponse> getNotice(Long noticeId){
+       return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, NoticeResponse.from(noticeRepository.findById(noticeId).orElseThrow()));
     }
 
     /**
@@ -94,6 +98,54 @@ public class NoticeService {
         noticeRepository.delete(noticeEntity);
     }
 
+    @Transactional
+    public ResponseBody<NoticeCommentResponse> createNoticeComments(NoticeCommentRequest noticeCommentRequest) {
+        // User ID로 User 조회
+        User user = userRepository.findById(noticeCommentRequest.getUser().getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
+        // NoticeEntity 생성 (User 포함)
+        NoticeCommentEntity createNoticeComments = NoticeCommentEntity.create(
+                noticeCommentRequest.getTitle(),
+                noticeCommentRequest.getContent(),
+                noticeCommentRequest.getNoticeId(),
+                user
+        );
+
+        // 저장
+        NoticeCommentEntity noticeCommentEntity = noticeCommentRepository.save(createNoticeComments);
+
+        // NoticeResponse 생성 및 반환
+        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, NoticeCommentResponse.from(noticeCommentEntity));
+    }
+
+    @Transactional
+    public ResponseBody<NoticeCommentResponse> updateNoticeComments(NoticeCommentUpdateRequest noticeCommentUpdateRequest) {
+
+        NoticeCommentEntity noticeCommentEntity = noticeCommentRepository.findById(noticeCommentUpdateRequest.getCommentId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        noticeCommentEntity.update(
+                noticeCommentUpdateRequest.getCommentId(),
+                noticeCommentUpdateRequest.getNoticeId(),
+                noticeCommentUpdateRequest.getTitle(),
+                noticeCommentUpdateRequest.getContent()
+
+
+        );
+
+        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, NoticeCommentResponse.from(noticeCommentEntity));
+    }
+
+    /**
+     * 클래스 삭제
+     * @param commentId
+     */
+    @Transactional
+    public void deleteCommentNotice(Long commentId) {
+        NoticeCommentEntity noticeCommentEntity = noticeCommentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        noticeCommentRepository.delete(noticeCommentEntity);
+    }
 
 }

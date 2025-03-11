@@ -3,7 +3,7 @@ package org.example.plain.domain.notice.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.example.plain.domain.notice.entity.NoticeEntity;
+import org.example.plain.domain.notice.entity.NoticeCommentEntity;
 import org.example.plain.domain.user.entity.User;
 
 import java.time.LocalDateTime;
@@ -25,15 +25,15 @@ public class NoticeCommentResponse {
 
     }
 
-    public static NoticeCommentResponse from(NoticeEntity noticeEntity) {
+    public static NoticeCommentResponse from(NoticeCommentEntity noticeCommentEntity) {
         NoticeCommentResponse response = new NoticeCommentResponse();
-        response.noticeId = noticeEntity.getNoticeId();
-        response.commentId = noticeEntity.getNoticeId();
-        response.title = noticeEntity.getTitle();
-        response.content = noticeEntity.getContent();
-        response.user = noticeEntity.getUser();
-        response.createDate = noticeEntity.getCreateDate();
-        response.modifiedAt = noticeEntity.getModifiedAt();
+        response.noticeId = noticeCommentEntity.getNoticeId();
+        response.commentId = noticeCommentEntity.getNoticeId();
+        response.title = noticeCommentEntity.getTitle();
+        response.content = noticeCommentEntity.getContent();
+        response.user = noticeCommentEntity.getUser();
+        response.createDate = noticeCommentEntity.getCreateDate();
+        response.modifiedAt = noticeCommentEntity.getModifiedAt();
         return response;
     }
 

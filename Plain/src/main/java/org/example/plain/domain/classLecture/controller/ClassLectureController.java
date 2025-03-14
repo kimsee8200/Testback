@@ -3,13 +3,11 @@ package org.example.plain.domain.classLecture.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
 import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classLecture.dto.ClassMemberResponse;
-import org.example.plain.domain.classLecture.dto.ClassRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
-import org.example.plain.domain.classLecture.service.ClassInviteService;
+import org.example.plain.domain.classLecture.service.ClassJoinService;
 import org.example.plain.domain.classLecture.service.ClassLectureService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,7 @@ import java.util.List;
 public class ClassLectureController {
 
     private final ClassLectureService classLectureService;
-    private final ClassInviteService classInviteService;
+    private final ClassJoinService classJoinService;
 
     @Operation(summary = "모든 클래스 조회")
     @GetMapping
@@ -73,6 +71,14 @@ public class ClassLectureController {
             @PathVariable String classId
     ) {
         return ResponseEntity.ok().body(classLectureService.getClassMembers(classId));
+    }
+
+    @Operation(summary = "클래스 코드 생성")
+    @PostMapping("/{classId}/invite-member")
+    public ResponseEntity<String> joinCode(
+            @PathVariable String classId
+    ) {
+        return ResponseEntity.ok().body(classLectureService.createCode(classId));
     }
 
 

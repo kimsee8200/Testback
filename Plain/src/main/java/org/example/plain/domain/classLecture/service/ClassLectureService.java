@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classLecture.dto.ClassMemberResponse;
-import org.example.plain.domain.classLecture.dto.ClassRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.classLecture.repository.ClassLectureRepositoryPort;
@@ -104,6 +103,11 @@ public class ClassLectureService {
         return ClassResponse.from(classLecture);
     }
 
+    /**
+     * 클래스 멤버 조회
+     * @param classId
+     * @return
+     */
     public List<ClassMemberResponse> getClassMembers(String classId) {
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         List<ClassMember> members = classLecture.getMembers();
@@ -116,6 +120,17 @@ public class ClassLectureService {
      */
     public String generateCode() {
         return CodeGenerator.generateCode();
+    }
+
+    /**
+     * 클래스 초대코드 생성
+     * @param id
+     * @return
+     */
+    public String createCode(String classId) {
+        ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
+
+        return "https://www.example.com/invite?code=" + classLecture.getCode();
     }
 }
 

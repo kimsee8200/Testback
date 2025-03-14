@@ -33,4 +33,9 @@ public class ClassLectureRepositoryAdapter implements ClassLectureRepositoryPort
         ClassLecture classLecture = findById(id);
         classLectureRepository.delete(classLecture);
     }
+
+    @Override
+    public ClassLecture findByCode(String code) {
+        return classLectureRepository.findByCode(code);
+    }
 }

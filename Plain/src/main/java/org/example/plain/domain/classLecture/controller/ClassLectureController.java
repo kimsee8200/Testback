@@ -29,6 +29,7 @@ public class ClassLectureController {
         return ResponseEntity.ok().body(classLectureService.getAllClass());
     }
 
+    @Operation(summary = "단일 클래스 조회")
     @GetMapping("/{classId}")
     public ResponseEntity<ClassResponse> getClass(
             @PathVariable String classId
@@ -36,6 +37,7 @@ public class ClassLectureController {
         return ResponseEntity.ok().body(classLectureService.getClass(classId));
     }
 
+    @Operation(summary = "클래스 생성")
     @PostMapping
     public ResponseEntity<ClassResponse> createClass(
             @RequestBody ClassAddRequest classAddRequest
@@ -44,6 +46,7 @@ public class ClassLectureController {
                 .body(classLectureService.createClass(classAddRequest, SecurityUtils.getUserId()));
     }
 
+    @Operation(summary = "클래스 수정")
     @PatchMapping("/{classId}")
     public ResponseEntity<ClassResponse> updateClass(
             @PathVariable String classId,
@@ -53,6 +56,7 @@ public class ClassLectureController {
                 .body(classLectureService.modifiedClass(classRequest, classId, SecurityUtils.getUserId()));
     }
 
+    @Operation(summary = "클래스 삭제")
     @DeleteMapping("/{classId}")
     public ResponseEntity<ClassResponse> deleteClass(
             @PathVariable String classId

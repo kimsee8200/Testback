@@ -1,5 +1,7 @@
 package org.example.plain.domain.classLecture.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Class controller api", description = "클래스 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/classes")
@@ -20,6 +23,7 @@ public class ClassLectureController {
     private final ClassLectureService classLectureService;
     private final ClassInviteService classInviteService;
 
+    @Operation(summary = "모든 클래스 조회")
     @GetMapping
     public ResponseEntity<List<ClassResponse>> getAllClass(){
         return ResponseEntity.ok().body(classLectureService.getAllClass());

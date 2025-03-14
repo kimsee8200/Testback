@@ -29,8 +29,7 @@ public class ClassJoinService {
 
         ClassLecture classLecture = classLectureRepositoryPort.findByCode(code);
 
-        classLecture.addMember(user);
-        classMemberRepository.save(new ClassMember(classLecture, user));
+        classLecture.addMember(user,classMemberRepository);
 
         return "클래스 코드 가입 완료" ;
     }
@@ -45,8 +44,7 @@ public class ClassJoinService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        classLecture.addMember(user);
-        classMemberRepository.save(new ClassMember(classLecture, user));
+        classLecture.addMember(user,classMemberRepository);
     }
 
 }

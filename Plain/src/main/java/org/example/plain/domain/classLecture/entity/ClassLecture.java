@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.example.plain.common.enums.ClassType;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.repository.ClassMemberRepository;
 import org.example.plain.domain.member.dto.Member;
 import org.example.plain.domain.user.entity.User;
 
@@ -49,8 +50,10 @@ public class ClassLecture {
     @JoinColumn(name = "user_id", nullable = false)
     private User instructor;
 
-    public void addMember(User user) {
-        this.members.add(new ClassMember(this, user));
+    public void addMember(User user, ClassMemberRepository classMemberRepository) {
+        ClassMember classMember = new ClassMember(this, user);
+        this.members.add(classMember);
+        classMemberRepository.save(classMember);
     }
 
     public void updateClass(ClassAddRequest classAddRequest) {

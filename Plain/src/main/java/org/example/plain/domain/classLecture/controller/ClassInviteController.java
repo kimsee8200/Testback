@@ -24,8 +24,7 @@ public class ClassInviteController {
     public ResponseEntity<String> joinCode(
             @PathVariable String classId
     ) {
-        return ResponseEntity.ok()
-                .body(classInviteService.joinByCode(classId));
+        return ResponseEntity.ok().body(classInviteService.joinByCode(classId));
     }
 
     @Operation(summary = "클래스 가입")

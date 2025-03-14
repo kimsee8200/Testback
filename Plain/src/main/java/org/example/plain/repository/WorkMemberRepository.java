@@ -1,6 +1,6 @@
 package org.example.plain.repository;
 
-import org.example.plain.domain.groupmember.entity.ClassMember;
+import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;

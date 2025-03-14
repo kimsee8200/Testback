@@ -8,7 +8,6 @@ import org.example.plain.domain.user.entity.User;
 
 @Builder
 public record ClassAddRequest(
-        String userId,
         String title,
         String classImg,
         Long maxMember,

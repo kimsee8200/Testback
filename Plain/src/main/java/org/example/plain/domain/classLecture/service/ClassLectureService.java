@@ -1,12 +1,15 @@
 package org.example.plain.domain.classLecture.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.enums.Role;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
+import org.example.plain.domain.classLecture.dto.ClassMemberResponse;
 import org.example.plain.domain.classLecture.dto.ClassRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.classLecture.repository.ClassLectureRepositoryPort;
 import org.example.plain.domain.classLecture.util.CodeGenerator;
+import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -84,29 +87,28 @@ public class ClassLectureService {
      * 클래스 수정
      * @param userId
      * @param classId
-     * @param classRequest
+     * @param ClassAddRequest
      * @return
      */
-    public ClassResponse modifiedClass(ClassRequest classRequest, String classId, String userId) {
+    public ClassResponse modifiedClass(ClassAddRequest ClassAddRequest, String classId, String userId) {
         ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
         User user = userRepository.findById(userId).orElseThrow();
 
-        if (classLecture.getInstructor().getId().equals(user.getId())) {
+        if (!classLecture.getInstructor().getId().equals(user.getId()) || !user.getRole().equals(Role.LEADER_CLASS)) {
             throw new RuntimeException("수정 할 수 없습니다");
         }
-        String title = classRequest.title();
-        String description = classRequest.description();
 
-        classLecture.updateClass(title, description);
+        classLecture.updateClass(ClassAddRequest);
         classLectureRepositoryPort.save(classLecture);
 
         return ClassResponse.from(classLecture);
     }
 
-//    public List<User> getClassMembers(Long classId) {
-//        ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
-//        return classLecture.getUser()
-//    }
+    public List<ClassMemberResponse> getClassMembers(String classId) {
+        ClassLecture classLecture = classLectureRepositoryPort.findById(classId);
+        List<ClassMember> members = classLecture.getMembers();
+        return ClassMemberResponse.from(members);
+    }
 
     /**
      * 코드 생성기

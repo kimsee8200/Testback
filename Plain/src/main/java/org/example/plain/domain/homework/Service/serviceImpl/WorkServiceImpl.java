@@ -1,8 +1,8 @@
 package org.example.plain.domain.homework.Service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.groupmember.entity.ClassMember;
-import org.example.plain.domain.groupmember.entity.ClassMemberId;
+import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.Service.interfaces.WorkService;

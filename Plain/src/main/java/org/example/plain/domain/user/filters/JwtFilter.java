@@ -26,10 +26,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
 
+
         if (token == null){
             filterChain.doFilter(request, response);
             return;
         }
+
+        token = token.substring(7);
+
         if(!jwtUtil.getType(token).equals("access")){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().println("invalid token");

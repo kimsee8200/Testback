@@ -3,8 +3,10 @@ package org.example.plain.domain.classLecture.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.example.plain.common.ResponseBody;
 import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
+import org.example.plain.domain.classLecture.dto.ClassMemberResponse;
 import org.example.plain.domain.classLecture.dto.ClassRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
 import org.example.plain.domain.classLecture.service.ClassInviteService;
@@ -50,10 +52,10 @@ public class ClassLectureController {
     @PatchMapping("/{classId}")
     public ResponseEntity<ClassResponse> updateClass(
             @PathVariable String classId,
-            @RequestBody ClassRequest classRequest
+            @RequestBody ClassAddRequest classAddRequest
     ) {
         return ResponseEntity.ok()
-                .body(classLectureService.modifiedClass(classRequest, classId, SecurityUtils.getUserId()));
+                .body(classLectureService.modifiedClass(classAddRequest, classId, SecurityUtils.getUserId()));
     }
 
     @Operation(summary = "클래스 삭제")
@@ -65,12 +67,13 @@ public class ClassLectureController {
         return ResponseEntity.ok().body(deleteClass);
     }
 
-    @PostMapping("/{classId}/invite-member")
-    public ResponseEntity<String> joinCode(
+    @Operation(summary = "클래스 멤버 조회")
+    @GetMapping("/{classId}/members")
+    public ResponseEntity<List<ClassMemberResponse>> getMember(
             @PathVariable String classId
     ) {
-        return ResponseEntity.ok()
-                .body(classInviteService.joinByCode(classId));
+        return ResponseEntity.ok().body(classLectureService.getClassMembers(classId));
     }
+
 
 }

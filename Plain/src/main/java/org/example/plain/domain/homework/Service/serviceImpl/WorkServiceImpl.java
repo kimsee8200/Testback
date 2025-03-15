@@ -1,8 +1,8 @@
 package org.example.plain.domain.homework.Service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.groupmember.entity.GroupMemberId;
+import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.Service.interfaces.WorkService;
@@ -48,9 +48,9 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public void insertWork(Work work, String groupId, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(groupId,userDetails.getUser().getId())).orElseThrow();
+        ClassMember classMember = groupMemberRepository.findById(new ClassMemberId(groupId,userDetails.getUser().getId())).orElseThrow();
 
-        if (!groupMember.getClassLecture().getInstructor().getId().equals(userDetails.getUser().getId())) {
+        if (!classMember.getClassLecture().getInstructor().getId().equals(userDetails.getUser().getId())) {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
         }
 
@@ -59,8 +59,8 @@ public class WorkServiceImpl implements WorkService {
         workEntity.setWorkId(makeUUID());
         workEntity.setUserId(userDetails.getUser().getId());
         workEntity.setGroupId(groupId);
-        workEntity.setUser(groupMember.getUser());
-        workEntity.setGroup(groupMember.getClassLecture());
+        workEntity.setUser(classMember.getUser());
+        workEntity.setGroup(classMember.getClassLecture());
         boardRepository.save(workEntity);
     }
 

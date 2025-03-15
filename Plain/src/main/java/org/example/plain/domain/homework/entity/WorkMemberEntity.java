@@ -2,7 +2,6 @@ package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.user.entity.User;
 
 @Entity

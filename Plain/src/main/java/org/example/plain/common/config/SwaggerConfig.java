@@ -9,6 +9,9 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Configuration
 public class SwaggerConfig {
 
@@ -33,6 +36,8 @@ public class SwaggerConfig {
                         .info(apiInfo())
                         .addSecurityItem(securityRequirement);
         }
+
+
 
         private io.swagger.v3.oas.models.info.Info apiInfo() {
                 return new Info()

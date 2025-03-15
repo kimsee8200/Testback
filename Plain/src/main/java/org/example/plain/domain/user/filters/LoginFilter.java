@@ -8,8 +8,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.user.dto.CustomUserDetails;
+import org.example.plain.domain.user.dto.UserLoginRequest;
 import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserRequest userRequest = objectMapper.readValue(request.getInputStream(), UserRequest.class);
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userRequest.getId(), userRequest.getPassword());
+            UserLoginRequest userRequest = objectMapper.readValue(request.getInputStream(), UserLoginRequest.class);
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userRequest.id(), userRequest.password());
             return authenticationManager.authenticate(token);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -54,8 +55,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.getContextHolderStrategy().clearContext();
-        ResponseBody responseBody = new ResponseBody<>(failed.getMessage(), HttpStatus.UNAUTHORIZED,null);
-        String body = objectMapper.writeValueAsString(responseBody);
+        ResponseField responseField = new ResponseField<>(failed.getMessage(), HttpStatus.UNAUTHORIZED,null);
+        String body = objectMapper.writeValueAsString(responseField);
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(body);

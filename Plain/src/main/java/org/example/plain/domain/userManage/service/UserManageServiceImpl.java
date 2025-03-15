@@ -5,6 +5,7 @@ import org.example.plain.domain.classLecture.dto.ClassResponse;
 import org.example.plain.domain.groupmember.entity.GroupMember;
 import org.example.plain.domain.lecture.normal.entity.Lecture;
 import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.dto.UserResponse;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.domain.userManage.interfaces.UserManageService;
@@ -23,10 +24,10 @@ public class UserManageServiceImpl implements UserManageService {
     private final GroupMemberRepository groupMemberRepository;
 
     @Override
-    public UserRequest userSingleInfo(String userId) {
+    public UserResponse userSingleInfo(String userId) {
         User user = userRepository.findById(userId).orElseThrow();
-        UserRequest userRequest = new UserRequest(user);
-        return userRequest;
+        UserResponse userResponse = UserResponse.chaingeUsertoUserResponse(user);
+        return userResponse;
     }
 
     @Override

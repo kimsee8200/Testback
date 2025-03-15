@@ -6,7 +6,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
@@ -97,7 +97,7 @@ public class LoginFilterTest {
 
         Mockito.when(failure.getMessage()).thenReturn("test 실패 당함");
         Mockito.when(response.getWriter()).thenReturn(Mockito.mock(PrintWriter.class));
-        Mockito.when(objectMapper.writeValueAsString(any(ResponseBody.class))).thenReturn("ResponseBody");
+        Mockito.when(objectMapper.writeValueAsString(any(ResponseField.class))).thenReturn("ResponseBody");
 
 
         ReflectionTestUtils.invokeMethod(loginFilter, "unsuccessfulAuthentication", request, response, failure);

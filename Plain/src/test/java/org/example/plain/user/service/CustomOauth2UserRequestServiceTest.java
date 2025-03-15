@@ -9,11 +9,12 @@ import org.example.plain.domain.user.service.CustomOauth2UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.*;
 
@@ -22,9 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringJUnitConfig
 public class CustomOauth2UserRequestServiceTest {
 
-    @MockitoBean
+    @MockBean
     private UserService userService;
-    @MockitoBean
+    @MockBean
     private CustomOauth2UserService.OauthLoadUser oauthLoadUser;
     private CustomOauth2UserService customOauth2UserService;
     private List<OAuth2User> oAuth2User;

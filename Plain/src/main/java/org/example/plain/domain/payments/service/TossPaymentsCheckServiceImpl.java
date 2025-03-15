@@ -8,6 +8,7 @@ import org.example.plain.domain.lecture.lectureMember.service.LectureMemberImpl;
 import org.example.plain.domain.payments.domain.Payments;
 import org.example.plain.domain.payments.domain.PaymentsToss;
 import org.example.plain.domain.payments.interfaces.PaymentsCheckService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -28,13 +29,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class TossPaymentsCheckServiceImpl implements PaymentsCheckService {
 
-
+    @Value("${spring.payKey}")
     private String payKey;
-    private final LectureMemberService lectureMemberService;
-    private final GroupMemberService groupMemberService;
 
     @Override
-    public void CheckingForPayments(Payments payments) throws URISyntaxException {
+    public boolean CheckingForPayments(Payments payments) throws URISyntaxException {
         PaymentsToss paymentsToss = (PaymentsToss) payments;
 
 
@@ -58,6 +57,7 @@ public class TossPaymentsCheckServiceImpl implements PaymentsCheckService {
             throw new URISyntaxException(response.getStatusCode().toString(),response.getBody().get("message").toString());
         }
 
+        return true;
         // 결제 완료 후 결제 정보저장, 해당 강의의 수강자로 가입, 리다이렉트.
 
     }

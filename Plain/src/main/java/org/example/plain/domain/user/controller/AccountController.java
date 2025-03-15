@@ -1,6 +1,6 @@
 package org.example.plain.domain.user.controller;
 
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.dto.UserRequest;
@@ -46,7 +46,7 @@ public class AccountController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<ResponseBody<UserResponse>> getUserInfo(String userId){
+    public ResponseEntity<ResponseField<UserResponse>> getUserInfo(String userId){
         UserResponse userResponse = userService.getUser(userId);
         return new ResponseMaker<UserResponse>().ok(userResponse);
     }

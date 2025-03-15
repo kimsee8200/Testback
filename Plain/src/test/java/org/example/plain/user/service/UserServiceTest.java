@@ -8,9 +8,11 @@ import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.domain.user.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.ArrayList;
@@ -22,9 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringJUnitConfig
 public class UserServiceTest {
 
-    @MockitoBean
+    @MockBean
     private UserRepository userRepository;
-    @MockitoBean
+    @MockBean
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserService userService;
     private List<UserRequest> userRequestRespons;

@@ -13,6 +13,4 @@ public class WorkSubmitField {
     String workId;
     String userId;
     List<MultipartFile> file;
-
-
 }

@@ -1,4 +1,4 @@
-package org.example.plain.domain.groupmember.entity;
+package org.example.plain.domain.classMember.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -6,15 +6,15 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Data
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class GroupMemberId implements Serializable {
+public class ClassMemberId implements Serializable {
 
-    @Column(name = "g_id")
-    private String groupId;
+    @Column(name = "c_id")
+    private String classId;
 
     @Column(name = "user_id")
     private String userId;

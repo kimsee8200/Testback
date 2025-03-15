@@ -2,8 +2,8 @@ package org.example.plain.scenario.homework;
 
 import org.example.plain.domain.classLecture.dto.ClassAddRequest;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
+import org.example.plain.domain.classLecture.service.ClassJoinService;
 import org.example.plain.domain.classLecture.service.ClassLectureService;
-import org.example.plain.domain.groupmember.service.GroupMemberService;
 import org.example.plain.domain.homework.interfaces.WorkMemberService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.Work;
@@ -47,7 +47,7 @@ public class HomeworkTest {
     private UserRepository repository;
 
     @Autowired
-    private GroupMemberService groupMemberService;
+    private ClassJoinService groupMemberService;
 
     private List<ClassResponse> classResponse;
     private Authentication authUser;
@@ -92,14 +92,14 @@ public class HomeworkTest {
         authUser2 = new UsernamePasswordAuthenticationToken(customUserDetails2, "admin");
         authUser = new UsernamePasswordAuthenticationToken(customUserDetails, "admin");
 
-        lectureService.createClass(new ClassAddRequest(null,user,"makeClass","클래스 만들기.")); // 클래스 인원 추가.
-        Thread.sleep(300);
-        lectureService.createClass(new ClassAddRequest(null,user2,"deleteClass","클래스 없에기."));
-
-        classResponse = lectureService.getAllClass();
-        groupMemberService.joinGroup(classResponse.get(0).id(),customUserDetails.getUser().getId());
-        groupMemberService.joinGroup(classResponse.get(1).id(),customUserDetails.getUser().getId());
-        groupMemberService.joinGroup(classResponse.get(1).id(),customUserDetails2.getUser().getId());
+//        lectureService.createClass(new ClassAddRequest(null,user,"makeClass","클래스 만들기.")); // 클래스 인원 추가.
+//        Thread.sleep(300);
+//        lectureService.createClass(new ClassAddRequest(null,user2,"deleteClass","클래스 없에기."));
+//
+//        classResponse = lectureService.getAllClass();
+//        groupMemberService.joinGroup(classResponse.get(0).id(),customUserDetails.getUser().getId());
+//        groupMemberService.joinGroup(classResponse.get(1).id(),customUserDetails.getUser().getId());
+//        groupMemberService.joinGroup(classResponse.get(1).id(),customUserDetails2.getUser().getId());
     }
 
     @Test

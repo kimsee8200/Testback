@@ -50,7 +50,7 @@ public class WorkDaoImpl implements WorkDao {
 
     @Override
     public WorkEntity findById(String id) {
-        return (WorkEntity) boardRepository.findByBoardId(id);
+        return (WorkEntity) boardRepository.findByBoardId(id).orElseThrow();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class WorkDaoImpl implements WorkDao {
     @Override
     public List<Work> selectAllGroupWork(String groupId) {
         List<Work> works = new ArrayList<>();
-        for(BoardEntity entity:boardRepository.findByGroupId(groupId)) {
+        for(BoardEntity entity:boardRepository.findByGroupId(groupId).orElse(null)) {
             if(entity instanceof WorkEntity)
                 works.add(transportWorkEntity((WorkEntity) entity));
         }

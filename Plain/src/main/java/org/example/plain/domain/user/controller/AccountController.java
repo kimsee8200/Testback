@@ -1,9 +1,10 @@
 package org.example.plain.domain.user.controller;
 
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.user.dto.CustomUserDetails;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.dto.UserResponse;
 import org.example.plain.domain.user.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,18 +23,18 @@ public class AccountController {
     UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity createAccount(@RequestBody UserRequestResponse userRequestResponse) throws Exception {
-        userService.createUser(userRequestResponse);
+    public ResponseEntity createAccount(@RequestBody UserRequest userRequest) throws Exception {
+        userService.createUser(userRequest);
         return ResponseMaker.noContent();
     }
 
     @PatchMapping("/update")
-    public ResponseEntity updateAccount(@RequestBody UserRequestResponse userRequestResponse, Authentication authentication) throws Exception {
+    public ResponseEntity updateAccount(@RequestBody UserRequest userRequest, Authentication authentication) throws Exception {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        if (!userRequestResponse.getId().equals(customUserDetails.getUser().getId())) {
+        if (!userRequest.getId().equals(customUserDetails.getUser().getId())) {
             throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
-        userService.updateUser(userRequestResponse);
+        userService.updateUser(userRequest);
         return ResponseMaker.noContent();
     }
 
@@ -45,9 +46,9 @@ public class AccountController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<ResponseBody<UserRequestResponse>> getUserInfo(String userId){
-        UserRequestResponse userRequestResponse = userService.getUser(userId);
-        return new ResponseMaker<UserRequestResponse>().ok(userRequestResponse);
+    public ResponseEntity<ResponseField<UserResponse>> getUserInfo(String userId){
+        UserResponse userResponse = userService.getUser(userId);
+        return new ResponseMaker<UserResponse>().ok(userResponse);
     }
 
 }

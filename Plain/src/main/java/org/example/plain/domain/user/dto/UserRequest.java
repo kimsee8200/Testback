@@ -7,20 +7,20 @@ import org.example.plain.domain.user.entity.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequestResponse {
+public class UserRequest {
     private String id;
     private String username;
     private String email;
     private String password;
 
-    public UserRequestResponse(User user){
+    public UserRequest(User user){
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.password = user.getPassword();
     }
 
-    public UserRequestResponse(String username, String email) {
+    public UserRequest(String username, String email) {
         this.username = username;
         this.email = email;
     }

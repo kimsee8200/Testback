@@ -1,11 +1,11 @@
-package org.example.plain.domain.homework.Service.serviceImpl;
+package org.example.plain.domain.homework.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.homework.Service.interfaces.WorkService;
+import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
 import org.example.plain.domain.user.dto.CustomUserDetails;
@@ -31,6 +31,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class WorkServiceImpl implements WorkService {
+    // 리팩토링 요망.
    // private UserService userService;
     private final BoardRepository boardRepository;
     private final WorkSubmitFieldRepository workSubmitFieldRepository;
@@ -45,6 +46,7 @@ public class WorkServiceImpl implements WorkService {
         return uuid.toString();
     }
 
+    @Transactional
     @Override
     public void insertWork(Work work, String groupId, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -74,6 +76,7 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    @Transactional
     public Work selectWork(String workId) {
         return Work.changeWorkEntity(boardRepository.findByWorkId(workId).orElseThrow());
     }
@@ -81,9 +84,11 @@ public class WorkServiceImpl implements WorkService {
 
     public List<Work> selectGroupWorks(String groupId){
         List<Work> works = new ArrayList<>();
-        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId);
-        for (WorkEntity work:workEntities){
-            works.add(Work.changeWorkEntity(work));
+        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId).orElse(null);
+        if (workEntities != null) {
+            for (WorkEntity work:workEntities){
+                works.add(Work.changeWorkEntity(work));
+            }
         }
         return works;
     }

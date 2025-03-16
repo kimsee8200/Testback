@@ -25,7 +25,7 @@ public class JWTUtil {
     }
 
     public String makeJwtToken(String id){
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis()+expiresNormal))
                 .claim("type","access")

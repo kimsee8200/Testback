@@ -12,13 +12,13 @@ public class WorkMemberEntity {
     private WorkMemberId workMemberId;
 
     @MapsId("work")
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "h_id")
     private WorkEntity work;
 
     @MapsId("memberUser")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "is_submit")
@@ -27,9 +27,11 @@ public class WorkMemberEntity {
     @Column(name = "is_late")
     private boolean isLate = false;
 
-    public static WorkMemberEntity makeWorkMemberEntity(String userId, String workId) {
+    public static WorkMemberEntity makeWorkMemberEntity(User userId, WorkEntity workId) {
         WorkMemberEntity workMemberEntity = new WorkMemberEntity();
-        workMemberEntity.setWorkMemberId(new WorkMemberId(workId, userId));
+        workMemberEntity.setWorkMemberId(new WorkMemberId(workId.getWorkId(), userId.getId()));
+        workMemberEntity.setWork(workId);
+        workMemberEntity.setUser(userId);
         return workMemberEntity;
     }
 

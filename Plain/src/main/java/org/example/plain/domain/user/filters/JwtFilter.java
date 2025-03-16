@@ -26,10 +26,13 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
 
-
         if (token == null){
             filterChain.doFilter(request, response);
             return;
+        }
+
+        if(!token.startsWith("Bearer")){
+            throw new IllegalArgumentException("Bearer 타입이 아닙니다.");
         }
 
         token = token.substring(7);
@@ -45,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         CustomUserDetails customUserDetails = new CustomUserDetails(
-                new User().builder()
+                User.builder()
                         .id(jwtUtil.getId(token))
                         .role(Role.NORMAL)
                         .build()

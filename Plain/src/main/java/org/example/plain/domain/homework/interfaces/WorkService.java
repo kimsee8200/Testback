@@ -1,7 +1,6 @@
-package org.example.plain.domain.homework.Service.interfaces;
+package org.example.plain.domain.homework.interfaces;
 
 import org.example.plain.domain.homework.dto.Work;
-import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.springframework.security.core.Authentication;

@@ -22,7 +22,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-        if(customOAuth2User.getUserRequestResponse().getId() == null) {
+        if(customOAuth2User.getUserRequest().getId() == null) {
             String body = objectMapper.writeValueAsString(customOAuth2User);
 
             response.setContentType("application/json");
@@ -30,8 +30,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             response.setStatus(HttpServletResponse.SC_FOUND);
             response.sendRedirect("/sign_up");
         }else{
-            String token = jwtUtil.makeJwtToken(customOAuth2User.getUserRequestResponse().getId());
-            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUserRequestResponse().getId());
+            String token = jwtUtil.makeJwtToken(customOAuth2User.getUserRequest().getId());
+            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUserRequest().getId());
 
             Cookie cookie = makeCookie(refresh);
             response.addHeader("Authorization",token);

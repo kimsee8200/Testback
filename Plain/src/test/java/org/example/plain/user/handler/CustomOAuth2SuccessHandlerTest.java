@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.plain.domain.user.dto.CustomOAuth2User;
-import org.example.plain.domain.user.dto.UserRequestResponse;
+import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.handler.CustomOAuth2SuccessHandler;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,15 +45,15 @@ public class CustomOAuth2SuccessHandlerTest {
         response = Mockito.mock(HttpServletResponse.class);
         users = new ArrayList<>();
 
-        UserRequestResponse userRequestResponse = new UserRequestResponse("kimsee","박근택","go@email.com","1234");
-        UserRequestResponse userRequestResponse2 = new UserRequestResponse("김주호","ju@email");
-        UserRequestResponse userRequestResponse3 = new UserRequestResponse("rkedx","김갑든","kimgap@gmail.com","1234");
-        UserRequestResponse userRequestResponse4 = new UserRequestResponse("김주호","opt@email.com");
+        UserRequest userRequest = new UserRequest("kimsee","박근택","go@email.com","1234");
+        UserRequest userRequest2 = new UserRequest("김주호","ju@email");
+        UserRequest userRequest3 = new UserRequest("rkedx","김갑든","kimgap@gmail.com","1234");
+        UserRequest userRequest4 = new UserRequest("김주호","opt@email.com");
 
-        users.add(new CustomOAuth2User(userRequestResponse));
-        users.add(new CustomOAuth2User(userRequestResponse2));
-        users.add(new CustomOAuth2User(userRequestResponse3));
-        users.add(new CustomOAuth2User(userRequestResponse4));
+        users.add(new CustomOAuth2User(userRequest));
+        users.add(new CustomOAuth2User(userRequest2));
+        users.add(new CustomOAuth2User(userRequest3));
+        users.add(new CustomOAuth2User(userRequest4));
 
         authentication = new UsernamePasswordAuthenticationToken(users.get(0), "password");
     }

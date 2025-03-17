@@ -1,7 +1,7 @@
 package org.example.plain.domain.calendar.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.common.enums.Message;
 import org.example.plain.domain.calendar.dto.CalendarRequest;
 import org.example.plain.domain.calendar.dto.CalendarResponse;
@@ -21,7 +21,7 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
 
     @Transactional
-    public ResponseBody<CalendarResponse> insertCalendar(CalendarRequest calendarRequest) {
+    public ResponseField<CalendarResponse> insertCalendar(CalendarRequest calendarRequest) {
         // User ID로 User 조회
         User user = userRepository.findById(calendarRequest.getUser().getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -37,11 +37,11 @@ public class CalendarService {
         CalendarEntity calendarEntity = calendarRepository.save(insertCalendar);
 
         // NoticeResponse 생성 및 반환
-        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarEntity));
+        return new ResponseField<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarEntity));
     }
 
     @Transactional
-    public ResponseBody<CalendarResponse> updateCalendar(CalendarRequest calendarRequest) {
+    public ResponseField<CalendarResponse> updateCalendar(CalendarRequest calendarRequest) {
 
         CalendarEntity calendarEntity = calendarRepository.findById(calendarRequest.getCalId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -53,11 +53,11 @@ public class CalendarService {
 
         );
 
-        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarEntity));
+        return new ResponseField<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarEntity));
     }
 
-    public ResponseBody<CalendarResponse> getDetailCalendar(Long calId){
-        return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarRepository.findById(calId).orElseThrow()));
+    public ResponseField<CalendarResponse> getDetailCalendar(Long calId){
+        return new ResponseField<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarRepository.findById(calId).orElseThrow()));
     }
 
     @Transactional

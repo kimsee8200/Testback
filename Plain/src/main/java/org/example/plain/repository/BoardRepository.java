@@ -14,10 +14,10 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<BoardEntity, String> {
     Optional<WorkEntity> findByWorkId(String id);
 
-    List<WorkEntity> findByGroupId(String  groupId);
+    Optional<List<WorkEntity>> findByGroupId(String  groupId);
 
     List<BoardEntity> findAllByGroupId(String groupId);
 
-    BoardEntity findByBoardId(String id);
+    Optional<BoardEntity> findByBoardId(String id);
 
 }

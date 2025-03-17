@@ -13,7 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
 
-    private UserRequestResponse userRequestResponse;
+    private UserRequest userRequest;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -27,6 +27,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return userRequestResponse.getUsername();
+        return userRequest.getUsername();
     }
 }

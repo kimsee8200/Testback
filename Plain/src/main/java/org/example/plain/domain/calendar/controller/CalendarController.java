@@ -1,7 +1,7 @@
 package org.example.plain.domain.calendar.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.calendar.dto.CalendarRequest;
 import org.example.plain.domain.calendar.dto.CalendarResponse;
 import org.example.plain.domain.calendar.service.CalendarService;
@@ -18,19 +18,19 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @PostMapping("/{insert}")
-    public ResponseEntity<ResponseBody<CalendarResponse>> insertCalendar(
+    public ResponseEntity<ResponseField<CalendarResponse>> insertCalendar(
             @RequestBody CalendarRequest calendarRequest) {
 
-        ResponseBody<CalendarResponse> responseBody = calendarService.insertCalendar(calendarRequest);
+        ResponseField<CalendarResponse> responseBody = calendarService.insertCalendar(calendarRequest);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
     @PatchMapping("/update/{calId}")
-    public ResponseEntity<ResponseBody<CalendarResponse>> updateCalendar(
+    public ResponseEntity<ResponseField<CalendarResponse>> updateCalendar(
             @RequestBody CalendarRequest calendarRequest) {
 
-        ResponseBody<CalendarResponse> responseBody = calendarService.updateCalendar(calendarRequest);
+        ResponseField<CalendarResponse> responseBody = calendarService.updateCalendar(calendarRequest);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
@@ -45,10 +45,10 @@ public class CalendarController {
 //    }
     //?상의필요
     @GetMapping("/List/{calId}")
-    public ResponseEntity<ResponseBody<CalendarResponse>> getDetailCalendar(
+    public ResponseEntity<ResponseField<CalendarResponse>> getDetailCalendar(
             @PathVariable Long calId) {
 
-        ResponseBody<CalendarResponse> responseBody = calendarService.getDetailCalendar(calId);
+        ResponseField<CalendarResponse> responseBody = calendarService.getDetailCalendar(calId);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
 

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
-@DiscriminatorValue("work")
+@DiscriminatorValue("Work")
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "homework")

@@ -1,7 +1,7 @@
 package org.example.plain.domain.notice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.notice.dto.*;
 import org.example.plain.domain.notice.service.NoticeService;
 import org.springframework.http.ResponseEntity;
@@ -17,37 +17,37 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping("/{notice}")
-    public ResponseEntity<ResponseBody<NoticeResponse>> createNotice(
+    public ResponseEntity<ResponseField<NoticeResponse>> createNotice(
             @RequestBody NoticeRequest noticeRequest) {
 
-        ResponseBody<NoticeResponse> responseBody = noticeService.createNotice(noticeRequest);
+        ResponseField<NoticeResponse> responseBody = noticeService.createNotice(noticeRequest);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
     @PatchMapping("/notice/{notice_id}")
-    public ResponseEntity<ResponseBody<NoticeResponse>> updateNotice(
+    public ResponseEntity<ResponseField<NoticeResponse>> updateNotice(
             @RequestBody NoticeUpdateRequest noticeUpdateRequest) {
 
-        ResponseBody<NoticeResponse> responseBody = noticeService.updateNotice(noticeUpdateRequest);
+        ResponseField<NoticeResponse> responseBody = noticeService.updateNotice(noticeUpdateRequest);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
     @GetMapping
-    public ResponseEntity<ResponseBody<List<NoticeResponse>>> getAllNotice(){
+    public ResponseEntity<ResponseField<List<NoticeResponse>>> getAllNotice(){
 
-        ResponseBody<List<NoticeResponse>> responseBody = noticeService.getAllNotice();
+        ResponseField<List<NoticeResponse>> responseBody = noticeService.getAllNotice();
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
 
     }
 
     @GetMapping("/notice/{notice_id}")
-    public ResponseEntity<ResponseBody<NoticeResponse>> getNotice(
+    public ResponseEntity<ResponseField<NoticeResponse>> getNotice(
             @PathVariable Long noticeId) {
 
-        ResponseBody<NoticeResponse> responseBody = noticeService.getNotice(noticeId);
+        ResponseField<NoticeResponse> responseBody = noticeService.getNotice(noticeId);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
 
@@ -64,20 +64,20 @@ public class NoticeController {
 
 
     @PostMapping("/notice/{notice_id}/comments")
-    public ResponseEntity<ResponseBody<NoticeCommentResponse>> createNoticeComments(
+    public ResponseEntity<ResponseField<NoticeCommentResponse>> createNoticeComments(
             @RequestBody NoticeCommentRequest noticeCommentRequest) {
 
-        ResponseBody<NoticeCommentResponse> responseBody = noticeService.createNoticeComments(noticeCommentRequest);
+        ResponseField<NoticeCommentResponse> responseBody = noticeService.createNoticeComments(noticeCommentRequest);
 
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
 
     }
 
     @PutMapping("/notice/{notice_id}/comments/{comment_id}")
-    public ResponseEntity<ResponseBody<NoticeCommentResponse>> updateNoticeComments(
+    public ResponseEntity<ResponseField<NoticeCommentResponse>> updateNoticeComments(
             @RequestBody NoticeCommentUpdateRequest noticeCommentUpdateRequest) {
 
-        ResponseBody<NoticeCommentResponse> responseBody = noticeService.updateNoticeComments(noticeCommentUpdateRequest);
+        ResponseField<NoticeCommentResponse> responseBody = noticeService.updateNoticeComments(noticeCommentUpdateRequest);
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 

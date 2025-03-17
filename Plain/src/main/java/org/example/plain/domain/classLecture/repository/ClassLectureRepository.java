@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClassLectureRepository extends JpaRepository<ClassLecture, String> {
 
+    ClassLecture findByCode(String code);
 }

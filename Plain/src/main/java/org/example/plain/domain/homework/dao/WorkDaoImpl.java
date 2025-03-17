@@ -27,7 +27,7 @@ public class WorkDaoImpl implements WorkDao {
         workEntity.setTitle(work.getTitle());
         workEntity.setContent(work.getContent());
         workEntity.setWorkId(work.getWorkId());
-        workEntity.setGroupId(work.getGroupId());
+        workEntity.setClassId(work.getGroupId());
         workEntity.setDeadline(work.getDeadline());
         return workEntity;
     }
@@ -35,7 +35,7 @@ public class WorkDaoImpl implements WorkDao {
     private Work transportWorkEntity(WorkEntity workEntity) {
         Work work = new Work();
         work.setBoardId(workEntity.getBoardId());
-        work.setGroupId(workEntity.getGroupId());
+        work.setGroupId(workEntity.getClassId());
         work.setWorkId(workEntity.getWorkId());
         work.setTitle(workEntity.getTitle());
         work.setContent(workEntity.getContent());

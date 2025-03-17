@@ -23,7 +23,7 @@ public class Board {
     public static Board changeBoard(BoardEntity boardEntity) {
         Board board = new Board();
         board.setBoardId(boardEntity.getBoardId());
-        board.setGroupId(boardEntity.getGroupId());
+        board.setGroupId(boardEntity.getClassId());
         board.setUserId(boardEntity.getUser().getId());
         board.setType(boardEntity.getType());
         board.setTitle(boardEntity.getTitle());

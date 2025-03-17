@@ -74,7 +74,7 @@ public class BoardServiceImpl implements BoardService {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setTitle(board.getTitle());
         boardEntity.setContent(board.getContent());
-        boardEntity.setGroupId(board.getGroupId());
+        boardEntity.setClassId(board.getGroupId());
         return boardEntity;
     }
 

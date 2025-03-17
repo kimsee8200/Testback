@@ -1,8 +1,6 @@
 package org.example.plain.domain.calendar.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.example.plain.domain.calendar.entity.CalendarEntity;
 import org.example.plain.domain.user.entity.User;
 
@@ -11,6 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalendarResponse {
 
     private Long calId;
@@ -19,9 +19,6 @@ public class CalendarResponse {
     private LocalDateTime dateInfo;
     private User user;
 
-    public CalendarResponse() {
-
-    }
 
     public static CalendarResponse from(CalendarEntity calendarEntity) {
         CalendarResponse response = new CalendarResponse();

@@ -1,8 +1,6 @@
 package org.example.plain.domain.notice.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.example.plain.domain.notice.entity.NoticeEntity;
 import org.example.plain.domain.user.entity.User;
 
@@ -11,6 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NoticeResponse{
 
     private Long noticeId;
@@ -20,9 +20,6 @@ public class NoticeResponse{
     private LocalDateTime modifiedAt;
     private User user;
 
-    public NoticeResponse() {
-
-    }
 
     public static NoticeResponse from(NoticeEntity noticeEntity) {
         NoticeResponse response = new NoticeResponse();

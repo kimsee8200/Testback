@@ -35,14 +35,14 @@ public class CalendarController {
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
-    @GetMapping
-    public ResponseEntity<ResponseBody<List<CalendarResponse>>> getCalendar(){
-
-        ResponseBody<List<CalendarResponse>> responseBody = calendarService.getCalendar();
-
-        return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
-
-    }
+//    @GetMapping
+//    public ResponseEntity<ResponseBody<List<CalendarResponse>>> getCalendar(){
+//
+//        ResponseBody<List<CalendarResponse>> responseBody = calendarService.getCalendar();
+//
+//        return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
+//
+//    }
     //?상의필요
     @GetMapping("/List/{calId}")
     public ResponseEntity<ResponseBody<CalendarResponse>> getDetailCalendar(

@@ -5,25 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/controller/CalendarController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/entity/CalendarEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/repository/CalendarRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/service/CalendarService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentUpdateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/repository/NoticeCommentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/canlender/dao/CalenderDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/canlender/dao/CalenderDaoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/canlender/dto/Calender.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/controller/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/controller/CalendarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/entity/NoticeCommentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/entity/NoticeCommentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/entity/NoticeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/entity/NoticeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/service/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/service/NoticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +97,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\study\plain-lkn\Plain\src\main\resources" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.plain.domain.notice.dto" />
       <recent name="org.example.plain.domain.notice.repository" />

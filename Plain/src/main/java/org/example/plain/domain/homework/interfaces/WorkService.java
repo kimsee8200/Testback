@@ -5,10 +5,11 @@ import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.springframework.security.core.Authentication;
 
+import java.io.File;
 import java.util.List;
 
 
-public interface WorkService {
+public interface WorkService extends FileService{
     void insertWork(Work work, String groupId, Authentication authentication);
 
     void updateWork(Work work, String workId, String userId);
@@ -22,4 +23,6 @@ public interface WorkService {
     List<Work> selectGroupWorks(String groupId);
 
     List<WorkSubmitFieldResponse> getSubmitList(String workId);
+
+    List<File> getWorkResults(String workId, String userid);
 }

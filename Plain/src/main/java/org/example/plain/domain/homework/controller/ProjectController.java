@@ -5,6 +5,7 @@ import org.example.plain.common.ResponseField;
 import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
+import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.service.WorkMemberServiceImpl;
 import org.example.plain.domain.homework.service.WorkServiceImpl;
 import org.example.plain.domain.homework.dto.Work;
@@ -23,16 +24,16 @@ import java.util.List;
 
 @Tag(name = "homework", description = "과제 도메인.")
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/assignment")
 public class ProjectController {
 
-    WorkServiceImpl workService;
+    WorkService workService;
     WorkMemberServiceImpl workMemberService;
     BoardServiceImpl boardService;
 
     // 수정 필요. -> 과제로.
 
-    @PostMapping("/new_project")
+    @PostMapping("/new_assignment")
     public ResponseEntity<?> projectInsert(Work work, String groupId, Authentication authentication){
         workService.insertWork(work, groupId, authentication);
         return ResponseEntity.noContent().build();
@@ -51,12 +52,10 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{board_id}/details")
-    public ResponseEntity<ResponseField<Work>> getWorkDetail(@PathVariable(value = "board_id") String board_id) throws Exception {
-        Board board = boardService.getBoard(board_id);
-        if(!(board instanceof Work)){
-            throw new Exception();
-        }
+    @GetMapping("/{work_id}/details")
+    public ResponseEntity<ResponseField<Work>> getWorkDetail(@PathVariable(value = "work_id") String work_id) throws Exception {
+        Board board = boardService.getBoard(work_id);
+        workService.selectWork(work_id);
         return new ResponseMaker<Work>().ok((Work) board);
     }
 

@@ -5,6 +5,7 @@ import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
+import org.example.plain.domain.homework.interfaces.FileService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
@@ -24,9 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,9 +47,9 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public void insertWork(Work work, String groupId, Authentication authentication) {
+    public void insertWork(Work work, String classId, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        ClassMember classMember = groupMemberRepository.findById(new ClassMemberId(groupId,userDetails.getUser().getId())).orElseThrow();
+        ClassMember classMember = groupMemberRepository.findById(new ClassMemberId(classId,userDetails.getUser().getId())).orElseThrow();
 
         if (!classMember.getClassLecture().getInstructor().getId().equals(userDetails.getUser().getId())) {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
@@ -60,7 +59,7 @@ public class WorkServiceImpl implements WorkService {
        // workEntity.setBoardId(makeUUID()); // 임시 설정.
         workEntity.setWorkId(makeUUID());
         workEntity.setUserId(userDetails.getUser().getId());
-        workEntity.setGroupId(groupId);
+        workEntity.setClassId(classId);
         workEntity.setUser(classMember.getUser());
         workEntity.setGroup(classMember.getClassLecture());
         boardRepository.save(workEntity);
@@ -111,7 +110,7 @@ public class WorkServiceImpl implements WorkService {
         for(MultipartFile file : multifiles){
 
             FileEntity fileEntity = new FileEntity();
-            String filename = makeFilename(file.getOriginalFilename(),workSubmitField.getUserId());
+            String filename = makeFilename(Objects.requireNonNull(file.getOriginalFilename()),workSubmitField.getUserId());
 
             saveFile(file,filename);
 
@@ -153,14 +152,30 @@ public class WorkServiceImpl implements WorkService {
        return workSubmitFields;
     }
 
+    @Override
     public File getFile (String filename){
         File file = new File(filepath+filename).exists() ? new File(filepath+filename):null;
         return file;
     }
 
+    @Override
+    public List<File> getFiles(String id, String userId) {
+        return List.of();
+    }
 
 
-    private String makeFilename (String originalFilename, String userId){
+    @Override
+    public void deleteFile(String filename) {
+        File file = new File(filepath+filename);
+        if(file.exists()){
+            file.delete();
+        }else {
+            throw new NoSuchElementException("파일이 존재하지 않습니다.");
+        }
+    }
+
+
+    public String makeFilename (String originalFilename, String userId){
         Integer count = 1;
         int split = originalFilename.lastIndexOf(".");
         String name = originalFilename.substring(0, split);
@@ -173,7 +188,7 @@ public class WorkServiceImpl implements WorkService {
         return userId+name+addSide+extending;
     }
 
-    private File saveFile(MultipartFile file, String filename) {
+    public File saveFile(MultipartFile file, String filename) {
         File file1 = new File(filepath+filename);
         try {
             file.transferTo(file1);
@@ -183,7 +198,7 @@ public class WorkServiceImpl implements WorkService {
         return file1;
     }
 
-    private List<File> getFiles(List<FileEntity> fileEntities) {
+    public List<File> getFiles(List<FileEntity> fileEntities) {
         List<File> files = new ArrayList<>();
         for (FileEntity fileEntity:fileEntities){
             File file1 = new File(fileEntity.getFilename());

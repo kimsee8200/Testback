@@ -1,9 +1,11 @@
 package org.example.plain.domain.homework.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.groupmember.entity.GroupMemberId;
+import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.entity.ClassMemberId;
+import org.example.plain.domain.classMember.repository.ClassMemberRepository;
 import org.example.plain.domain.homework.dto.Work;
+import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.WorkMemberService;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.entity.WorkEntity;
@@ -24,9 +26,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkMemberServiceImpl implements WorkMemberService {
 
-    private final GroupMemberRepository groupMemberRepository;
     private final WorkMemberRepository workMemberRepository;
     private final BoardRepository boardRepository;
+    private final ClassMemberRepository classMemberRepository;
 
     @Override
     public void addHomeworkMember(String workId, String memberId, Authentication authentication) {
@@ -39,10 +41,10 @@ public class WorkMemberServiceImpl implements WorkMemberService {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(400),"생성자에게 과제를 할당 할 수 없습니다.");
         }
 
+        ClassMember classMember = classMemberRepository.getReferenceById(new ClassMemberId(work.getClassId(), memberId));
 
-        GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(work.getGroupId(), memberId)).orElseThrow();
 
-        WorkMemberEntity workMemberEntity = WorkMemberEntity.makeWorkMemberEntity(groupMember.getUser(), work);
+        WorkMemberEntity workMemberEntity = WorkMemberEntity.makeWorkMemberEntity(classMember.getUser(), work);
 
         System.out.println(workMemberEntity.getWork().getWorkId());
         System.out.println(workMemberEntity.getWorkMemberId().getWork());
@@ -58,7 +60,8 @@ public class WorkMemberServiceImpl implements WorkMemberService {
 
     @Override
     public WorkMember getSingleMembers(String workId, String memberId) {
-        return null;
+        WorkMemberEntity workMemberEntity = workMemberRepository.getReferenceById(new WorkMemberId(workId,memberId));
+        return WorkMember.changeEntity(workMemberEntity);
     }
 
     @Override
@@ -70,12 +73,12 @@ public class WorkMemberServiceImpl implements WorkMemberService {
         return workMemberList;
     }
 
-    private void checkLeader(String leaderId, String classId){
-        GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(leaderId, classId)).orElseThrow();
-        if(!groupMember.getAuthority().equals("LEADER")){
-            throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"권한이 없습니다.");
-        };
-    }
+//    private void checkLeader(String leaderId, String classId){
+//        GroupMember groupMember = groupMemberRepository.findById(new GroupMemberId(leaderId, classId)).orElseThrow();
+//        if(!groupMember.getAuthority().equals("LEADER")){
+//            throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"권한이 없습니다.");
+//        };
+//    }
 
     private void checkWriter(String writerId, String boardId){
         WorkEntity work = (WorkEntity) boardRepository.findByBoardId(boardId).orElseThrow();

@@ -25,7 +25,7 @@ public class BoardEntity {
     private String userId;
 
     @Column(name = "c_id", insertable = false, updatable = false)
-    private String groupId;
+    private String classId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "c_id", referencedColumnName = "c_id")
@@ -60,9 +60,9 @@ public class BoardEntity {
         }
     }
 
-    public void setGroupId(String groupId) {
+    public void setClassId(String groupId) {
         if (group != null) {
-            this.groupId = groupId;
+            this.classId = groupId;
         }
     }
 

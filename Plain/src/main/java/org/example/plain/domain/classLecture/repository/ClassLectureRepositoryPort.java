@@ -12,4 +12,6 @@ public interface ClassLectureRepositoryPort {
     List<ClassLecture> findAll();
 
     void delete(String id);
+
+    ClassLecture findByCode(String code);
 }

@@ -4,8 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
-import org.example.plain.common.enums.Message;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.example.plain.domain.user.service.TokenService;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,14 @@ public class ReissueController {
     private final TokenService tokenService;
 
     @PostMapping("/reissue")
-    public ResponseEntity<ResponseBody> reissue(HttpServletRequest request, HttpServletResponse response) {
-        ResponseBody responseBody = tokenService.reissue(request, response);
-        if (responseBody.getStatus().is4xxClientError()) {
-            return new ResponseEntity<>(responseBody,HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ResponseField> reissue(HttpServletRequest request, HttpServletResponse response) {
+        ResponseField responseField = tokenService.reissue(request, response);
+        if (responseField.getStatus().is4xxClientError()) {
+            return new ResponseEntity<>(responseField,HttpStatus.UNAUTHORIZED);
         }else {
-            response = (HttpServletResponse) responseBody.getBody();
-            responseBody.setBody(null);
-            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+            response = (HttpServletResponse) responseField.getBody();
+            responseField.setBody(null);
+            return new ResponseEntity<>(responseField, HttpStatus.OK);
         }
     }
 

@@ -32,7 +32,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public BoardEntity findById(String id) {
-        return boardRepository.findByBoardId(id);
+        return boardRepository.findByBoardId(id).orElseThrow();
     }
 
     @Override

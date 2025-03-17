@@ -4,10 +4,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.common.enums.Message;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
     private final JWTUtil jwtUtil;
 
-    public ResponseBody reissue(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseField reissue(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookie = request.getCookies();
         String token = null;
         for(Cookie c : cookie) {
@@ -26,21 +25,21 @@ public class TokenService {
         }
 
         if (token == null) {
-            return new ResponseBody<>("토큰이 존재하지 않습니다..", HttpStatus.UNAUTHORIZED,null);
+            return new ResponseField<>("토큰이 존재하지 않습니다..", HttpStatus.UNAUTHORIZED,null);
         }
 
         String id = jwtUtil.getId(token);
 
         if (jwtUtil.isExpired(token)) {
-            return new ResponseBody<>("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED,null);
+            return new ResponseField<>("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED,null);
         }
 
         if (jwtUtil.getType(token).equals("refresh")) {
             response.addHeader("Authorization", jwtUtil.makeJwtToken(id));
             response.addCookie(makeCookie(jwtUtil.makeRefreshToken(id)));
-            return new ResponseBody<>(Message.OK.name(), HttpStatus.OK, response);
+            return new ResponseField<>(Message.OK.name(), HttpStatus.OK, response);
         }else
-            return new ResponseBody<>("지원되지 않는 토큰 입니다.", HttpStatus.UNAUTHORIZED,null);
+            return new ResponseField<>("지원되지 않는 토큰 입니다.", HttpStatus.UNAUTHORIZED,null);
 
     }
 

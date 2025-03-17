@@ -3,7 +3,7 @@ package org.example.plain.user.service;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.plain.common.ResponseBody;
+import org.example.plain.common.ResponseField;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.example.plain.domain.user.service.TokenService;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ public class TokenServiceTest {
         Cookie cookie = new Cookie("token", jwtUtil.makeRefreshToken("test"));
         Mockito.when(request.getCookies()).thenReturn(new Cookie[]{cookie});
 
-        ResponseBody result = tokenService.reissue(request, response);
+        ResponseField result = tokenService.reissue(request, response);
 
         assertThat(result.getStatus()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isNotNull();
@@ -49,7 +49,7 @@ public class TokenServiceTest {
     public void isTokenNull(){
         Mockito.when(request.getCookies()).thenReturn(new Cookie[]{});
 
-        ResponseBody result = tokenService.reissue(request, response);
+        ResponseField result = tokenService.reissue(request, response);
 
         assertThat(result.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(result.getBody()).isNull();
@@ -61,7 +61,7 @@ public class TokenServiceTest {
         Cookie cookie = new Cookie("token", jwtUtil.makeJwtToken("test"));
         Mockito.when(request.getCookies()).thenReturn(new Cookie[]{cookie});
 
-        ResponseBody result = tokenService.reissue(request, response);
+        ResponseField result = tokenService.reissue(request, response);
 
         assertThat(result.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(result.getBody()).isNull();

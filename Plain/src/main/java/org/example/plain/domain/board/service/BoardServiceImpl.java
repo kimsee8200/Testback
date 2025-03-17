@@ -26,7 +26,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board getBoard(String id) {
-        BoardEntity board = boardRepository.findByBoardId(id);
+        BoardEntity board = boardRepository.findByBoardId(id).orElseThrow();
         if (board instanceof WorkEntity) {
             return Work.changeWorkEntity((WorkEntity) board);
         }else {

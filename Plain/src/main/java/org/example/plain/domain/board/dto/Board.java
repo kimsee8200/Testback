@@ -15,7 +15,7 @@ public class Board {
     private String boardId;
     private String groupId;
     private String userId;
-    private int type;
+    private String type;
     private String title;
     private String content;
     private LocalDateTime createTime;

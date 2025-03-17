@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.plain.domain.user.filters.JwtFilter;
 import org.example.plain.domain.user.service.JWTUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,7 +18,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 @TestPropertySource(properties = {"spring.jwt.expires=1800000","spring.jwt.refresh.expires=864000000"})
-@TestPropertySource(properties = {"spring.jwt.screat=rjwltakfzldltkdqndnqns93dcxptmdxa"})
+@TestPropertySource(properties = {"spring.jwt.secret=rjwltakfzldltkdqndnqnsdcxptmdxadksfslkafjlkfafasdsasfsaf"})
 @SpringJUnitConfig(classes = {JWTUtil.class})
 public class JwtFilterTest {
 
@@ -62,5 +63,14 @@ public class JwtFilterTest {
         jwtFilter.doFilter(request, response, chain);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         Mockito.verify(response).getWriter();
+    }
+
+    @Test
+    public void noBearerToken() throws Exception {
+        String validToken = jwtUtil.makeJwtToken("test").substring(7);
+        Mockito.doReturn(validToken).when(request).getHeader("Authorization");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            jwtFilter.doFilter(request, response, chain);
+        });
     }
 }

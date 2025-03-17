@@ -24,11 +24,11 @@ public class BoardEntity {
     @Column(name = "user_id", insertable = false, updatable = false)
     private String userId;
 
-    @Column(name = "g_id", insertable = false, updatable = false)
+    @Column(name = "c_id", insertable = false, updatable = false)
     private String groupId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_id", referencedColumnName = "g_id")
+    @JoinColumn(name = "c_id", referencedColumnName = "c_id")
     private ClassLecture group;
 
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -42,7 +42,7 @@ public class BoardEntity {
     private String content;
 
     @Column(name = "board_type", insertable = false, updatable = false)
-    private Integer type;
+    private String type;
 
     @Column(name = "create_date")
     @CreatedDate
@@ -90,7 +90,7 @@ public class BoardEntity {
         }
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

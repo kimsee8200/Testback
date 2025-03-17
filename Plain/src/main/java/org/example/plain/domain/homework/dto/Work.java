@@ -17,7 +17,7 @@ public class Work extends Board {
     }
 
     public Work(String boardId, String groupId, String writer, String workId, String title, String content, LocalDateTime deadline) {
-        super(boardId,groupId,writer,2,title,content,deadline);
+        super(boardId,groupId,writer,"Work",title,content,deadline);
         this.workId = workId;
         this.deadline = deadline;
     }

@@ -3,7 +3,7 @@ package org.example.plain.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
-import org.example.plain.domain.user.dto.OAuth2Response;
+import org.example.plain.common.handler.SecurityExceptionHandler;
 import org.example.plain.domain.user.filters.JwtFilter;
 import org.example.plain.domain.user.filters.LoginFilter;
 import org.example.plain.domain.user.handler.CustomOAuth2SuccessHandler;
@@ -16,7 +16,6 @@ import org.example.plain.domain.user.service.UserServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,8 +23,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.NullRememberMeServices;
-import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -38,6 +35,7 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final JWTUtil jwtUtil;
     private final CustomOauth2UserService oauth2UserService;
+    private final SecurityExceptionHandler securityExceptionHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -79,6 +77,9 @@ public class SecurityConfig {
                                 ).successHandler(new CustomOAuth2SuccessHandler(jwtUtil,objectMapper)
                         )
 
+                )
+                .exceptionHandling(ex ->
+                        ex.authenticationEntryPoint(securityExceptionHandler)
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

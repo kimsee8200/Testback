@@ -4,120 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/ResponseField.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/SecurityUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/entity/TimeStampEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/enums/ClassType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/exception/CustomException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/exception/PaymentRequireException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/handler/SecurityExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/controller/ClassJoinController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassMemberResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/service/ClassJoinService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/controller/GroupMemberController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/dto/GroupMemberDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/entity/ClassMember.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/repository/ClassMemberRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/service/GroupMemberService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/service/GroupMemberServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/WorkMemberServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/controller/lectureController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/dto/LectureMemberRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/dto/LectureMemberResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/entity/LectureMember.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/interfaces/LectureMemberService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/repository/LectureMemberRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/lectureMember/service/LectureMemberImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/data/LectureResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/data/LectureResponsePerchers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/entity/Lecture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/interfaces/LectureService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/repository/LectureRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/lecture/normal/service/LectureServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/domain/Payments.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/domain/PaymentsResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/domain/PaymentsToss.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/interfaces/PaymentsCheckService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/payments/service/TossPaymentsCheckServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/UserLoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/UserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/userManage/UserMenageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/userManage/interfaces/UserManageService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/userManage/service/UserManageServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/lecture/lectureServiceUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/scenario/homework/HomeworkTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/ResponseBody.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/ResponseMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/ResponseMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/handler/ControllerExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/handler/ControllerExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/controller/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/controller/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/dao/BoardDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/dao/BoardDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/dto/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/dto/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/entity/BoardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/entity/BoardEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/service/BoardServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/board/service/BoardServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/controller/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/controller/CalendarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/service/CalendarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/service/CalendarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/controller/ClassLectureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/controller/ClassLectureController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassAddRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassAddRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/dto/ClassResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/entity/ClassLecture.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/entity/ClassLecture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/repository/ClassLectureRepositoryPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/service/ClassInviteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/service/ClassLectureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classLecture/service/ClassLectureService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/controller/GroupMemberController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/dto/GroupMemberDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/entity/GroupMember.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/entity/GroupMemberId.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/entity/ClassMemberId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/service/GroupMemberService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/groupmember/service/GroupMemberServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/Service/interfaces/WorkMemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/WorkMemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/Service/interfaces/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/WorkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/Service/serviceImpl/WorkMemberServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/Service/serviceImpl/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/WorkServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dao/WorkDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dao/WorkDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/Work.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/Work.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitField.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberId.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/member/dto/GroupMemberDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/member/dto/GroupMemberDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/service/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/service/NoticeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/CustomOAuth2User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/CustomOAuth2User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/UserRequestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/dto/UserRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/JwtFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/LoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/LoginFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/handler/CustomOAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/handler/CustomOAuth2SuccessHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/interfaces/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/CustomOauth2UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/CustomOauth2UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/JWTUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/BoardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/BoardRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/GroupMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/GroupMemberRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/WorkMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/WorkMemberRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/JwtFilterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/JwtFilterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/LoginFilterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/LoginFilterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/handler/CustomOAuth2SuccessHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/handler/CustomOAuth2SuccessHandlerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/CustomOauth2UserRequestResponseServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/CustomOauth2UserRequestServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/TokenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/TokenServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/UserServiceTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,7 +83,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/notice 병합 중",
+    "git-widget-placeholder": "feat/notice",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/study/product-order-service",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"

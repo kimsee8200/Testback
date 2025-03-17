@@ -26,7 +26,7 @@ public class Work extends Board {
         Work work = new Work();
         work.setWorkId(workEntity.getWorkId());
         work.setDeadline(workEntity.getDeadline());
-        work.setGroupId(workEntity.getGroupId());
+        work.setGroupId(workEntity.getClassId());
         work.setBoardId(workEntity.getBoardId());
         work.setUserId(workEntity.getUser().getId());
         work.setTitle(workEntity.getTitle());

@@ -27,7 +27,7 @@ public class WorkEntity extends BoardEntity {
     public static WorkEntity workToWorkEntity(Work work) {
         WorkEntity workEntity = new WorkEntity();
         workEntity.setBoardId(work.getBoardId());
-        workEntity.setGroupId(work.getGroupId());
+        workEntity.setClassId(work.getGroupId());
         workEntity.setWorkId(work.getWorkId());
         workEntity.setTitle(work.getTitle());
         workEntity.setContent(work.getContent());

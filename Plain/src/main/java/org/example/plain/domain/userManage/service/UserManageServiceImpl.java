@@ -2,7 +2,8 @@ package org.example.plain.domain.userManage.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.classLecture.dto.ClassResponse;
-import org.example.plain.domain.groupmember.entity.GroupMember;
+import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.repository.ClassMemberRepository;
 import org.example.plain.domain.lecture.normal.entity.Lecture;
 import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.dto.UserResponse;
@@ -21,7 +22,7 @@ import java.util.List;
 public class UserManageServiceImpl implements UserManageService {
 
     private final UserRepository userRepository;
-    private final GroupMemberRepository groupMemberRepository;
+    private final ClassMemberRepository groupMemberRepository;
 
     @Override
     public UserResponse userSingleInfo(String userId) {
@@ -34,10 +35,10 @@ public class UserManageServiceImpl implements UserManageService {
     @Transactional
     public List<ClassResponse> getMyClasses(String userId) {
         User user = userRepository.findById(userId).orElseThrow();
-        List<GroupMember> groupMembers = groupMemberRepository.findAllByUser(user).orElseThrow();
+        List<ClassMember> groupMembers = groupMemberRepository.findByUser(user).orElseThrow();
         List<ClassResponse> classResponses = new ArrayList<>();
-        for(GroupMember groupMember : groupMembers) {
-            classResponses.add(ClassResponse.chaingeClassLectureToResponse(groupMember.getGroup()));
+        for(ClassMember groupMember : groupMembers) {
+            classResponses.add(ClassResponse.from(groupMember.getClassLecture()));
         }
         return classResponses;
     }

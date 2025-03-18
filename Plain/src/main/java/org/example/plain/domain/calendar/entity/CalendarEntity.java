@@ -2,7 +2,7 @@ package org.example.plain.domain.calendar.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.example.plain.domain.notice.entity.NoticeEntity;
+import org.example.plain.common.enums.Category;
 import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,16 +32,20 @@ public class CalendarEntity {
     @Column(name = "content")
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     @Column(name = "date_info")
     @CreatedDate
     private LocalDateTime dateInfo;
 
     private static final AtomicLong counter = new AtomicLong();
 
-    public static CalendarEntity create(String title, String content, User user){
+    public static CalendarEntity create(String title, String content, Category category, User user){
         CalendarEntity calendarEntity  = new CalendarEntity();
         calendarEntity.calId = counter.incrementAndGet();
         calendarEntity.title = title;
+        calendarEntity.category = category;
         calendarEntity.content = content;
         calendarEntity.user = user;
         calendarEntity.dateInfo = LocalDateTime.now();

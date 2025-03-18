@@ -2,6 +2,7 @@ package org.example.plain.domain.calendar.dto;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.example.plain.common.enums.Category;
 import org.example.plain.domain.user.entity.User;
 
 @Getter
@@ -11,5 +12,6 @@ public class CalendarRequest {
     private Long calId;
     private String title;
     private String content;
+    private Category category;
     private User user;
 }

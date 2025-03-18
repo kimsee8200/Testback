@@ -2,6 +2,7 @@ package org.example.plain.domain.calendar.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.ResponseField;
+import org.example.plain.common.enums.Category;
 import org.example.plain.domain.calendar.dto.CalendarRequest;
 import org.example.plain.domain.calendar.dto.CalendarResponse;
 import org.example.plain.domain.calendar.service.CalendarService;
@@ -35,14 +36,14 @@ public class CalendarController {
         return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
     }
 
-//    @GetMapping
-//    public ResponseEntity<ResponseBody<List<CalendarResponse>>> getCalendar(){
-//
-//        ResponseBody<List<CalendarResponse>> responseBody = calendarService.getCalendar();
-//
-//        return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
-//
-//    }
+    @GetMapping("/List/{category}")
+    public ResponseEntity<ResponseField<List<CalendarResponse>>> getCalendar(@PathVariable Category category){
+
+        ResponseField<List<CalendarResponse>> responseBody = calendarService.getCalendar(category);
+
+        return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
+
+    }
     //?상의필요
     @GetMapping("/List/{calId}")
     public ResponseEntity<ResponseField<CalendarResponse>> getDetailCalendar(

@@ -2,6 +2,7 @@ package org.example.plain.domain.calendar.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.ResponseField;
+import org.example.plain.common.enums.Category;
 import org.example.plain.common.enums.Message;
 import org.example.plain.domain.calendar.dto.CalendarRequest;
 import org.example.plain.domain.calendar.dto.CalendarResponse;
@@ -12,6 +13,10 @@ import org.example.plain.domain.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +34,8 @@ public class CalendarService {
         // NoticeEntity 생성 (User 포함)
         CalendarEntity insertCalendar = CalendarEntity.create(
                 calendarRequest.getTitle(),
-                calendarRequest.getTitle(),
+                calendarRequest.getContent(),
+                calendarRequest.getCategory(),
                 user
         );
 
@@ -54,6 +60,21 @@ public class CalendarService {
         );
 
         return new ResponseField<>(Message.OK.name(), HttpStatus.OK, CalendarResponse.from(calendarEntity));
+    }
+
+    public ResponseField<List<CalendarResponse>> getCalendar(Category category){
+        List<CalendarEntity> calendars = calendarRepository.findByCategory(category);
+
+        if (calendars.isEmpty()) {
+            throw new NoSuchElementException("해당 카테고리에 대한 캘린더가 없습니다.");
+        }
+        
+        // List<Calendar> -> List<CalendarResponse> 변환
+        List<CalendarResponse> calendarResponses = calendars.stream()
+                .map(CalendarResponse::from)
+                .collect(Collectors.toList());
+
+        return new ResponseField<>(Message.OK.name(), HttpStatus.OK, calendarResponses);
     }
 
     public ResponseField<CalendarResponse> getDetailCalendar(Long calId){

@@ -2,9 +2,6 @@ package org.example.plain.domain.payments.service;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.example.plain.domain.groupmember.service.GroupMemberService;
-import org.example.plain.domain.lecture.lectureMember.interfaces.LectureMemberService;
-import org.example.plain.domain.lecture.lectureMember.service.LectureMemberImpl;
 import org.example.plain.domain.payments.domain.Payments;
 import org.example.plain.domain.payments.domain.PaymentsToss;
 import org.example.plain.domain.payments.interfaces.PaymentsCheckService;
@@ -13,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

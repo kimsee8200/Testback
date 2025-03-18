@@ -1,12 +1,16 @@
 package org.example.plain.domain.calendar.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.example.plain.common.enums.Category;
 import org.example.plain.domain.user.entity.User;
 
 @Getter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalendarRequest {
 
     private Long calId;

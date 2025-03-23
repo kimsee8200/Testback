@@ -16,6 +16,7 @@ import org.example.plain.domain.user.service.UserServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -55,13 +56,13 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form.disable())
                 .userDetailsService(userDetailsService)
-                .addFilterAt(new LoginFilter(jwtUtil, authenticationConfiguration.getAuthenticationManager(),objectMapper), UsernamePasswordAuthenticationFilter.class)
+                .with(new Custom(), custom -> custom.getClass())
                 .addFilterAt(new JwtFilter(jwtUtil), LoginFilter.class)
                 .authorizeHttpRequests(authorizeRequests ->
                         {
                             // sing_in은 회원가입 페이지로 이동.
                             authorizeRequests.requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**").permitAll();
-                            authorizeRequests.requestMatchers("/account/create","/login","/","/sign_up").permitAll();
+                            authorizeRequests.requestMatchers("/account/create","/users/login","/","/sign_up").permitAll();
                             authorizeRequests.anyRequest().authenticated();
                         }
                 )
@@ -71,7 +72,7 @@ public class SecurityConfig {
                 })
                 .oauth2Login(oauth2 ->
                         oauth2.authorizationEndpoint(authorizationEndpoint ->
-                                        authorizationEndpoint.baseUri("/user/login")
+                                        authorizationEndpoint.baseUri("/users/login")
                                 ).userInfoEndpoint(userInfoEndpoint ->
                                         userInfoEndpoint.userService(oauth2UserService)
                                 ).successHandler(new CustomOAuth2SuccessHandler(jwtUtil,objectMapper)
@@ -84,5 +85,16 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
+    }
+
+    public class Custom extends AbstractHttpConfigurer<Custom, HttpSecurity>{
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            LoginFilter jwtAuthenticationFilter = new LoginFilter(jwtUtil,authenticationManager,objectMapper);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
+            builder
+                    .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        }
     }
 }

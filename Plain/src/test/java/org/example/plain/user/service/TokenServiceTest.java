@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.plain.common.ResponseField;
+import org.example.plain.domain.user.repository.RefreshTokenRepository;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.example.plain.domain.user.service.TokenService;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +24,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class TokenServiceTest {
     @Autowired
     private JWTUtil jwtUtil;
+    private RefreshTokenRepository repository;
     private TokenService tokenService;
     private HttpServletRequest request;
     private HttpServletResponse response;
 
     @BeforeEach
     public void setUp() {
-        tokenService = new TokenService(jwtUtil);
+        repository = Mockito.mock(RefreshTokenRepository.class);
+        tokenService = new TokenService(jwtUtil,repository);
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
     }

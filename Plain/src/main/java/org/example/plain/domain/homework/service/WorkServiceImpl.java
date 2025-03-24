@@ -10,6 +10,7 @@ import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
 import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.dto.CustomUserDetails;
+import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.WorkMemberRepository;
@@ -108,6 +109,11 @@ public class WorkServiceImpl implements WorkService {
 
         List<FileEntity> files = new ArrayList<>();
         List<MultipartFile> multifiles = workSubmitField.getFile();
+
+        Work work = this.selectWork(workSubmitField.getWorkId());
+
+        User user = groupMemberRepository.findById(new ClassMemberId(work.getGroupId(),workSubmitField.getUserId())).orElseThrow().getUser();
+
         for(MultipartFile file : multifiles){
 
             FileEntity fileEntity = new FileEntity();
@@ -116,6 +122,9 @@ public class WorkServiceImpl implements WorkService {
             saveFile(file,filename);
 
             fileEntity.setFilename(filename);
+            fileEntity.setUser(user);
+            fileEntity.setFilePath(filepath+filename);
+
             files.add(fileEntity);
         }
         entity.setFileEntities(files);

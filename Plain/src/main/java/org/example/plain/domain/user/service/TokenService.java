@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.ResponseField;
 import org.example.plain.common.enums.Message;
+import org.example.plain.domain.user.entity.RefreshToken;
+import org.example.plain.domain.user.repository.RefreshTokenRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
     private final JWTUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public ResponseField reissue(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookie = request.getCookies();
         String token = null;
         for(Cookie c : cookie) {
-            if(c.getName().equals("token")) {
+            if (c.getName().equals("token")) {
                 token = c.getValue();
                 break;
             }
@@ -30,13 +33,16 @@ public class TokenService {
 
         String id = jwtUtil.getId(token);
 
-        if (jwtUtil.isExpired(token)) {
+        if (jwtUtil.isExpired(token)||refreshTokenRepository.get(token) == null) {
             return new ResponseField<>("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED,null);
         }
 
         if (jwtUtil.getType(token).equals("refresh")) {
+            token = jwtUtil.makeRefreshToken(id);
+
+            refreshTokenRepository.put(token, new RefreshToken(token, jwtUtil.getId(token)));
             response.addHeader("Authorization", jwtUtil.makeJwtToken(id));
-            response.addCookie(makeCookie(jwtUtil.makeRefreshToken(id)));
+            response.addCookie(makeCookie(token));
             return new ResponseField<>(Message.OK.name(), HttpStatus.OK, response);
         }else
             return new ResponseField<>("지원되지 않는 토큰 입니다.", HttpStatus.UNAUTHORIZED,null);

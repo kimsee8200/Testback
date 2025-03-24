@@ -26,8 +26,6 @@ public class ReissueController {
         if (responseField.getStatus().is4xxClientError()) {
             return new ResponseEntity<>(responseField,HttpStatus.UNAUTHORIZED);
         }else {
-            response = (HttpServletResponse) responseField.getBody();
-            responseField.setBody(null);
             return new ResponseEntity<>(responseField, HttpStatus.OK);
         }
     }

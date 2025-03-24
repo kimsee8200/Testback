@@ -8,6 +8,7 @@ import org.example.plain.domain.user.filters.JwtFilter;
 import org.example.plain.domain.user.filters.LoginFilter;
 import org.example.plain.domain.user.handler.CustomOAuth2SuccessHandler;
 import org.example.plain.domain.user.interfaces.UserService;
+import org.example.plain.domain.user.repository.RefreshTokenRepository;
 import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.domain.user.service.CustomOauth2UserService;
 import org.example.plain.domain.user.service.CustomUserDetailsService;
@@ -37,6 +38,7 @@ public class SecurityConfig {
     private final JWTUtil jwtUtil;
     private final CustomOauth2UserService oauth2UserService;
     private final SecurityExceptionHandler securityExceptionHandler;
+    private final RefreshTokenRepository repository;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -91,7 +93,7 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-            LoginFilter jwtAuthenticationFilter = new LoginFilter(jwtUtil,authenticationManager,objectMapper);
+            LoginFilter jwtAuthenticationFilter = new LoginFilter(repository, jwtUtil,authenticationManager,objectMapper);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
             builder
                     .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

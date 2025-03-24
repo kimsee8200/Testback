@@ -11,6 +11,8 @@ import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.dto.UserRequest;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.domain.user.filters.LoginFilter;
+import org.example.plain.domain.user.repository.RefreshTokenRepository;
+import org.example.plain.domain.user.repository.UserRepository;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 
 @TestPropertySource(properties = {"spring.jwt.expires=1800000","spring.jwt.refresh.expires=864000000"})
-@TestPropertySource(properties = {"spring.jwt.screat=rjwltakfzldltkdqndnqns93dcxptmdxa"})
+@TestPropertySource(properties = {"spring.jwt.secret=rjwltakfzldltkdqndnqns93dcxptmdxdfasf32323sdfasfasdfsdfasfasfsadfasdfasfa"})
 @SpringJUnitConfig(classes = {JWTUtil.class})
 public class LoginFilterTest {
 
@@ -44,6 +46,7 @@ public class LoginFilterTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private UserRequest userRequest;
+    private RefreshTokenRepository repository;
 
     @BeforeEach
     public void init(){
@@ -51,6 +54,7 @@ public class LoginFilterTest {
         objectMapper = Mockito.mock(ObjectMapper.class);
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
+        repository = Mockito.mock(RefreshTokenRepository.class);
         userRequest = new UserRequest("test","park","park@gmail.com","test1234");
     }
 
@@ -62,7 +66,7 @@ public class LoginFilterTest {
 
         ArgumentCaptor<UsernamePasswordAuthenticationToken> chapter = ArgumentCaptor.forClass(UsernamePasswordAuthenticationToken.class);
 
-        LoginFilter loginFilter = new LoginFilter(jwtUtil, authenticationManager, objectMapper);
+        LoginFilter loginFilter = new LoginFilter(repository, jwtUtil, authenticationManager, objectMapper);
         loginFilter.attemptAuthentication(request, response);
 
         Mockito.verify(authenticationManager).authenticate(Mockito.any(Authentication.class));
@@ -74,7 +78,7 @@ public class LoginFilterTest {
 
     @Test
     public void isAuthenticationSuccess() throws Exception{
-        LoginFilter loginFilter = new LoginFilter(jwtUtil, authenticationManager, objectMapper);
+        LoginFilter loginFilter = new LoginFilter(repository, jwtUtil, authenticationManager, objectMapper);
 
         FilterChain chain = Mockito.mock(FilterChain.class);
         Authentication authentication = Mockito.mock(Authentication.class);
@@ -87,11 +91,12 @@ public class LoginFilterTest {
         Mockito.verify(response,Mockito.atLeastOnce()).addCookie(Mockito.any());
         Mockito.verify(response,Mockito.atLeastOnce()).addHeader(eq("Authorization"),Mockito.anyString());
         Mockito.verify(response,Mockito.never()).sendRedirect(Mockito.anyString());
+        Mockito.verify(repository,Mockito.atLeastOnce()).put(Mockito.anyString(),Mockito.any());
     }
 
     @Test
     public void isAuthenticationFailed() throws Exception{
-        LoginFilter loginFilter = new LoginFilter(jwtUtil, authenticationManager, objectMapper);
+        LoginFilter loginFilter = new LoginFilter(repository, jwtUtil, authenticationManager, objectMapper);
 
         AuthenticationException failure = Mockito.mock(AuthenticationException.class);
 
@@ -110,7 +115,7 @@ public class LoginFilterTest {
 
     @Test
     public void makeCookie() throws Exception {
-        LoginFilter loginFilter = new LoginFilter(jwtUtil, authenticationManager, objectMapper);
+        LoginFilter loginFilter = new LoginFilter(repository, jwtUtil, authenticationManager, objectMapper);
 
         Cookie cookie = ReflectionTestUtils.invokeMethod(loginFilter, "makeCookie", "tookenteeessst");
 

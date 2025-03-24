@@ -4,11 +4,12 @@ package org.example.plain.homework.service;
 import org.example.plain.common.enums.Role;
 import org.example.plain.domain.board.entity.BoardEntity;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
-import org.example.plain.domain.groupmember.entity.GroupMember;
-import org.example.plain.domain.groupmember.entity.GroupMemberId;
+import org.example.plain.domain.classMember.entity.ClassMember;
+import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.interfaces.WorkService;
+import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.homework.service.WorkServiceImpl;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.entity.User;
@@ -48,6 +49,7 @@ public class WorkServiceTest {
     private List<Work> works;
     private List<ClassLecture> classLectures;
     private List<User> users;
+    private FileRepository fileRepository;
 
     @BeforeEach
     public void init(){
@@ -55,7 +57,8 @@ public class WorkServiceTest {
         boardRepository = Mockito.mock(BoardRepository.class);
         workSubmitFieldRepository = Mockito.mock(WorkSubmitFieldRepository.class);
         groupMemberRepository = Mockito.mock(GroupMemberRepository.class);
-        workService = new WorkServiceImpl(boardRepository, workSubmitFieldRepository, workMemberRepository, groupMemberRepository);
+        fileRepository = Mockito.mock(FileRepository.class);
+        workService = new WorkServiceImpl(boardRepository, workSubmitFieldRepository, workMemberRepository, groupMemberRepository, fileRepository);
 
 
         works =  new ArrayList<>();
@@ -68,9 +71,9 @@ public class WorkServiceTest {
         users.add(new User("parkdea", Role.LEADER_CLASS,"박대철","1111","park@gmail.com"));
 
         classLectures = new ArrayList<>();
-        classLectures.add(new ClassLecture("class1","로동 랜드",null,"로동을 배우는 클래스","1212",users.get(1)));
+        //classLectures.add(new ClassLecture("class1","로동 랜드",null,"로동을 배우는 클래스","1212",users.get(1)));
 
-        Mockito.when(groupMemberRepository.findById(new GroupMemberId("class1","parkdea"))).thenReturn(Optional.of(GroupMember.makeGroupMember(classLectures.get(0), users.get(1))));
+        Mockito.when(groupMemberRepository.findById(new ClassMemberId("class1","parkdea"))).thenReturn(Optional.of(new ClassMember(classLectures.get(0), users.get(1))));
     }
 
     @Test

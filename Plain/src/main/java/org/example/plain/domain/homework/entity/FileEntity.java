@@ -16,17 +16,18 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "file")
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileEntity{
 
-    @EmbeddedId
-    private FileEntityKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @MapsId("assignmentId")
     @ManyToOne
     @JoinColumn(name = "h_id")
     private WorkEntity board;
 
-    @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -35,6 +36,13 @@ public class FileEntity{
 
     @Column(name = "file_path")
     private String filePath;
+
+    public FileEntity(String filename, String filePath, WorkEntity board, User user) {
+        this.filename = filename;
+        this.filePath = filePath;
+        this.board = board;
+        this.user = user;
+    }
 
     public static List<FileEntity> fileEntities(List<File> files) {
         List<FileEntity> fileEntities = new ArrayList<>();
@@ -45,5 +53,6 @@ public class FileEntity{
         }
         return fileEntities;
     }
+
 }
 

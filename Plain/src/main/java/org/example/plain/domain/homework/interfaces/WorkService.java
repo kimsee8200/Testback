@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.List;
 
 
-public interface WorkService extends FileService{
+public interface WorkService{
     void insertWork(Work work, String groupId, Authentication authentication);
 
     void updateWork(Work work, String workId, String userId);

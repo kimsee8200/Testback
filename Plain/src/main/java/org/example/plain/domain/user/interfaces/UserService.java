@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     public boolean createUser(UserRequest userRequest);
-
     boolean updateUser(UserRequest userRequest);
-
     public boolean deleteUser(String id);
     public UserResponse getUser(String id);
     public UserResponse getUserByEmail(String email);

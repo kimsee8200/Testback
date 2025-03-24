@@ -5,6 +5,7 @@ import org.example.plain.common.ResponseField;
 import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
+import org.example.plain.domain.homework.interfaces.FileService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.service.WorkMemberServiceImpl;
 import org.example.plain.domain.homework.service.WorkServiceImpl;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ProjectController {
 
     WorkService workService;
+    FileService fileService;
     WorkMemberServiceImpl workMemberService;
     BoardServiceImpl boardService;
 
@@ -37,6 +39,11 @@ public class ProjectController {
     public ResponseEntity<?> projectInsert(Work work, String groupId, Authentication authentication){
         workService.insertWork(work, groupId, authentication);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<ResponseField<List<Work>>> getWorkList (String classId){
+        return new ResponseMaker<List<Work>>().ok(workService.selectGroupWorks(classId));
     }
 
     @PatchMapping("/{board_id}")
@@ -76,7 +83,7 @@ public class ProjectController {
 
     @GetMapping("/single_file/{filename}")
     public ResponseEntity<File> getSingleFile(@PathVariable String filename) throws Exception {
-        return ResponseEntity.ok().body(workService.getFile(filename));
+        return ResponseEntity.ok().body(fileService.getFile(filename));
     }
 
     @PostMapping(value = "/{work_id}/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -5,10 +5,10 @@ import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.homework.interfaces.FileService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.homework.entity.*;
+import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.GroupMemberRepository;
@@ -36,6 +36,7 @@ public class WorkServiceImpl implements WorkService {
     private final WorkSubmitFieldRepository workSubmitFieldRepository;
     private final WorkMemberRepository workMemberRepository;
     private final GroupMemberRepository groupMemberRepository;
+    private final FileRepository fileRepository;
 
     @Value("${file.path}")
     private String filepath;
@@ -152,23 +153,22 @@ public class WorkServiceImpl implements WorkService {
        return workSubmitFields;
     }
 
-    @Override
+
     public File getFile (String filename){
         File file = new File(filepath+filename).exists() ? new File(filepath+filename):null;
         return file;
     }
 
-    @Override
-    public List<File> getFiles(String id, String userId) {
-        return List.of();
-    }
 
 
-    @Override
-    public void deleteFile(String filename) {
-        File file = new File(filepath+filename);
+
+    public void deleteFile(Integer file_id) {
+        FileEntity entity = fileRepository.findById(file_id).orElseThrow(NullPointerException::new);
+
+        File file = new File(entity.getFilePath()+entity.getFilename());
         if(file.exists()){
             file.delete();
+            fileRepository.delete(entity);
         }else {
             throw new NoSuchElementException("파일이 존재하지 않습니다.");
         }
@@ -181,6 +181,7 @@ public class WorkServiceImpl implements WorkService {
         String name = originalFilename.substring(0, split);
         String extending = originalFilename.substring(split);
         String addSide = "";
+
         while(new File(userId+name+addSide+extending).exists()){
             addSide = "(" + count + ")";
             count++;
@@ -188,7 +189,24 @@ public class WorkServiceImpl implements WorkService {
         return userId+name+addSide+extending;
     }
 
+    public String makeFilename (String originalFilename){
+        Integer count = 1;
+        int split = originalFilename.lastIndexOf(".");
+        String name = originalFilename.substring(0, split);
+        String extending = originalFilename.substring(split);
+        String addSide = "";
+
+        while(new File(name+addSide+extending).exists()){
+            addSide = "(" + count + ")";
+            count++;
+        }
+        return name+addSide+extending;
+    }
+
+    // 파일을 서버나 S3에 저장하기 위한 것.
     public File saveFile(MultipartFile file, String filename) {
+        filename = makeFilename(filename);
+
         File file1 = new File(filepath+filename);
         try {
             file.transferTo(file1);

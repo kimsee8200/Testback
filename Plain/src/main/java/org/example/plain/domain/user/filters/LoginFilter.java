@@ -50,7 +50,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = jwtUtil.makeJwtToken(customUserDetails.getUser().getId());
         String refresh = jwtUtil.makeRefreshToken(customUserDetails.getUser().getId());
 
-        repository.put(refresh,new RefreshToken(refresh, customUserDetails.getUser().getId()));
+        repository.save(new RefreshToken(refresh, customUserDetails.getUser().getId()));
 
         response.addHeader("Authorization",token);
         response.addCookie(makeCookie(refresh));

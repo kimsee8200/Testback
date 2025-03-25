@@ -14,6 +14,7 @@ import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.entity.FileEntity;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
+import org.example.plain.domain.homework.entity.WorkSubmitFieldEntity;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.homework.service.WorkServiceImpl;
@@ -154,10 +155,11 @@ public class WorkServiceTest {
                 .thenReturn(Optional.of(mockGroupMember2));
 
 
-
         List<MultipartFile> files = new ArrayList<>();
         files.add(new MockMultipartFile("myfile","myfile.txt", (String) null, (byte[]) null));
         files.add(new MockMultipartFile("myfile","myfile2.jpg", (String) null, (byte[]) null));
+        files.add(new MockMultipartFile("myfile","myfile2.jpg", (String) null, (byte[]) null));
+
 
         WorkSubmitField workSubmitField = WorkSubmitField.builder()
                 .workId(mock.getWorkId())
@@ -168,8 +170,16 @@ public class WorkServiceTest {
         workService.submitWork(workSubmitField);
 
         Mockito.verify(workMemberRepository).save(Mockito.any(WorkMemberEntity.class));
-        Mockito.verify(fileRepository).save(Mockito.any(FileEntity.class));
+        Mockito.verify(workSubmitFieldRepository).save(Mockito.any(WorkSubmitFieldEntity.class));
+    }
 
+    @Test
+    public void checkSubmitWork(){
+        WorkSubmitFieldEntity workSubmitFieldEntity =
+
+        Mockito.when(workSubmitFieldRepository.findById(Mockito.any())).thenReturn(Optional.of(workSubmitFieldEntity));
+
+        workService.getWorkResults(workEntities.get(0).getWorkId(),users.get(0).getId());
     }
 
 }

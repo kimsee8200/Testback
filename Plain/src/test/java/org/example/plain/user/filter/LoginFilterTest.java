@@ -91,7 +91,7 @@ public class LoginFilterTest {
         Mockito.verify(response,Mockito.atLeastOnce()).addCookie(Mockito.any());
         Mockito.verify(response,Mockito.atLeastOnce()).addHeader(eq("Authorization"),Mockito.anyString());
         Mockito.verify(response,Mockito.never()).sendRedirect(Mockito.anyString());
-        Mockito.verify(repository,Mockito.atLeastOnce()).put(Mockito.anyString(),Mockito.any());
+        Mockito.verify(repository,Mockito.atLeastOnce()).findById(Mockito.anyString());
     }
 
     @Test

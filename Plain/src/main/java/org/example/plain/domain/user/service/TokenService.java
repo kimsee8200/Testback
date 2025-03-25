@@ -33,14 +33,14 @@ public class TokenService {
 
         String id = jwtUtil.getId(token);
 
-        if (jwtUtil.isExpired(token)||refreshTokenRepository.get(token) == null) {
+        if (jwtUtil.isExpired(token) || refreshTokenRepository.findById(token).isEmpty()) {
             return new ResponseField<>("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED,null);
         }
 
         if (jwtUtil.getType(token).equals("refresh")) {
             token = jwtUtil.makeRefreshToken(id);
 
-            refreshTokenRepository.put(token, new RefreshToken(token, jwtUtil.getId(token)));
+            refreshTokenRepository.save(new RefreshToken(token, jwtUtil.getId(token)));
             response.addHeader("Authorization", jwtUtil.makeJwtToken(id));
             response.addCookie(makeCookie(token));
             return new ResponseField<>(Message.OK.name(), HttpStatus.OK, response);

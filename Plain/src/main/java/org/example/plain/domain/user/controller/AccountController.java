@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+// logout 기능 개발.
 @Controller
 @RequestMapping("/account")
 public class AccountController {

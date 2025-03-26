@@ -12,6 +12,8 @@ import org.example.plain.common.ResponseField;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.domain.user.dto.UserLoginRequest;
 import org.example.plain.domain.user.dto.UserRequest;
+import org.example.plain.domain.user.entity.RefreshToken;
+import org.example.plain.domain.user.repository.RefreshTokenRepository;
 import org.example.plain.domain.user.service.JWTUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +28,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
+    private final RefreshTokenRepository repository;
     private final JWTUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper;
@@ -46,6 +49,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
         String token = jwtUtil.makeJwtToken(customUserDetails.getUser().getId());
         String refresh = jwtUtil.makeRefreshToken(customUserDetails.getUser().getId());
+
+        repository.save(new RefreshToken(refresh, customUserDetails.getUser().getId()));
 
         response.addHeader("Authorization",token);
         response.addCookie(makeCookie(refresh));

@@ -10,6 +10,7 @@ import org.example.plain.domain.user.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -17,19 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class ReissueController {
 
-    private final JWTUtil jwtUtil;
     private final TokenService tokenService;
 
-    @PostMapping("/reissue")
+    @GetMapping("/reissue")
     public ResponseEntity<ResponseField> reissue(HttpServletRequest request, HttpServletResponse response) {
         ResponseField responseField = tokenService.reissue(request, response);
-        if (responseField.getStatus().is4xxClientError()) {
-            return new ResponseEntity<>(responseField,HttpStatus.UNAUTHORIZED);
-        }else {
-            response = (HttpServletResponse) responseField.getBody();
-            responseField.setBody(null);
-            return new ResponseEntity<>(responseField, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(responseField, responseField.getStatus());
     }
 
     private Cookie makeCookie(String key){

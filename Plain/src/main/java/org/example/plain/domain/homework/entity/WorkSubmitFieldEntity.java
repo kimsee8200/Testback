@@ -1,6 +1,7 @@
 package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.user.entity.User;
@@ -33,5 +34,7 @@ public class WorkSubmitFieldEntity {
         workSubmitFieldEntity.workSubmitFieldId = new WorkSubmitFieldId(workSubmitField.getUserId(), workSubmitField.getWorkId());
         return workSubmitFieldEntity;
     }
+
+
 }
 

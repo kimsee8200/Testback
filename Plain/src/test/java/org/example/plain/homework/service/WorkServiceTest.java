@@ -175,9 +175,9 @@ public class WorkServiceTest {
 
     @Test
     public void checkSubmitWork(){
-        WorkSubmitFieldEntity workSubmitFieldEntity =
+        //WorkSubmitFieldEntity workSubmitFieldEntity =
 
-        Mockito.when(workSubmitFieldRepository.findById(Mockito.any())).thenReturn(Optional.of(workSubmitFieldEntity));
+        //Mockito.when(workSubmitFieldRepository.findById(Mockito.any())).thenReturn(Optional.of(workSubmitFieldEntity));
 
         workService.getWorkResults(workEntities.get(0).getWorkId(),users.get(0).getId());
     }

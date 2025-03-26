@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.plain.common.ResponseField;
 import org.example.plain.common.enums.Message;
 import org.example.plain.domain.user.entity.RefreshToken;
@@ -11,6 +12,7 @@ import org.example.plain.domain.user.repository.RefreshTokenRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -18,6 +20,7 @@ public class TokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     public ResponseField reissue(HttpServletRequest request, HttpServletResponse response) {
+        log.info("reissue Service get request");
         Cookie[] cookie = request.getCookies();
         String token = null;
         for(Cookie c : cookie) {

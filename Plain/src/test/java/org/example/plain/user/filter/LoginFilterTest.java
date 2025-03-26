@@ -87,11 +87,12 @@ public class LoginFilterTest {
 
         ReflectionTestUtils.invokeMethod(loginFilter, "successfulAuthentication", request, response, chain, authentication);
 
+
         Mockito.verify(response,Mockito.atLeastOnce()).setStatus(HttpServletResponse.SC_OK);
         Mockito.verify(response,Mockito.atLeastOnce()).addCookie(Mockito.any());
         Mockito.verify(response,Mockito.atLeastOnce()).addHeader(eq("Authorization"),Mockito.anyString());
         Mockito.verify(response,Mockito.never()).sendRedirect(Mockito.anyString());
-        Mockito.verify(repository,Mockito.atLeastOnce()).findById(Mockito.anyString());
+        Mockito.verify(repository, Mockito.atLeastOnce()).save(Mockito.any());
     }
 
     @Test

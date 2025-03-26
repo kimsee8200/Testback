@@ -107,26 +107,15 @@ public class WorkServiceImpl implements WorkService {
     public void submitWork(WorkSubmitField workSubmitField) {
         WorkSubmitFieldEntity entity = WorkSubmitFieldEntity.createEntity(workSubmitField);
 
-        List<FileEntity> files = new ArrayList<>();
+        List<FileEntity> files;
         List<MultipartFile> multifiles = workSubmitField.getFile();
 
         Work work = this.selectWork(workSubmitField.getWorkId());
 
         User user = groupMemberRepository.findById(new ClassMemberId(work.getGroupId(),workSubmitField.getUserId())).orElseThrow().getUser();
 
-        for(MultipartFile file : multifiles){
+        files = changeFile(multifiles,user);
 
-            FileEntity fileEntity = new FileEntity();
-            String filename = makeFilename(Objects.requireNonNull(file.getOriginalFilename()),workSubmitField.getUserId());
-
-            saveFile(file,filename);
-
-            fileEntity.setFilename(filename);
-            fileEntity.setUser(user);
-            fileEntity.setFilePath(filepath+filename);
-
-            files.add(fileEntity);
-        }
         entity.setFileEntities(files);
         workSubmitFieldRepository.save(entity);
 
@@ -144,7 +133,7 @@ public class WorkServiceImpl implements WorkService {
         WorkSubmitFieldEntity workSubmitFieldEntity = workSubmitFieldRepository.findById(workSubmitFieldId).orElseThrow();
         List<File> files = new ArrayList<>();
         for (FileEntity file:workSubmitFieldEntity.getFileEntities()){
-            File file1 = new File(file.getFilename());
+            File file1 = new File(filepath+file.getFilename());
             files.add(file1);
         }
         return files;
@@ -162,13 +151,30 @@ public class WorkServiceImpl implements WorkService {
        return workSubmitFields;
     }
 
+    // file service로 분리 필요. -> 일반 컴포넌트.
+    public List<FileEntity> changeFile (List<MultipartFile> multifiles, User user){
+        List<FileEntity> files = new ArrayList<>();
+
+        multifiles.forEach(file -> {
+            FileEntity fileEntity = new FileEntity();
+            String filename = makeFilename(Objects.requireNonNull(file.getOriginalFilename()),user.getId());
+
+            saveFile(file,filename);
+
+            fileEntity.setFilename(filename);
+            fileEntity.setUser(user);
+            fileEntity.setFilePath(filepath+filename);
+
+            files.add(fileEntity);
+        });
+
+        return files;
+    }
 
     public File getFile (String filename){
         File file = new File(filepath+filename).exists() ? new File(filepath+filename):null;
         return file;
     }
-
-
 
 
     public void deleteFile(Integer file_id) {

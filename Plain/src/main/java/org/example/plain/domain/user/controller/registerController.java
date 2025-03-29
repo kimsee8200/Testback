@@ -14,7 +14,7 @@ public class registerController {
 
     private final UserService userService;
 
-    @GetMapping("/sign_up")
+    @GetMapping("users/sign_up")
     public ResponseEntity singUp(UserRequest userRequest) {
         userService.createUser(userRequest);
         return ResponseEntity.noContent().build();

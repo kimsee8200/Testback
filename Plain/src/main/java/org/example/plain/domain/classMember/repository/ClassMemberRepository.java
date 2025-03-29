@@ -1,5 +1,6 @@
 package org.example.plain.domain.classMember.repository;
 
+import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.user.entity.User;
@@ -10,4 +11,5 @@ import java.util.Optional;
 
 public interface ClassMemberRepository extends JpaRepository<ClassMember, ClassMemberId> {
     Optional<List<ClassMember>> findByUser(User userId);
+    Optional<List<ClassMember>> findByClassLecture(ClassLecture lecture);
 }

@@ -82,7 +82,7 @@ public class WorkMemberServiceImpl implements WorkMemberService {
 
     private void checkWriter(String writerId, String boardId){
         WorkEntity work = (WorkEntity) boardRepository.findByBoardId(boardId).orElseThrow();
-        if(work.getUserId().equals(writerId)){
+        if(!work.getUserId().equals(writerId)){
             throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"권한이 없습니다.");
         }
     }

@@ -33,6 +33,7 @@ import java.util.*;
 public class WorkServiceImpl implements WorkService {
     // 리팩토링 요망.
    // private UserService userService;
+    private final SubmitFileService submitFileService;
     private final BoardRepository boardRepository;
     private final WorkSubmitFieldRepository workSubmitFieldRepository;
     private final WorkMemberRepository workMemberRepository;
@@ -57,11 +58,12 @@ public class WorkServiceImpl implements WorkService {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
         }
 
+        work.setWorkId(makeUUID());
+        work.setUserId(userDetails.getUser().getId());
+        work.setGroupId(classId);
+
         WorkEntity workEntity = WorkEntity.workToWorkEntity(work);
        // workEntity.setBoardId(makeUUID()); // 임시 설정.
-        workEntity.setWorkId(makeUUID());
-        workEntity.setUserId(userDetails.getUser().getId());
-        workEntity.setClassId(classId);
         workEntity.setUser(classMember.getUser());
         workEntity.setGroup(classMember.getClassLecture());
         boardRepository.save(workEntity);
@@ -114,7 +116,7 @@ public class WorkServiceImpl implements WorkService {
 
         User user = groupMemberRepository.findById(new ClassMemberId(work.getGroupId(),workSubmitField.getUserId())).orElseThrow().getUser();
 
-        files = changeFile(multifiles,user);
+        files = submitFileService.changeFile(multifiles,user);
 
         entity.setFileEntities(files);
         workSubmitFieldRepository.save(entity);
@@ -145,98 +147,12 @@ public class WorkServiceImpl implements WorkService {
        WorkEntity workEntity = WorkEntity.workToWorkEntity(selectWork(workId));
        for (WorkSubmitFieldEntity workSubmitFieldEntity:workSubmitFieldRepository.findByWorkId(workEntity)){
            WorkSubmitFieldResponse workSubmitField = WorkSubmitFieldResponse.changeEntity(workSubmitFieldEntity);
-           workSubmitField.setFile(getFiles(workSubmitFieldEntity.getFileEntities()));
+           workSubmitField.setFile(submitFileService.getFiles(workSubmitFieldEntity.getFileEntities()));
            workSubmitFields.add(workSubmitField);
        }
        return workSubmitFields;
     }
 
     // file service로 분리 필요. -> 일반 컴포넌트.
-    public List<FileEntity> changeFile (List<MultipartFile> multifiles, User user){
-        List<FileEntity> files = new ArrayList<>();
 
-        multifiles.forEach(file -> {
-            FileEntity fileEntity = new FileEntity();
-            String filename = makeFilename(Objects.requireNonNull(file.getOriginalFilename()),user.getId());
-
-            saveFile(file,filename);
-
-            fileEntity.setFilename(filename);
-            fileEntity.setUser(user);
-            fileEntity.setFilePath(filepath+filename);
-
-            files.add(fileEntity);
-        });
-
-        return files;
-    }
-
-    public File getFile (String filename){
-        File file = new File(filepath+filename).exists() ? new File(filepath+filename):null;
-        return file;
-    }
-
-
-    public void deleteFile(Integer file_id) {
-        FileEntity entity = fileRepository.findById(file_id).orElseThrow(NullPointerException::new);
-
-        File file = new File(entity.getFilePath()+entity.getFilename());
-        if(file.exists()){
-            file.delete();
-            fileRepository.delete(entity);
-        }else {
-            throw new NoSuchElementException("파일이 존재하지 않습니다.");
-        }
-    }
-
-
-    public String makeFilename (String originalFilename, String userId){
-        Integer count = 1;
-        int split = originalFilename.lastIndexOf(".");
-        String name = originalFilename.substring(0, split);
-        String extending = originalFilename.substring(split);
-        String addSide = "";
-
-        while(new File(userId+name+addSide+extending).exists()){
-            addSide = "(" + count + ")";
-            count++;
-        }
-        return userId+name+addSide+extending;
-    }
-
-    public String makeFilename (String originalFilename){
-        Integer count = 1;
-        int split = originalFilename.lastIndexOf(".");
-        String name = originalFilename.substring(0, split);
-        String extending = originalFilename.substring(split);
-        String addSide = "";
-
-        while(new File(name+addSide+extending).exists()){
-            addSide = "(" + count + ")";
-            count++;
-        }
-        return name+addSide+extending;
-    }
-
-    // 파일을 서버나 S3에 저장하기 위한 것.
-    public File saveFile(MultipartFile file, String filename) {
-        filename = makeFilename(filename);
-
-        File file1 = new File(filepath+filename);
-        try {
-            file.transferTo(file1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return file1;
-    }
-
-    public List<File> getFiles(List<FileEntity> fileEntities) {
-        List<File> files = new ArrayList<>();
-        for (FileEntity fileEntity:fileEntities){
-            File file1 = new File(fileEntity.getFilename());
-            files.add(file1);
-        }
-        return files;
-    }
 }

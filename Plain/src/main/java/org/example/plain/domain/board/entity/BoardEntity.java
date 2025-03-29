@@ -2,7 +2,10 @@ package org.example.plain.domain.board.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +13,10 @@ import org.springframework.data.relational.core.sql.In;
 
 import java.time.LocalDateTime;
 
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "board_type", discriminatorType = DiscriminatorType.STRING)
@@ -47,6 +53,17 @@ public class BoardEntity {
     @Column(name = "create_date")
     @CreatedDate
     private LocalDateTime createDate;
+
+    @Builder
+    public BoardEntity (String userId, String classId, String title, String content, String type, LocalDateTime deadLine) {
+        this.userId = userId;
+        this.classId = classId;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.createDate = deadLine;
+    }
+
 
     public void setBoardId(String boardId) {
         if (boardId != null) {

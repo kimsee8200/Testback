@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/docker-compose2.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/calendar/dto/CalendarRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeCommentRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/dto/NoticeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +73,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "kimsee8200"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/kimsee8200/Testback",
+    "accountId": "49e4a3eb-2f47-4579-916e-a259d3b8233d"
+  }
+}]]></component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -89,10 +106,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/notice",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/study/product-order-service",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+    "last_opened_file_path": "C:/Users/user/Desktop/github/Testback",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -104,7 +127,7 @@
       <recent name="org.example.plain.domain.notice.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.PlainApplication">
+  <component name="RunManager" selected="Application.PlainApplication">
     <configuration name="PlainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.plain.PlainApplication" />
       <module name="Plain.main" />
@@ -140,12 +163,27 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="PlainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Plain.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.plain.PlainApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="애플리케이션.PlainApplication" />
         <item itemvalue="Gradle.Plain [compileJava]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -155,8 +193,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740359268377</updated>
+      <workItem from="1743214457482" duration="611000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

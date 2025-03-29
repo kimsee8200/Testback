@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @DiscriminatorValue("Work")
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "homework")
 public class WorkEntity extends BoardEntity {
@@ -23,6 +22,13 @@ public class WorkEntity extends BoardEntity {
 
     @Column(name = "submit_date", nullable = false)
     private LocalDateTime deadline;
+
+    @Builder
+    public WorkEntity(Work work) {
+        super(work.getUserId(),work.getUserId(),work.getTitle(),work.getContent(),"WORK",work.getDeadline());
+        this.workId = work.getWorkId();
+        this.deadline = work.getDeadline();
+    }
 
     public static WorkEntity workToWorkEntity(Work work) {
         WorkEntity workEntity = new WorkEntity();

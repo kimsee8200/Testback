@@ -5,15 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Plain/docker-compose2.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/S3Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/service/UUIDService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/FileData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/FileInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/SubmitFileData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/SubmitFileInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/CloudFileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AwsFileServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitListResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/notice/controller/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/controller/ReissueController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitField.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitFieldResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitFieldResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/FileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/FileEntityKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntityKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkSubmitFieldEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkSubmitFieldId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/WorkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/WorkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/repository/FileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/repository/FileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/FileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/FileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/WorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/CloudWorkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/repository/WorkSubmitFieldRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,18 +89,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "kimsee8200"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;kimsee8200&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/kimsee8200/Testback",
-    "accountId": "49e4a3eb-2f47-4579-916e-a259d3b8233d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/kimsee8200/Testback&quot;,
+    &quot;accountId&quot;: &quot;49e4a3eb-2f47-4579-916e-a259d3b8233d&quot;
   }
-}]]></component>
+}</component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -99,25 +115,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Plain [:org.example.plain.PlainApplication.main()].executor": "Run",
-    "Gradle.Plain [compileJava].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/user/Desktop/github/Testback",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Plain [:org.example.plain.PlainApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Plain [compileJava].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/github/Testback&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\study\plain-lkn\Plain\src\main\resources" />
@@ -194,6 +210,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740359268377</updated>
       <workItem from="1743214457482" duration="611000" />
+      <workItem from="1743332380558" duration="40000" />
     </task>
     <servers />
   </component>

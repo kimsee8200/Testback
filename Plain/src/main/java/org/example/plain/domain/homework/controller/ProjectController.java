@@ -5,14 +5,10 @@ import org.example.plain.common.ResponseField;
 import org.example.plain.common.ResponseMaker;
 import org.example.plain.domain.board.service.BoardServiceImpl;
 import org.example.plain.domain.board.dto.Board;
-import org.example.plain.domain.homework.interfaces.FileService;
+import org.example.plain.domain.file.interfaces.FileService;
+import org.example.plain.domain.homework.dto.*;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.service.WorkMemberServiceImpl;
-import org.example.plain.domain.homework.service.WorkServiceImpl;
-import org.example.plain.domain.homework.dto.Work;
-import org.example.plain.domain.homework.dto.WorkMember;
-import org.example.plain.domain.homework.dto.WorkSubmitField;
-import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
 import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +68,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{work_id}/submits")
-    public ResponseEntity<List<WorkSubmitFieldResponse>> getWorkSubmitFields(@PathVariable String work_id) throws Exception {
+    public ResponseEntity<List<WorkSubmitListResponse>> getWorkSubmitFields(@PathVariable String work_id) throws Exception {
         return ResponseEntity.ok().body(workService.getSubmitList(work_id));
     }
 

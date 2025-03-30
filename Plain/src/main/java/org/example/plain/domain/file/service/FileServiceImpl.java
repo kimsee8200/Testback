@@ -1,10 +1,10 @@
-package org.example.plain.domain.homework.service;
+package org.example.plain.domain.file.service;
 
-import org.example.plain.domain.homework.entity.FileEntity;
-import org.example.plain.domain.homework.entity.WorkSubmitFieldEntity;
-import org.example.plain.domain.homework.entity.WorkSubmitFieldId;
-import org.example.plain.domain.homework.interfaces.FileService;
-import org.example.plain.repository.WorkSubmitFieldRepository;
+import org.example.plain.domain.file.entity.FileEntity;
+import org.example.plain.domain.file.interfaces.FileService;
+import org.example.plain.domain.homework.entity.WorkMemberEntity;
+import org.example.plain.domain.homework.entity.WorkMemberId;
+import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +18,15 @@ import java.util.NoSuchElementException;
 @Service
 public class FileServiceImpl implements FileService {
 
-    WorkSubmitFieldRepository workSubmitFieldRepository;
+    private final WorkMemberRepository workMemberRepository;
 
 
     @Value("${file.path}")
     private String filepath;
+
+    public FileServiceImpl(WorkMemberRepository workMemberRepository) {
+        this.workMemberRepository = workMemberRepository;
+    }
 
     @Override
     public File getFile (String filename){
@@ -32,8 +36,8 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> getFiles(String workId, String userId) {
-        WorkSubmitFieldEntity workSubmitFieldEntity = workSubmitFieldRepository.findById(new WorkSubmitFieldId(userId, workId)).orElseThrow();
-        return this.getFiles(workSubmitFieldEntity.getFileEntities());
+        WorkMemberEntity workMember = workMemberRepository.findById(new WorkMemberId(workId, userId)).orElseThrow();
+        return this.getFiles(workMember.getFileEntities());
     }
 
 

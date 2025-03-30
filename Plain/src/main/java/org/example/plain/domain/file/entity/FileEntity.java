@@ -1,13 +1,12 @@
-package org.example.plain.domain.homework.entity;
+package org.example.plain.domain.file.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.example.plain.domain.board.entity.BoardEntity;
+import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.user.entity.User;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ public class FileEntity{
     @Column(name = "file_path")
     private String filePath;
 
+    @Builder
     public FileEntity(String filename, String filePath, WorkEntity board, User user) {
         this.filename = filename;
         this.filePath = filePath;

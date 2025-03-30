@@ -3,6 +3,7 @@ package org.example.plain.domain.homework.interfaces;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitFieldResponse;
+import org.example.plain.domain.homework.dto.WorkSubmitListResponse;
 import org.springframework.security.core.Authentication;
 
 import java.io.File;
@@ -22,7 +23,7 @@ public interface WorkService{
 
     List<Work> selectGroupWorks(String groupId);
 
-    List<WorkSubmitFieldResponse> getSubmitList(String workId);
+    List<WorkSubmitListResponse> getSubmitList(String workId);
 
     List<File> getWorkResults(String workId, String userid);
 }

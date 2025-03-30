@@ -2,7 +2,10 @@ package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.user.entity.User;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -26,6 +29,9 @@ public class WorkMemberEntity {
 
     @Column(name = "is_late")
     private boolean isLate = false;
+
+    @OneToMany
+    private List<FileEntity> fileEntities;
 
     public static WorkMemberEntity makeWorkMemberEntity(User userId, WorkEntity workId) {
         WorkMemberEntity workMemberEntity = new WorkMemberEntity();

@@ -1,4 +1,4 @@
-package org.example.plain.domain.homework.interfaces;
+package org.example.plain.domain.file.interfaces;
 
 import org.springframework.web.multipart.MultipartFile;
 

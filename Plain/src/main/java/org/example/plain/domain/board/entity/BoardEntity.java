@@ -2,10 +2,8 @@ package org.example.plain.domain.board.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,10 +12,11 @@ import org.springframework.data.relational.core.sql.In;
 import java.time.LocalDateTime;
 
 
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "board_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "board")
@@ -54,14 +53,23 @@ public class BoardEntity {
     @CreatedDate
     private LocalDateTime createDate;
 
-    @Builder
-    public BoardEntity (String userId, String classId, String title, String content, String type, LocalDateTime deadLine) {
+    public BoardEntity (String userId, String classId, String title, String content, String type) {
         this.userId = userId;
         this.classId = classId;
         this.title = title;
         this.content = content;
         this.type = type;
-        this.createDate = deadLine;
+        this.createDate = LocalDateTime.now();
+    }
+
+    public BoardEntity(String boardId, String userId, String classId, String title, String content, String type) {
+        this.boardId = boardId;
+        this.userId = userId;
+        this.classId = classId;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.createDate = LocalDateTime.now();
     }
 
 

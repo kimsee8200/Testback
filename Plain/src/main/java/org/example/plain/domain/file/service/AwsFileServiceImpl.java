@@ -1,7 +1,6 @@
 package org.example.plain.domain.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -32,35 +32,40 @@ public class AwsFileServiceImpl implements CloudFileService {
     private String bucket;
 
     private final AmazonS3 amazonS3;
-
     private final FileRepository fileRepository;
 
-    // 버킷 파일 아이디 문제.
-    public FileEntity uploadSingleFile(FileData fileData){
+    @Override
+    public FileEntity uploadSingleFile(FileData fileData) {
         SubmitFileData submitFileData = (SubmitFileData) fileData;
+        MultipartFile file = submitFileData.getFile();
+        
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
 
         String filename = makeFilename(
-                submitFileData.getFileName(),submitFileData.getUserId().getId(),submitFileData.getWorkId().getBoardId());
+                submitFileData.getFileName(),
+                submitFileData.getUserId().getId(),
+                submitFileData.getWorkId().getBoardId());
 
         try {
-            File fileCarry = new File(fileData.getFileName());
-            submitFileData.getFile().transferTo(fileCarry);
-            amazonS3.putObject(new PutObjectRequest(bucket, filename, fileCarry));
-            fileCarry.delete();
-
+            File tempFile = new File(file.getOriginalFilename());
+            file.transferTo(tempFile);
+            amazonS3.putObject(new PutObjectRequest(bucket, filename, tempFile));
+            tempFile.delete();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to upload file", e);
         }
 
         String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
         return fileRepository.save(
                 FileEntity.builder()
-                .filename(submitFileData.getFileName())
-                .filePath(fileUrl)
-                .board(submitFileData.getWorkId())
-                .user(submitFileData.getUserId())
-                .build()
+                        .filename(submitFileData.getFileName())
+                        .filePath(fileUrl)
+                        .board(submitFileData.getWorkId())
+                        .user(submitFileData.getUserId())
+                        .build()
         );
     }
 
@@ -68,43 +73,71 @@ public class AwsFileServiceImpl implements CloudFileService {
     public List<FileEntity> uploadFiles(FileData fileData, List<MultipartFile> files) {
         SubmitFileData submitFileData = (SubmitFileData) fileData;
         List<FileEntity> fileEntities = new ArrayList<>();
-        files.forEach(file -> {
+
+        for (MultipartFile file : files) {
+            if (file == null) {
+                throw new IllegalArgumentException("File cannot be null");
+            }
+
             String filename = makeFilename(
-                    submitFileData.getFileName(),submitFileData.getUserId().getId(),submitFileData.getWorkId().getBoardId());
+                    file.getOriginalFilename(),
+                    submitFileData.getUserId().getId(),
+                    submitFileData.getWorkId().getBoardId());
 
             try {
-                File fileCarry = new File(filePath+fileData.getFile().getOriginalFilename());
-                submitFileData.getFile().transferTo(fileCarry);
-                amazonS3.putObject(new PutObjectRequest(bucket, filename, fileCarry));
-                fileCarry.delete();
-
+                File tempFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+                file.transferTo(tempFile);
+                amazonS3.putObject(new PutObjectRequest(bucket, filename, tempFile));
+                tempFile.delete();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Failed to upload file", e);
             }
 
             String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
             fileEntities.add(
                     fileRepository.save(
-                        FileEntity.builder()
-                        .user(submitFileData.getUserId())
-                        .board(submitFileData.getWorkId())
-                        .filename(file.getOriginalFilename())
-                        .filePath(fileUrl)
-                        .build()
+                            FileEntity.builder()
+                                    .user(submitFileData.getUserId())
+                                    .board(submitFileData.getWorkId())
+                                    .filename(file.getOriginalFilename())
+                                    .filePath(fileUrl)
+                                    .build()
                     )
             );
-        });
+        }
         return fileEntities;
     }
 
     @Override
-    public void deleteFile(String filename) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, filename));
+    public void deleteFile(String fileUrl) {
+        if (fileUrl == null || fileUrl.isEmpty()) {
+            throw new IllegalArgumentException("File URL cannot be null or empty");
+        }
+
+        if (!fileUrl.startsWith("https://" + bucket + ".s3.amazonaws.com/")) {
+            throw new IllegalArgumentException("Invalid S3 URL: URL must start with https://" + bucket + ".s3.amazonaws.com/");
+        }
+
+        String objectKey = extractObjectKeyFromUrl(fileUrl);
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, objectKey));
     }
 
-    public String makeFilename(String originalFilename, String userId, String workId){
-       return originalFilename+" "+userId+" "+workId;
+    private String extractObjectKeyFromUrl(String fileUrl) {
+        try {
+            // URL에서 파일 경로 부분만 추출
+            String path = fileUrl.replace("https://" + bucket + ".s3.amazonaws.com/", "");
+            if (path.isEmpty()) {
+                throw new IllegalArgumentException("Invalid S3 URL: empty path");
+            }
+            return path;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid S3 URL: " + fileUrl, e);
+        }
+    }
+
+    public String makeFilename(String originalFilename, String userId, String workId) {
+        return userId + "/" + workId + "/" + originalFilename;
     }
 
     public String makeFilename (String originalFilename, String userId){

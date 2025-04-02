@@ -1,14 +1,21 @@
 package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.user.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "homework_member")
 public class WorkMemberEntity {
     @EmbeddedId
@@ -25,21 +32,23 @@ public class WorkMemberEntity {
     private User user;
 
     @Column(name = "is_submit")
+    @Builder.Default
     private boolean isSubmited = false;
 
     @Column(name = "is_late")
+    @Builder.Default
     private boolean isLate = false;
 
     @OneToMany
-    private List<FileEntity> fileEntities;
+    @Builder.Default
+    private List<FileEntity> fileEntities = new ArrayList<>();
 
     public static WorkMemberEntity makeWorkMemberEntity(User userId, WorkEntity workId) {
-        WorkMemberEntity workMemberEntity = new WorkMemberEntity();
-        workMemberEntity.setWorkMemberId(new WorkMemberId(workId.getWorkId(), userId.getId()));
-        workMemberEntity.setWork(workId);
-        workMemberEntity.setUser(userId);
-        return workMemberEntity;
+        return WorkMemberEntity.builder()
+                .workMemberId(new WorkMemberId(workId.getWorkId(), userId.getId()))
+                .work(workId)
+                .user(userId)
+                .build();
     }
-
 }
 

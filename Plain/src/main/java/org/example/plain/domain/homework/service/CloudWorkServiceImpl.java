@@ -7,6 +7,7 @@ import org.example.plain.domain.file.dto.SubmitFileData;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.file.interfaces.CloudFileService;
 import org.example.plain.domain.homework.dto.*;
+import org.example.plain.domain.homework.interfaces.SubmissionService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.entity.*;
 import org.example.plain.domain.homework.repository.FileRepository;
@@ -16,7 +17,7 @@ import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class CloudWorkServiceImpl implements WorkService {
     private final WorkMemberRepository workMemberRepository;
     private final GroupMemberRepository groupMemberRepository;
     private final FileRepository fileRepository;
+    private final SubmissionService submissionService;
 
     @Value("${file.path}")
     private String filepath;
@@ -47,20 +49,19 @@ public class CloudWorkServiceImpl implements WorkService {
 
     @Transactional
     @Override
-    public void insertWork(Work work, String classId, Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        ClassMember classMember = groupMemberRepository.findById(new ClassMemberId(classId,userDetails.getUser().getId())).orElseThrow();
+    public void insertWork(Work work, String classId, String userId) {
+        ClassMember classMember = groupMemberRepository.findById(new ClassMemberId(classId, userId))
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "수업 멤버를 찾을 수 없습니다."));
 
-        if (!classMember.getClassLecture().getInstructor().getId().equals(userDetails.getUser().getId())) {
-            throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"접근 권한자가 아닙니다");
+        if (!classMember.getClassLecture().getInstructor().getId().equals(userId)) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "접근 권한이 없습니다.");
         }
 
         work.setWorkId(makeUUID());
-        work.setUserId(userDetails.getUser().getId());
+        work.setUserId(userId);
         work.setGroupId(classId);
 
         WorkEntity workEntity = WorkEntity.workToWorkEntity(work);
-       // workEntity.setBoardId(makeUUID()); // 임시 설정.
         workEntity.setUser(classMember.getUser());
         workEntity.setGroup(classMember.getClassLecture());
         boardRepository.save(workEntity);
@@ -69,65 +70,42 @@ public class CloudWorkServiceImpl implements WorkService {
     @Override
     @Transactional
     public void updateWork(Work work, String workId, String userId) {
-        WorkEntity workEntity = boardRepository.findByWorkId(workId).orElseThrow(NullPointerException::new);
-        if(!workEntity.getUser().getId().equals(userId)) throw new HttpClientErrorException(HttpStatusCode.valueOf(403),"작성자가 아닙니다.");
+        WorkEntity workEntity = boardRepository.findByWorkId(workId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제를 찾을 수 없습니다."));
+        
+        if (!workEntity.getUser().getId().equals(userId)) {
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "작성자가 아닙니다.");
+        }
+        
         work.setWorkId(workId);
-        boardRepository.save(WorkEntity.chaingeWorkEntitytoWork(work,workEntity));
+        boardRepository.save(WorkEntity.chaingeWorkEntitytoWork(work, workEntity));
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Work selectWork(String workId) {
-        return Work.changeWorkEntity(boardRepository.findByWorkId(workId).orElseThrow());
+        return Work.changeWorkEntity(boardRepository.findByWorkId(workId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제를 찾을 수 없습니다.")));
     }
 
-
-    public List<Work> selectGroupWorks(String groupId){
-        List<Work> works = new ArrayList<>();
-        List<WorkEntity> workEntities = boardRepository.findByGroupId(groupId).orElse(null);
-        if (workEntities != null) {
-            for (WorkEntity work:workEntities){
-                works.add(Work.changeWorkEntity(work));
-            }
-        }
-        return works;
+    @Transactional(readOnly = true)
+    public List<Work> selectGroupWorks(String groupId) {
+        return boardRepository.findByGroupId(groupId)
+                .map(workEntities -> workEntities.stream()
+                        .map(Work::changeWorkEntity)
+                        .toList())
+                .orElse(new ArrayList<>());
     }
-
 
     @Override
     @Transactional
     public void deleteWork(String workId) {
-        WorkEntity work = boardRepository.findByWorkId(workId).orElseThrow();
+        WorkEntity work = boardRepository.findByWorkId(workId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제를 찾을 수 없습니다."));
         boardRepository.delete(work);
     }
 
-    @Override
-    @Transactional
-    public void submitWork(WorkSubmitField workSubmitField) {
-
-        WorkMemberEntity workMemberEntity = workMemberRepository.findById(new WorkMemberId(workSubmitField.getWorkId(),workSubmitField.getUserId())).orElseThrow();
-
-        List<FileEntity> files;
-        List<MultipartFile> multifiles = workSubmitField.getFile();
-
-        Work work = this.selectWork(workSubmitField.getWorkId());
-
-        User user = groupMemberRepository.findById(new ClassMemberId(work.getGroupId(),workSubmitField.getUserId())).orElseThrow().getUser();
-
-        files = fileService.uploadFiles(SubmitFileData.builder()
-                        .userId(user)
-                        .workId(workMemberEntity.getWork())
-                .build(), multifiles);
-
-        workMemberEntity.setFileEntities(files);
-
-        if(files.size()>0){
-            workMemberEntity.setSubmited(true);
-            if(workMemberEntity.getWork().getDeadline().isBefore(LocalDateTime.now()))
-                workMemberEntity.setLate(true);
-            workMemberRepository.save(workMemberEntity);
-        }
-    }
+  
 
     public List<File> getWorkResults(String workId, String userId){
         WorkMemberEntity workMemberEntity = workMemberRepository.findById(new WorkMemberId(workId,userId)).orElseThrow();
@@ -138,17 +116,6 @@ public class CloudWorkServiceImpl implements WorkService {
             files.add(file1);
         }
         return files;
-    }
-
-    @Override
-    public List<WorkSubmitListResponse> getSubmitList(String workId) {
-       List<WorkSubmitListResponse> workSubmitFields = new ArrayList<>();
-       WorkEntity workEntity = WorkEntity.workToWorkEntity(selectWork(workId));
-       for (WorkMemberEntity workSubmitFieldEntity: workMemberRepository.findByWork(workEntity)){
-           WorkSubmitListResponse workSubmitField = WorkSubmitListResponse.changeEntity(workSubmitFieldEntity);
-           workSubmitFields.add(workSubmitField);
-       }
-       return workSubmitFields;
     }
 
     // file service로 분리 필요. -> 일반 컴포넌트.

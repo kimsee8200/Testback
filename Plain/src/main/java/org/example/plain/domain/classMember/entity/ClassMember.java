@@ -1,15 +1,12 @@
 package org.example.plain.domain.classMember.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.user.entity.User;
 
 @Entity
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

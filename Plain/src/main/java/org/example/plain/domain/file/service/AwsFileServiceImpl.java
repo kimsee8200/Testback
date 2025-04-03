@@ -61,11 +61,11 @@ public class AwsFileServiceImpl implements CloudFileService {
 
         return fileRepository.save(
                 FileEntity.builder()
-                        .filename(submitFileData.getFileName())
-                        .filePath(fileUrl)
-                        .board(submitFileData.getWorkId())
-                        .user(submitFileData.getUserId())
-                        .build()
+                .filename(submitFileData.getFileName())
+                .filePath(fileUrl)
+                .board(submitFileData.getWorkId())
+                .user(submitFileData.getUserId())
+                .build()
         );
     }
 
@@ -97,12 +97,12 @@ public class AwsFileServiceImpl implements CloudFileService {
 
             fileEntities.add(
                     fileRepository.save(
-                            FileEntity.builder()
-                                    .user(submitFileData.getUserId())
-                                    .board(submitFileData.getWorkId())
-                                    .filename(file.getOriginalFilename())
-                                    .filePath(fileUrl)
-                                    .build()
+                        FileEntity.builder()
+                        .user(submitFileData.getUserId())
+                        .board(submitFileData.getWorkId())
+                        .filename(file.getOriginalFilename())
+                        .filePath(fileUrl)
+                        .build()
                     )
             );
         }

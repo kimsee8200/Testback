@@ -9,17 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: repository 확인
+      - name: 레포지토리 체크아웃
         uses: actions/checkout@v3
 
-      - name: Docker image build 및 push
+      - name: application.yml 파일 생성
+        run: |
+          touch ./src/main/resources/application.yml
+          echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+          cat ./src/main/resources/application.yml
+
+      - name: Docker 이미지 빌드 및 푸시
         run: |
           echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u kimsee --password-stdin
           docker build -t kimsee/plain:latest ./Plain
-          docker images
           docker push kimsee/plain:latest
 
-      - name: SSH로 EC2에 로그인 후 배포포
+      - name: EC2에 SSH 접속하여 배포
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -27,7 +32,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /home/ubuntu/Testback/Plain  # docker-compose3.yaml이 위치한 폴더로 이동
-            docker-compose pull  # 최신 이미지 가져오기
-            docker-compose -f docker-compose3.yaml up -d --no-deps --force-recreate api  # API 컨테이너만 재시작
-
+            cd /home/ubuntu/Testback/Plain
+            docker rm -f plain-api || true
+            docker compose pull
+            docker compose -f docker-compose3.yaml up -d --no-deps --force-recreate plain-api

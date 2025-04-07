@@ -2,28 +2,22 @@ package org.example.plain.domain.homework.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.classMember.repository.ClassMemberRepository;
-import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.WorkMemberService;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
-import org.example.plain.domain.user.dto.CustomUserDetails;
 import org.example.plain.repository.BoardRepository;
-import org.example.plain.repository.GroupMemberRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -37,12 +31,12 @@ public class WorkMemberServiceImpl implements WorkMemberService {
 
     @Override
     @Transactional
-    public void addHomeworkMember(String workId, String memberId) {
+    public void addHomeworkMember(String workId, String memberId, String userId) {
         WorkEntity work = boardRepository.findByWorkId(workId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제를 찾을 수 없습니다."));
 
         // 권한 체크
-        checkLeader(work.getClassId(), SecurityUtils.getUserId());
+        checkLeader(work.getClassId(), userId);
 
         if (work.getUserId().equals(memberId)) {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(400), "생성자에게 과제를 할당할 수 없습니다.");
@@ -54,7 +48,7 @@ public class WorkMemberServiceImpl implements WorkMemberService {
         }
 
         ClassMember classMember = classMemberRepository.findById(new ClassMemberId(work.getClassId(), memberId))
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "수업 멤버를 찾을 수 없습니다."));
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "클래스 멤버가 아닙니다."));
 
         WorkMemberEntity workMemberEntity = WorkMemberEntity.makeWorkMemberEntity(classMember.getUser(), work);
         workMemberRepository.save(workMemberEntity);
@@ -64,12 +58,12 @@ public class WorkMemberServiceImpl implements WorkMemberService {
 
     @Override
     @Transactional
-    public void removeHomeworkMember(String workId, String memberId) {
+    public void removeHomeworkMember(String workId, String memberId, String userId) {
         WorkEntity work = boardRepository.findByWorkId(workId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제를 찾을 수 없습니다."));
 
         // 권한 체크
-        checkLeader(work.getClassId(), SecurityUtils.getUserId());
+        checkLeader(work.getClassId(), userId);
 
         WorkMemberEntity workMemberEntity = workMemberRepository.findById(new WorkMemberId(workId, memberId))
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제 멤버를 찾을 수 없습니다."));

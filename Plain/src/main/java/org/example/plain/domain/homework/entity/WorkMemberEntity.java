@@ -39,7 +39,9 @@ public class WorkMemberEntity {
     @Builder.Default
     private boolean isLate = false;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "h_id", referencedColumnName = "h_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @Builder.Default
     private List<FileEntity> fileEntities = new ArrayList<>();
 

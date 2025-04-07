@@ -2,6 +2,7 @@ package org.example.plain.domain.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.file.dto.FileData;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +50,12 @@ public class AwsFileServiceImpl implements CloudFileService {
                 submitFileData.getUserId().getId(),
                 submitFileData.getWorkId().getBoardId());
 
-        try {
-            File tempFile = new File(file.getOriginalFilename());
-            file.transferTo(tempFile);
-            amazonS3.putObject(new PutObjectRequest(bucket, filename, tempFile));
-            tempFile.delete();
+        try (InputStream inputStream = file.getInputStream()) {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(file.getSize());
+            metadata.setContentType(file.getContentType());
+
+            amazonS3.putObject(new PutObjectRequest(bucket, filename, inputStream, metadata));
         } catch (IOException e) {
             throw new RuntimeException("Failed to upload file", e);
         }
@@ -84,11 +87,12 @@ public class AwsFileServiceImpl implements CloudFileService {
                     submitFileData.getUserId().getId(),
                     submitFileData.getWorkId().getBoardId());
 
-            try {
-                File tempFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-                file.transferTo(tempFile);
-                amazonS3.putObject(new PutObjectRequest(bucket, filename, tempFile));
-                tempFile.delete();
+            try (InputStream inputStream = file.getInputStream()) {
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(file.getSize());
+                metadata.setContentType(file.getContentType());
+
+                amazonS3.putObject(new PutObjectRequest(bucket, filename, inputStream, metadata));
             } catch (IOException e) {
                 throw new RuntimeException("Failed to upload file", e);
             }
@@ -115,8 +119,9 @@ public class AwsFileServiceImpl implements CloudFileService {
             throw new IllegalArgumentException("File URL cannot be null or empty");
         }
 
-        if (!fileUrl.startsWith("https://" + bucket + ".s3.amazonaws.com/")) {
-            throw new IllegalArgumentException("Invalid S3 URL: URL must start with https://" + bucket + ".s3.amazonaws.com/");
+        String expectedPrefix = "https://" + bucket + ".s3.";
+        if (!fileUrl.startsWith(expectedPrefix)) {
+            throw new IllegalArgumentException("Invalid S3 URL: URL must start with " + expectedPrefix);
         }
 
         String objectKey = extractObjectKeyFromUrl(fileUrl);
@@ -126,7 +131,7 @@ public class AwsFileServiceImpl implements CloudFileService {
     private String extractObjectKeyFromUrl(String fileUrl) {
         try {
             // URL에서 파일 경로 부분만 추출
-            String path = fileUrl.replace("https://" + bucket + ".s3.amazonaws.com/", "");
+            String path = fileUrl.substring(fileUrl.indexOf(bucket + "/") + bucket.length() + 1);
             if (path.isEmpty()) {
                 throw new IllegalArgumentException("Invalid S3 URL: empty path");
             }

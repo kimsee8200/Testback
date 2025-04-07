@@ -1,16 +1,13 @@
 package org.example.plain.domain.board.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.user.entity.User;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.relational.core.sql.In;
 
 import java.time.LocalDateTime;
-
 
 @SuperBuilder
 @Entity
@@ -26,18 +23,18 @@ public class BoardEntity {
     @Column(name = "b_id", unique = true, nullable = false)
     private String boardId;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "c_id", insertable = false, updatable = false)
+    @Column(name = "g_id")
     private String classId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "c_id", referencedColumnName = "c_id")
+    @JoinColumn(name = "g_id", referencedColumnName = "g_id", insertable = false, updatable = false)
     private ClassLecture group;
 
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private User user;
 
     @Column(name = "title")
@@ -53,7 +50,7 @@ public class BoardEntity {
     @CreatedDate
     private LocalDateTime createDate;
 
-    public BoardEntity (String userId, String classId, String title, String content, String type) {
+    public BoardEntity(String userId, String classId, String title, String content, String type) {
         this.userId = userId;
         this.classId = classId;
         this.title = title;
@@ -72,7 +69,6 @@ public class BoardEntity {
         this.createDate = LocalDateTime.now();
     }
 
-
     public void setBoardId(String boardId) {
         if (boardId != null) {
             this.boardId = boardId;
@@ -82,18 +78,20 @@ public class BoardEntity {
     public void setGroup(ClassLecture group) {
         if (group != null) {
             this.group = group;
+            this.classId = group.getId();
         }
     }
 
-    public void setClassId(String groupId) {
-        if (group != null) {
-            this.classId = groupId;
+    public void setClassId(String classId) {
+        if (classId != null) {
+            this.classId = classId;
         }
     }
 
     public void setUser(User user) {
         if (user != null) {
             this.user = user;
+            this.userId = user.getId();
         }
     }
 

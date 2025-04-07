@@ -2,8 +2,8 @@ package org.example.plain.domain.homework.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
+import org.example.plain.domain.classMember.repository.ClassMemberRepository;
 import org.example.plain.domain.file.dto.SubmitFileData;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.file.interfaces.CloudFileService;
@@ -13,17 +13,16 @@ import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.SubmissionService;
-import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.user.entity.User;
-import org.example.plain.repository.GroupMemberRepository;
+import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,21 +32,21 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final CloudFileService fileService;
     private final WorkMemberRepository workMemberRepository;
-    private final GroupMemberRepository groupMemberRepository;
-    private final WorkService workService;
+    private final ClassMemberRepository groupMemberRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     @Transactional
     public void submit(WorkSubmitField workSubmitField) {
         WorkMemberEntity workMemberEntity = validateWorkMember(workSubmitField.getWorkId(), workSubmitField.getUserId());
-        WorkEntity work = WorkEntity.workToWorkEntity(workService.selectWork(workSubmitField.getWorkId()));
+        WorkEntity work = workMemberEntity.getWork();
         
         // 마감일 체크
-        validateDeadline(work);
+        //validateDeadline(work);
         
-        // 클래스 멤버 검증 (submit에서는 다른 에러 메시지 사용)
+        // 클래스 멤버 검증
         User user = groupMemberRepository.findById(new ClassMemberId(work.getClassId(), workSubmitField.getUserId()))
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "수업 멤버를 찾을 수 없습니다"))
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "클래스 멤버가 아닙니다"))
                 .getUser();
 
         try {
@@ -88,8 +87,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     @Transactional(readOnly = true)
     public List<WorkSubmitListResponse> getSubmissionList(String workId) {
-        WorkEntity workEntity = WorkEntity.workToWorkEntity(workService.selectWork(workId));
-        return workMemberRepository.findByWork(workEntity).stream()
+        return workMemberRepository.findByWork(boardRepository.findByWorkId(workId).orElseThrow()).stream()
                 .map(WorkSubmitListResponse::changeEntity)
                 .toList();
     }
@@ -97,7 +95,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     @Transactional(readOnly = true)
     public boolean isSubmitted(String workId, String userId) {
-        return workMemberRepository.findById(new WorkMemberId(workId, userId))
+        return workMemberRepository.findByWorkIdAndUserId(workId, userId)
                 .map(workMemberEntity -> {
                     // 클래스 멤버 검증
                     WorkEntity work = workMemberEntity.getWork();
@@ -127,7 +125,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             });
 
             // DB에서 파일 정보 삭제
-            workMemberEntity.setFileEntities(List.of());
+            workMemberEntity.setFileEntities(new ArrayList<>());
             workMemberEntity.setSubmited(false);
             workMemberEntity.setLate(false);
             workMemberRepository.save(workMemberEntity);
@@ -146,8 +144,8 @@ public class SubmissionServiceImpl implements SubmissionService {
      * @return 검증된 WorkMemberEntity
      */
     private WorkMemberEntity validateWorkMember(String workId, String userId) {
-        return workMemberRepository.findById(new WorkMemberId(workId, userId))
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제 제출 정보를 찾을 수 없습니다."));
+        return workMemberRepository.findByWorkIdAndUserId(workId, userId)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제 할당 정보를 찾을 수 없습니다."));
     }
     
     /**

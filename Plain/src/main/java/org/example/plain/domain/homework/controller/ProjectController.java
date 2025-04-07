@@ -13,6 +13,7 @@ import org.example.plain.domain.homework.dto.*;
 import org.example.plain.domain.homework.interfaces.SubmissionService;
 import org.example.plain.domain.homework.interfaces.WorkService;
 import org.example.plain.domain.homework.service.WorkMemberServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,6 @@ import java.util.List;
 public class ProjectController {
 
     private final WorkService workService;
-    private final FileService fileService;
     private final WorkMemberServiceImpl workMemberService;
     private final BoardServiceImpl boardService;
     private final SubmissionService submissionService;

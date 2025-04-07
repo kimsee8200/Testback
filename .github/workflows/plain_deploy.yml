@@ -14,10 +14,10 @@ jobs:
 
       - name: Docker image build 및 push
         run: |
-          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          sudo docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/plain:latest ./Plain
-          sudo docker images
-          sudo docker push ${{ secrets.DOCKER_HUB_USERNAME }}/plain:latest
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u kimsee --password-stdin
+          docker build -t kimsee/plain:latest ./Plain
+          docker images
+          docker push kimsee/plain:latest
 
       - name: SSH로 EC2에 로그인 후 배포포
         uses: appleboy/ssh-action@master

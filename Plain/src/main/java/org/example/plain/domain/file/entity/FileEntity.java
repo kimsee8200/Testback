@@ -46,7 +46,9 @@ public class FileEntity {
         this.filename = filename;
         this.filePath = filePath;
         this.workMember = workMember;
-        this.user = workMember.getUser();
+        if (workMember != null && workMember.getUser() != null) {
+            this.user = workMember.getUser();
+        }
     }
 
     public static List<FileEntity> fileEntities(List<File> files) {

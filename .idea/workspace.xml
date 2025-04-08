@@ -4,39 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="refector: fileEntity, Config 오류 해결">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c8b414f9-28c7-4ca4-b635-589e6b4faa42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c8b414f9-28c7-4ca4-b635-589e6b4faa42.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Plain.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Plain.main.iml" afterDir="false" />
+    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="refector: 과제, 실시간 강의 통합테스트 및 리팩토링">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/repository/ClassMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/classMember/repository/ClassMemberRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AwsFileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AwsFileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitFieldResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/WorkSubmitFieldResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/CloudWorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/CloudWorkServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/SubmissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/SubmissionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/WorkMemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/WorkMemberServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/controller/MeetingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/controller/MeetingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/handler/MeetingWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/handler/MeetingWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/MeetingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/MeetingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/ParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/ParticipantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/impl/MeetingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/impl/MeetingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/impl/ParticipantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/meeting/service/impl/ParticipantServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/LoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/filters/LoginFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/handler/CustomOAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/handler/CustomOAuth2SuccessHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/JWTUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/file/service/AwsFileServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/file/service/AwsFileServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/integration/HomeworkIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/integration/HomeworkIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/service/SubmissionServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/service/SubmissionServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/JwtFilterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/filter/JwtFilterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/TokenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/user/service/TokenServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,7 +342,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744070934927</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="refector: 과제, 실시간 강의 통합테스트 및 리팩토링">
+      <option name="closed" value="true" />
+      <created>1744124645017</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744124645017</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,6 +370,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="변경" />
     <MESSAGE value="refector: fileEntity, Config 오류 해결" />
-    <option name="LAST_COMMIT_MESSAGE" value="refector: fileEntity, Config 오류 해결" />
+    <MESSAGE value="refector: 과제, 실시간 강의 통합테스트 및 리팩토링" />
+    <option name="LAST_COMMIT_MESSAGE" value="refector: 과제, 실시간 강의 통합테스트 및 리팩토링" />
   </component>
 </project>

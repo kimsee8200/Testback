@@ -1,10 +1,7 @@
 package org.example.plain.domain.homework.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.user.entity.User;
 
@@ -12,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "homework_member")
 public class WorkMemberEntity {
     @EmbeddedId
@@ -39,18 +37,19 @@ public class WorkMemberEntity {
     @Builder.Default
     private boolean isLate = false;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "h_id", referencedColumnName = "h_id")
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @Builder.Default
     private List<FileEntity> fileEntities = new ArrayList<>();
 
     public static WorkMemberEntity makeWorkMemberEntity(User userId, WorkEntity workId) {
-        return WorkMemberEntity.builder()
-                .workMemberId(new WorkMemberId(workId.getWorkId(), userId.getId()))
-                .work(workId)
-                .user(userId)
-                .build();
+        WorkMemberEntity entity = new WorkMemberEntity();
+        entity.setWorkMemberId(new WorkMemberId(workId.getWorkId(), userId.getId()));
+        entity.setWork(workId);
+        entity.setUser(userId);
+        entity.setFileEntities(new ArrayList<>());
+        return entity;
     }
 }
 

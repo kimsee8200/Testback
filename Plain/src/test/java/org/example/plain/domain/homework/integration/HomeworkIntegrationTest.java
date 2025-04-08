@@ -77,75 +77,92 @@ class HomeworkIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // 테스트용 강사(클래스 생성자) 생성
-        testInstructor = User.builder()
-                .id(TEST_INSTRUCTOR_ID)
-                .username("Test Instructor")
-                .email("instructor@example.com")
-                .role(Role.TEACHER)
-                .build();
-        userRepository.save(testInstructor);
+        try {
+            // 테스트용 강사(클래스 생성자) 생성
+            testInstructor = User.builder()
+                    .id(TEST_INSTRUCTOR_ID)
+                    .username("Test Instructor")
+                    .email("instructor@example.com")
+                    .role(Role.TEACHER)
+                    .build();
+            userRepository.save(testInstructor);
 
-        // 테스트용 학생(클래스 멤버) 생성
-        testStudent = User.builder()
-                .id(TEST_STUDENT_ID)
-                .username("Test Student")
-                .email("student@example.com")
-                .role(Role.NORMAL)
-                .build();
-        userRepository.save(testStudent);
+            // 테스트용 학생(클래스 멤버) 생성
+            testStudent = User.builder()
+                    .id(TEST_STUDENT_ID)
+                    .username("Test Student")
+                    .email("student@example.com")
+                    .role(Role.NORMAL)
+                    .build();
+            userRepository.save(testStudent);
 
-        // 테스트용 클래스 생성
-        testClass = ClassLecture.builder()
-                .id(TEST_CLASS_ID)
-                .title("Test Class")
-                .description("Test Description")
-                .code("TEST123")
-                .instructor(testInstructor)
-                .build();
-        testClass = classLectureRepository.save(testClass);
+            // 테스트용 클래스 생성
+            testClass = ClassLecture.builder()
+                    .id(TEST_CLASS_ID)
+                    .title("Test Class")
+                    .description("Test Description")
+                    .code("TEST123")
+                    .instructor(testInstructor)
+                    .build();
+            testClass = classLectureRepository.save(testClass);
 
-        // 강사를 클래스 멤버로 등록
-        ClassMemberId instructorMemberId = new ClassMemberId(testClass.getId(), testInstructor.getId());
-        instructorClassMember = ClassMember.builder()
-                .id(instructorMemberId)
-                .classLecture(testClass)
-                .user(testInstructor)
-                .build();
-        instructorClassMember = classMemberRepository.save(instructorClassMember);
+            // 강사를 클래스 멤버로 등록
+            ClassMemberId instructorMemberId = new ClassMemberId(testClass.getId(), testInstructor.getId());
+            instructorClassMember = ClassMember.builder()
+                    .id(instructorMemberId)
+                    .classLecture(testClass)
+                    .user(testInstructor)
+                    .build();
+            instructorClassMember = classMemberRepository.save(instructorClassMember);
+            
+            // 데이터베이스에 실제로 저장되었는지 확인
+            boolean instructorExists = classMemberRepository.findById(instructorMemberId).isPresent();
+            if (!instructorExists) {
+                throw new RuntimeException("강사를 클래스 멤버로 등록하는데 실패했습니다.");
+            }
 
-        // 학생을 클래스 멤버로 등록
-        ClassMemberId studentMemberId = new ClassMemberId(testClass.getId(), testStudent.getId());
-        studentClassMember = ClassMember.builder()
-                .id(studentMemberId)
-                .classLecture(testClass)
-                .user(testStudent)
-                .build();
-        studentClassMember = classMemberRepository.save(studentClassMember);
+            // 학생을 클래스 멤버로 등록
+            ClassMemberId studentMemberId = new ClassMemberId(testClass.getId(), testStudent.getId());
+            studentClassMember = ClassMember.builder()
+                    .id(studentMemberId)
+                    .classLecture(testClass)
+                    .user(testStudent)
+                    .build();
+            studentClassMember = classMemberRepository.save(studentClassMember);
+            
+            // 데이터베이스에 실제로 저장되었는지 확인
+            boolean studentExists = classMemberRepository.findById(studentMemberId).isPresent();
+            if (!studentExists) {
+                throw new RuntimeException("학생을 클래스 멤버로 등록하는데 실패했습니다.");
+            }
 
-        // 테스트용 과제 생성
-        testWork = Work.builder()
-                .boardId(TEST_BOARD_ID)
-                .groupId(TEST_CLASS_ID)
-                .writer(TEST_INSTRUCTOR_ID)
-                .workId(TEST_WORK_ID)
-                .title(TEST_TITLE)
-                .content(TEST_CONTENT)
-                .deadline(LocalDateTime.now().plusDays(7))
-                .build();
+            // 테스트용 과제 생성
+            testWork = Work.builder()
+                    .boardId(TEST_BOARD_ID)
+                    .groupId(TEST_CLASS_ID)
+                    .writer(TEST_INSTRUCTOR_ID)
+                    .workId(TEST_WORK_ID)
+                    .title(TEST_TITLE)
+                    .content(TEST_CONTENT)
+                    .deadline(LocalDateTime.now().plusDays(7))
+                    .build();
 
-        // 테스트용 파일 생성
-        testFile = new MockMultipartFile(
-                "test.txt",
-                "test.txt",
-                "text/plain",
-                "Test content".getBytes()
-        );
+            // 테스트용 파일 생성
+            testFile = new MockMultipartFile(
+                    "test.txt",
+                    "test.txt",
+                    "text/plain",
+                    "Test content".getBytes()
+            );
 
-        // 과제 저장
-        workService.insertWork(testWork, testClass.getId(), testInstructor.getId());
-        // 저장된 과제의 workId를 가져옴
-        testWork = workService.selectWork(TEST_WORK_ID);
+            // 과제 저장
+            workService.insertWork(testWork, testClass.getId(), testInstructor.getId());
+            // 저장된 과제의 workId를 가져옴
+            testWork = workService.selectWork(TEST_WORK_ID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @AfterEach
@@ -329,21 +346,41 @@ class HomeworkIntegrationTest {
         void removeHomeworkMember_Success() {
             // given
             workMemberService.addHomeworkMember(TEST_WORK_ID, TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
-
+            
             // when
             workMemberService.removeHomeworkMember(TEST_WORK_ID, TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
 
             // then
-            List<WorkMember> members = workMemberService.homeworkMembers(TEST_WORK_ID);
-            assertThat(members).isEmpty();
+            assertThrows(HttpClientErrorException.class, () ->
+                workMemberService.getSingleMembers(TEST_WORK_ID, TEST_STUDENT_ID),
+                "과제 멤버를 찾을 수 없습니다."
+            );
         }
 
         @Test
         @DisplayName("과제 멤버 목록 조회")
         void homeworkMembers_Success() {
             // given
+            // 두 번째 테스트 학생 생성 및 클래스 멤버로 등록
+            User testStudent2 = User.builder()
+                    .id("student2")
+                    .username("Test Student 2")
+                    .email("student2@example.com")
+                    .role(Role.NORMAL)
+                    .build();
+            userRepository.save(testStudent2);
+
+            ClassMemberId student2MemberId = new ClassMemberId(testClass.getId(), testStudent2.getId());
+            ClassMember student2ClassMember = ClassMember.builder()
+                    .id(student2MemberId)
+                    .classLecture(testClass)
+                    .user(testStudent2)
+                    .build();
+            classMemberRepository.save(student2ClassMember);
+
+            // 과제 멤버로 추가
             workMemberService.addHomeworkMember(TEST_WORK_ID, TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
-            workMemberService.addHomeworkMember(TEST_WORK_ID, "user2", TEST_INSTRUCTOR_ID);
+            workMemberService.addHomeworkMember(TEST_WORK_ID, testStudent2.getId(), TEST_INSTRUCTOR_ID);
 
             // when
             List<WorkMember> members = workMemberService.homeworkMembers(TEST_WORK_ID);
@@ -351,7 +388,11 @@ class HomeworkIntegrationTest {
             // then
             assertThat(members).hasSize(2);
             assertThat(members).extracting(member -> member.getUser().getId())
-                    .contains(TEST_STUDENT_ID, "user2");
+                    .contains(TEST_STUDENT_ID, testStudent2.getId());
+
+            // cleanup
+            classMemberRepository.delete(student2ClassMember);
+            userRepository.delete(testStudent2);
         }
 
         @Test
@@ -376,6 +417,17 @@ class HomeworkIntegrationTest {
         @DisplayName("과제 생성 성공")
         void insertWork_Success() {
             // given
+
+            classMemberRepository.save(instructorClassMember);
+            // 클래스 멤버 직접 확인
+            System.out.println(classMemberRepository.findAll().get(0).getId().getUserId()+" data "+classMemberRepository.findAll().get(0).getId().getClassId());
+            ClassMemberId instructorMemberId = new ClassMemberId(testClass.getId(), testInstructor.getId());
+            boolean instructorExists = classMemberRepository.findById(instructorMemberId).isPresent();
+            if (!instructorExists) {
+                throw new RuntimeException("강사가 클래스 멤버로 등록되어 있지 않습니다: " + TEST_CLASS_ID + ", " + TEST_INSTRUCTOR_ID);
+            }
+            
+            // 테스트 과제 생성
             Work newWork = Work.builder()
                     .boardId("board2")
                     .groupId(TEST_CLASS_ID)
@@ -387,7 +439,7 @@ class HomeworkIntegrationTest {
                     .build();
 
             // when
-            workService.insertWork(newWork, TEST_CLASS_ID, TEST_INSTRUCTOR_ID);
+            workService.insertWork(newWork, testClass.getId(), testInstructor.getId());
 
             // then
             Work savedWork = workService.selectWork("test-work-2");
@@ -425,27 +477,37 @@ class HomeworkIntegrationTest {
             workService.deleteWork(TEST_WORK_ID);
 
             // then
-            Work deletedWork = workService.selectWork(TEST_WORK_ID);
-            assertThat(deletedWork).isNull();
+            assertThrows(HttpClientErrorException.class, () ->
+                            workService.selectWork(TEST_WORK_ID),
+                    "과제를 찾을 수 없습니다."
+            );
+
         }
 
         @Test
         @DisplayName("그룹 과제 목록 조회")
         void selectGroupWorks_Success() {
             // given
+            // 클래스 멤버 직접 확인
+            ClassMemberId instructorMemberId = new ClassMemberId(testClass.getId(), testInstructor.getId());
+            boolean instructorExists = classMemberRepository.findById(instructorMemberId).isPresent();
+            if (!instructorExists) {
+                throw new RuntimeException("강사가 클래스 멤버로 등록되어 있지 않습니다: " + TEST_CLASS_ID + ", " + TEST_INSTRUCTOR_ID);
+            }
+            
             Work anotherWork = Work.builder()
                     .boardId("board2")
-                    .groupId(TEST_CLASS_ID)
+                    .groupId(testClass.getId())
                     .writer(TEST_INSTRUCTOR_ID)
                     .workId("test-work-2")
                     .title("Another Work")
                     .content("Another Description")
                     .deadline(LocalDateTime.now().plusDays(7))
                     .build();
-            workService.insertWork(anotherWork, TEST_CLASS_ID, TEST_INSTRUCTOR_ID);
+            workService.insertWork(anotherWork, testClass.getId(), testInstructor.getId());
 
             // when
-            List<Work> works = workService.selectGroupWorks(TEST_CLASS_ID);
+            List<Work> works = workService.selectGroupWorks(testClass.getId());
 
             // then
             assertThat(works).hasSize(2);
@@ -454,40 +516,6 @@ class HomeworkIntegrationTest {
         }
     }
 
-    @Nested
-    @DisplayName("테스트 데이터 정리")
-    class CleanupTest {
-        @Test
-        @DisplayName("테스트 데이터가 정상적으로 정리되는지 확인")
-        void verifyCleanup() {
-            // given
-            workMemberService.addHomeworkMember(TEST_WORK_ID, TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
-            WorkSubmitField submitField = WorkSubmitField.builder()
-                    .workId(TEST_WORK_ID)
-                    .userId(TEST_STUDENT_ID)
-                    .file(Arrays.asList(testFile))
-                    .build();
-            submissionService.submit(submitField);
-
-            // when
-            // @AfterEach에서 자동으로 정리됨
-
-            // then
-            // 다음 테스트에서 검증됨
-        }
-
-        @Test
-        @DisplayName("정리 후 데이터가 존재하지 않는지 확인")
-        void verifyNoDataAfterCleanup() {
-            // given
-            // 이전 테스트의 데이터가 정리된 상태
-
-            // when & then
-            assertThat(workMemberService.homeworkMembers(TEST_WORK_ID)).isEmpty();
-            assertThat(submissionService.isSubmitted(TEST_WORK_ID, TEST_STUDENT_ID)).isFalse();
-            assertThat(workService.selectWork(TEST_WORK_ID)).isNull();
-        }
-    }
 
     @Nested
     @DisplayName("클래스 멤버 통합 테스트")

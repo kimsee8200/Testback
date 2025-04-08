@@ -30,8 +30,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             response.setStatus(HttpServletResponse.SC_FOUND);
             response.sendRedirect("http://localhost:3000/sign_up");
         }else{
-            String token = jwtUtil.makeJwtToken(customOAuth2User.getUserRequest().getId());
-            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUserRequest().getId());
+            String token = jwtUtil.makeJwtToken(customOAuth2User.getUserRequest().getId(), customOAuth2User.getName());
+            String refresh = jwtUtil.makeRefreshToken(customOAuth2User.getUserRequest().getId(),  customOAuth2User.getName());
 
             Cookie cookie = makeCookie(refresh);
             response.addHeader("Authorization",token);

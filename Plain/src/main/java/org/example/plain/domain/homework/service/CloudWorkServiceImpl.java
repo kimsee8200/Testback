@@ -39,7 +39,8 @@ public class CloudWorkServiceImpl implements WorkService {
     @Override
     public void insertWork(Work work, String classId, String userId) {
         // 클래스 멤버 검증
-        ClassMember classMember = classMemberRepository.findById(new ClassMemberId(classId, userId))
+        ClassMemberId classMemberId = new ClassMemberId(classId, userId);
+        ClassMember classMember = classMemberRepository.findById(classMemberId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "클래스 멤버가 아닙니다."));
 
         if (!classMember.getClassLecture().getInstructor().getId().equals(userId)) {

@@ -42,7 +42,7 @@ public class MeetingWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String roomId = extractRoomId(session);
         String userId = SecurityUtils.getUserId();
         String userName = extractUserName(session);

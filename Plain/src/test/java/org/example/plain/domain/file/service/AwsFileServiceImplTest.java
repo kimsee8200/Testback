@@ -6,8 +6,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.example.plain.domain.file.dto.SubmitFileData;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.homework.entity.WorkEntity;
+import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.entity.User;
+import org.example.plain.repository.WorkMemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,6 +42,9 @@ class AwsFileServiceImplTest {
     @Mock
     private FileRepository fileRepository;
 
+    @Mock
+    private WorkMemberRepository workMemberRepository;
+
     private AwsFileServiceImpl awsFileService;
 
     private User testUser;
@@ -46,10 +52,11 @@ class AwsFileServiceImplTest {
     private SubmitFileData testFileData;
     private List<MultipartFile> testFiles;
     private MultipartFile testFile;
+    private WorkMemberEntity testWorkMember;
 
     @BeforeEach
     void setUp() {
-        awsFileService = new AwsFileServiceImpl(amazonS3, fileRepository);
+        awsFileService = new AwsFileServiceImpl(amazonS3, fileRepository, workMemberRepository);
         
         // Set bucket value using ReflectionTestUtils
         ReflectionTestUtils.setField(awsFileService, "bucket", BUCKET_NAME);
@@ -70,6 +77,8 @@ class AwsFileServiceImplTest {
                 .userId(testUser.getId())
                 .deadline(LocalDateTime.now().plusDays(1))
                 .build();
+
+        testWorkMember = WorkMemberEntity.makeWorkMemberEntity(testUser, testWork);
 
         testFile = new MockMultipartFile(
             "file",
@@ -94,11 +103,13 @@ class AwsFileServiceImplTest {
     @Test
     void uploadSingleFile_Success() {
         // given
+        when(workMemberRepository.findByWorkIdAndUserId(anyString(), anyString()))
+            .thenReturn(Optional.of(testWorkMember));
+
         FileEntity expectedFileEntity = FileEntity.builder()
                 .filename("test.txt")
                 .filePath(S3_BASE_URL + "test.txt")
-                .board(testWork)
-                .user(testUser)
+                .workMember(testWorkMember)
                 .build();
 
         when(fileRepository.save(any(FileEntity.class))).thenReturn(expectedFileEntity);
@@ -109,28 +120,45 @@ class AwsFileServiceImplTest {
         // then
         assertThat(result).isNotNull();
         assertThat(result.getFilename()).isEqualTo("test.txt");
-        assertThat(result.getBoard()).isEqualTo(testWork);
-        assertThat(result.getUser()).isEqualTo(testUser);
+        assertThat(result.getWorkMember()).isEqualTo(testWorkMember);
 
+        verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3).putObject(any(PutObjectRequest.class));
         verify(fileRepository).save(any(FileEntity.class));
     }
 
     @Test
+    void uploadSingleFile_WorkMemberNotFound_ThrowsException() {
+        // given
+        when(workMemberRepository.findByWorkIdAndUserId(anyString(), anyString()))
+            .thenReturn(Optional.empty());
+
+        // when & then
+        assertThatThrownBy(() -> awsFileService.uploadSingleFile(testFileData))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("WorkMember not found");
+
+        verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
+        verify(amazonS3, never()).putObject(any(PutObjectRequest.class));
+        verify(fileRepository, never()).save(any(FileEntity.class));
+    }
+
+    @Test
     void uploadFiles_Success() {
         // given
+        when(workMemberRepository.findByWorkIdAndUserId(anyString(), anyString()))
+            .thenReturn(Optional.of(testWorkMember));
+
         FileEntity expectedFileEntity1 = FileEntity.builder()
                 .filename("test1.txt")
                 .filePath(S3_BASE_URL + "test1.txt")
-                .board(testWork)
-                .user(testUser)
+                .workMember(testWorkMember)
                 .build();
 
         FileEntity expectedFileEntity2 = FileEntity.builder()
                 .filename("test2.txt")
                 .filePath(S3_BASE_URL + "test2.txt")
-                .board(testWork)
-                .user(testUser)
+                .workMember(testWorkMember)
                 .build();
 
         when(fileRepository.save(any(FileEntity.class)))
@@ -145,8 +173,25 @@ class AwsFileServiceImplTest {
         assertThat(results.get(0).getFilename()).isEqualTo("test1.txt");
         assertThat(results.get(1).getFilename()).isEqualTo("test2.txt");
 
+        verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3, times(2)).putObject(any(PutObjectRequest.class));
         verify(fileRepository, times(2)).save(any(FileEntity.class));
+    }
+
+    @Test
+    void uploadFiles_WorkMemberNotFound_ThrowsException() {
+        // given
+        when(workMemberRepository.findByWorkIdAndUserId(anyString(), anyString()))
+            .thenReturn(Optional.empty());
+
+        // when & then
+        assertThatThrownBy(() -> awsFileService.uploadFiles(testFileData, testFiles))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("WorkMember not found");
+
+        verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
+        verify(amazonS3, never()).putObject(any(PutObjectRequest.class));
+        verify(fileRepository, never()).save(any(FileEntity.class));
     }
 
     @Test

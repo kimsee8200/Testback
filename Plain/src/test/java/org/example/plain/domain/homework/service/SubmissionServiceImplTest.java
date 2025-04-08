@@ -13,6 +13,7 @@ import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.WorkService;
+import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
@@ -56,6 +57,9 @@ class SubmissionServiceImplTest {
     @Mock
     private WorkService workService;
 
+    @Mock
+    private FileRepository fileRepository;
+
     private SubmissionServiceImpl submissionService;
 
     private User testUser;
@@ -69,7 +73,7 @@ class SubmissionServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        submissionService = new SubmissionServiceImpl(fileService, workMemberRepository, groupMemberRepository, boardRepository);
+        submissionService = new SubmissionServiceImpl(fileService, workMemberRepository, groupMemberRepository, boardRepository, fileRepository);
 
         testUser = User.builder()
                 .id("testUser")

@@ -29,7 +29,7 @@ public class WorkSubmitFieldResponse {
         List<SubmitFileInfo> list = new ArrayList<>();
 
         workMemberEntity.getFileEntities().forEach(fileEntity -> {
-            list.add(new SubmitFileInfo(fileEntity.getFilename(), fileEntity.getFilePath(), fileEntity.getBoard(), fileEntity.getUser()));
+            list.add(new SubmitFileInfo(fileEntity.getFilename(), fileEntity.getFilePath(), fileEntity.getWorkMember().getWork(), fileEntity.getUser()));
         });
 
         workSubmitField.setFile(list);

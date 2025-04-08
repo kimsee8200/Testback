@@ -62,4 +62,10 @@ public class ParticipantServiceImpl implements ParticipantService {
         List<String> participants = roomParticipants.get(roomId);
         return participants == null || participants.isEmpty();
     }
+
+    @Override
+    public void removeAllParticipants(String roomId) {
+        roomParticipants.remove(roomId);
+        participantStates.keySet().removeIf(key -> key.startsWith(roomId + ":"));
+    }
 } 

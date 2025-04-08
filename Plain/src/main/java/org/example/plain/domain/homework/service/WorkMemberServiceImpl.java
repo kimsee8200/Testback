@@ -65,7 +65,7 @@ public class WorkMemberServiceImpl implements WorkMemberService {
         // 권한 체크
         checkLeader(work.getClassId(), userId);
 
-        WorkMemberEntity workMemberEntity = workMemberRepository.findById(new WorkMemberId(workId, memberId))
+        WorkMemberEntity workMemberEntity = workMemberRepository.findByWorkIdAndUserId(workId, memberId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제 멤버를 찾을 수 없습니다."));
 
         workMemberRepository.delete(workMemberEntity);
@@ -75,7 +75,7 @@ public class WorkMemberServiceImpl implements WorkMemberService {
     @Override
     @Transactional(readOnly = true)
     public WorkMember getSingleMembers(String workId, String memberId) {
-        WorkMemberEntity workMemberEntity = workMemberRepository.findById(new WorkMemberId(workId, memberId))
+        WorkMemberEntity workMemberEntity = workMemberRepository.findByWorkIdAndUserId(workId, memberId)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "과제 멤버를 찾을 수 없습니다."));
         return WorkMember.changeEntity(workMemberEntity);
     }

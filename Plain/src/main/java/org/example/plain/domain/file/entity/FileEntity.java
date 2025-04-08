@@ -1,23 +1,20 @@
 package org.example.plain.domain.file.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.example.plain.domain.homework.entity.WorkEntity;
-import org.example.plain.domain.user.entity.User;
+import lombok.*;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
+import org.example.plain.domain.user.entity.User;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
-@Table(name = "file", schema = "plain")
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "file", schema = "plain")
 public class FileEntity {
 
     @Id
@@ -25,15 +22,14 @@ public class FileEntity {
     @Column(name = "file_id")
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-        @JoinColumn(name = "h_id", referencedColumnName = "h_id"),
-        @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+        @JoinColumn(name = "h_id", referencedColumnName = "h_id", nullable = false, insertable = false, updatable = false),
+        @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     })
     private WorkMemberEntity workMember;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @Transient
     private User user;
 
     private String filename;
@@ -46,7 +42,7 @@ public class FileEntity {
         this.filename = filename;
         this.filePath = filePath;
         this.workMember = workMember;
-        if (workMember != null && workMember.getUser() != null) {
+        if (workMember != null) {
             this.user = workMember.getUser();
         }
     }

@@ -13,6 +13,7 @@ import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.SubmissionService;
+import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
@@ -34,6 +35,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final WorkMemberRepository workMemberRepository;
     private final ClassMemberRepository groupMemberRepository;
     private final BoardRepository boardRepository;
+    private final FileRepository fileRepository;
 
     @Override
     @Transactional
@@ -95,46 +97,44 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     @Transactional(readOnly = true)
     public boolean isSubmitted(String workId, String userId) {
-        return workMemberRepository.findByWorkIdAndUserId(workId, userId)
-                .map(workMemberEntity -> {
-                    // 클래스 멤버 검증
-                    WorkEntity work = workMemberEntity.getWork();
-                    validateClassMember(work.getClassId(), userId);
-                    return workMemberEntity.isSubmited();
-                })
-                .orElse(false);
+        log.info("Submit check workId: {}, userId: {}", workId, userId);
+        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(workId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("WorkMember not found for workId: " + workId + ", userId: " + userId));
+        
+        // 클래스 멤버 검증
+        WorkEntity work = workMember.getWork();
+        validateClassMember(work.getClassId(), userId);
+        return workMember.isSubmited();
     }
 
     @Override
     @Transactional
     public void cancelSubmission(String workId, String userId) {
-        WorkMemberEntity workMemberEntity = validateWorkMember(workId, userId);
+        log.info("Cancel submission workId: {}, userId: {}", workId, userId);
+        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(workId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("WorkMember not found for workId: " + workId + ", userId: " + userId));
         
         // 클래스 멤버 검증
-        WorkEntity work = workMemberEntity.getWork();
+        WorkEntity work = workMember.getWork();
         validateClassMember(work.getClassId(), userId);
-
-        try {
-            // S3에서 파일 삭제
-            workMemberEntity.getFileEntities().forEach(fileEntity -> {
-                try {
-                    fileService.deleteFile(fileEntity.getFilePath());
-                } catch (Exception e) {
-                    log.error("S3 파일 삭제 실패 - 파일URL: {}", fileEntity.getFilePath(), e);
-                }
-            });
-
-            // DB에서 파일 정보 삭제
-            workMemberEntity.setFileEntities(new ArrayList<>());
-            workMemberEntity.setSubmited(false);
-            workMemberEntity.setLate(false);
-            workMemberRepository.save(workMemberEntity);
-            
-            log.info("과제 제출 취소 성공 - 과제ID: {}, 사용자ID: {}", workId, userId);
-        } catch (Exception e) {
-            log.error("과제 제출 취소 실패 - 과제ID: {}, 사용자ID: {}", workId, userId, e);
-            throw new RuntimeException("과제 제출 취소에 실패했습니다.", e);
+        
+        // 파일 삭제
+        List<FileEntity> files = new ArrayList<>(workMember.getFileEntities());
+        for (FileEntity file : files) {
+            try {
+                fileService.deleteFile(file.getFilePath());
+            } catch (Exception e) {
+                log.error("S3 파일 삭제 실패 - 파일URL: {}", file.getFilePath(), e);
+            }
+            fileRepository.delete(file);
         }
+        
+        // 제출 상태 업데이트
+        workMember.setSubmited(false);
+        workMember.setLate(false);
+        workMember.getFileEntities().clear();
+        
+        log.info("과제 제출 취소 성공 - 과제ID: {}, 사용자ID: {}", workId, userId);
     }
     
     /**

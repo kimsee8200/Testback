@@ -11,6 +11,8 @@ import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.file.interfaces.CloudFileService;
 import org.example.plain.domain.file.interfaces.FileService;
 import org.example.plain.domain.homework.repository.FileRepository;
+import org.example.plain.domain.homework.entity.WorkMemberEntity;
+import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +37,7 @@ public class AwsFileServiceImpl implements CloudFileService {
 
     private final AmazonS3 amazonS3;
     private final FileRepository fileRepository;
+    private final WorkMemberRepository workMemberRepository;
 
     @Override
     public FileEntity uploadSingleFile(FileData fileData) {
@@ -43,6 +46,10 @@ public class AwsFileServiceImpl implements CloudFileService {
         
         if (file == null) {
             throw new IllegalArgumentException("File cannot be null");
+        }
+
+        if (submitFileData.getUserId() == null || submitFileData.getWorkId() == null) {
+            throw new IllegalArgumentException("User ID and Work ID cannot be null");
         }
 
         String filename = makeFilename(
@@ -62,12 +69,17 @@ public class AwsFileServiceImpl implements CloudFileService {
 
         String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
+        // Find existing WorkMemberEntity
+        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(
+            submitFileData.getWorkId().getWorkId(),
+            submitFileData.getUserId().getId()
+        ).orElseThrow(() -> new IllegalArgumentException("WorkMember not found"));
+
         return fileRepository.save(
                 FileEntity.builder()
                 .filename(submitFileData.getFileName())
                 .filePath(fileUrl)
-                .board(submitFileData.getWorkId())
-                .user(submitFileData.getUserId())
+                .workMember(workMember)
                 .build()
         );
     }
@@ -76,6 +88,16 @@ public class AwsFileServiceImpl implements CloudFileService {
     public List<FileEntity> uploadFiles(FileData fileData, List<MultipartFile> files) {
         SubmitFileData submitFileData = (SubmitFileData) fileData;
         List<FileEntity> fileEntities = new ArrayList<>();
+
+        if (submitFileData.getUserId() == null || submitFileData.getWorkId() == null) {
+            throw new IllegalArgumentException("User ID and Work ID cannot be null");
+        }
+
+        // Find existing WorkMemberEntity
+        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(
+            submitFileData.getWorkId().getWorkId(),
+            submitFileData.getUserId().getId()
+        ).orElseThrow(() -> new IllegalArgumentException("WorkMember not found"));
 
         for (MultipartFile file : files) {
             if (file == null) {
@@ -102,10 +124,9 @@ public class AwsFileServiceImpl implements CloudFileService {
             fileEntities.add(
                     fileRepository.save(
                         FileEntity.builder()
-                        .user(submitFileData.getUserId())
-                        .board(submitFileData.getWorkId())
                         .filename(file.getOriginalFilename())
                         .filePath(fileUrl)
+                        .workMember(workMember)
                         .build()
                     )
             );

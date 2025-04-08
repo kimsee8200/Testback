@@ -3,6 +3,7 @@ package org.example.plain.domain.meeting.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.common.config.SecurityUtils;
 import org.example.plain.domain.meeting.dto.ChatMessage;
+import org.example.plain.domain.meeting.dto.MeetingRoomDto;
 import org.example.plain.domain.meeting.dto.ParticipantState;
 import org.example.plain.domain.meeting.service.MeetingService;
 import org.springframework.http.ResponseEntity;
@@ -60,5 +61,41 @@ public class MeetingController {
     @GetMapping("/{roomId}/candidates")
     public ResponseEntity<List<String>> getCandidates(@PathVariable String roomId) {
         return ResponseEntity.ok(meetingService.getCandidates(roomId));
+    }
+
+    /**
+     * 새로운 회의실을 생성합니다.
+     * @param hostId 호스트 ID
+     * @param title 회의실 제목
+     * @return 생성된 회의실 정보
+     */
+    @PostMapping
+    public ResponseEntity<MeetingRoomDto> createMeetingRoom(
+            @RequestParam String hostId,
+            @RequestParam String title) {
+        MeetingRoomDto meetingRoom = meetingService.createMeetingRoom(hostId, title);
+        return ResponseEntity.ok(meetingRoom);
+    }
+
+    /**
+     * 회의실을 종료합니다.
+     * @param roomId 회의실 ID
+     * @return 성공 여부
+     */
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<Void> closeMeetingRoom(@PathVariable String roomId) {
+        meetingService.closeMeetingRoom(roomId);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 회의실 정보를 조회합니다.
+     * @param roomId 회의실 ID
+     * @return 회의실 정보
+     */
+    @GetMapping("/{roomId}")
+    public ResponseEntity<MeetingRoomDto> getMeetingRoom(@PathVariable String roomId) {
+        // TODO: 회의실 정보 조회 로직 구현
+        return ResponseEntity.ok().build();
     }
 } 

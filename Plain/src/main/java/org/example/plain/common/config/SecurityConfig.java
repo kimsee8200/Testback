@@ -64,7 +64,11 @@ public class SecurityConfig {
                         {
                             // sing_in은 회원가입 페이지로 이동.
                             authorizeRequests.requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**").permitAll();
+<<<<<<< HEAD
                             authorizeRequests.requestMatchers("/account/create","/users/login/**","/","/sign_up", "/api/email/**").permitAll();
+=======
+                            authorizeRequests.requestMatchers("/account/create","/users/login/**","/","/sign_up").permitAll();
+>>>>>>> origin/main
                             authorizeRequests.anyRequest().authenticated();
                         }
                 )

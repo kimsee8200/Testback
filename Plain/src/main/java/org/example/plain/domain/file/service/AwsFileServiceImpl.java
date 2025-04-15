@@ -6,13 +6,12 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.plain.domain.file.dto.FileData;
-import org.example.plain.domain.file.dto.SubmitFileData;
+import org.example.plain.domain.file.dto.FileInfo;
+import org.example.plain.domain.file.dto.FileServiceGenericInfo;
 import org.example.plain.domain.file.entity.FileEntity;
 import org.example.plain.domain.file.interfaces.CloudFileService;
-import org.example.plain.domain.file.interfaces.FileService;
-import org.example.plain.domain.homework.repository.FileRepository;
-import org.example.plain.domain.homework.entity.WorkMemberEntity;
-import org.example.plain.repository.WorkMemberRepository;
+import org.example.plain.domain.file.interfaces.FileDatabaseService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,10 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
 @Component
 @RequiredArgsConstructor
@@ -36,26 +34,17 @@ public class AwsFileServiceImpl implements CloudFileService {
     private String bucket;
 
     private final AmazonS3 amazonS3;
-    private final FileRepository fileRepository;
-    private final WorkMemberRepository workMemberRepository;
+
 
     @Override
-    public FileEntity uploadSingleFile(FileData fileData) {
-        SubmitFileData submitFileData = (SubmitFileData) fileData;
-        MultipartFile file = submitFileData.getFile();
+    public FileInfo uploadSingleFile(FileData fileData, String... id) {
+        MultipartFile file = fileData.getFile();
         
         if (file == null) {
             throw new IllegalArgumentException("File cannot be null");
         }
 
-        if (submitFileData.getUserId() == null || submitFileData.getWorkId() == null) {
-            throw new IllegalArgumentException("User ID and Work ID cannot be null");
-        }
-
-        String filename = makeFilename(
-                submitFileData.getFileName(),
-                submitFileData.getUserId().getId(),
-                submitFileData.getWorkId().getBoardId());
+        String filename = makeFilename(file.getOriginalFilename(), id);
 
         try (InputStream inputStream = file.getInputStream()) {
             ObjectMetadata metadata = new ObjectMetadata();
@@ -70,44 +59,21 @@ public class AwsFileServiceImpl implements CloudFileService {
         String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
         // Find existing WorkMemberEntity
-        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(
-            submitFileData.getWorkId().getWorkId(),
-            submitFileData.getUserId().getId()
-        ).orElseThrow(() -> new IllegalArgumentException("WorkMember not found"));
-
-        return fileRepository.save(
-                FileEntity.builder()
-                .filename(submitFileData.getFileName())
-                .filePath(fileUrl)
-                .workMember(workMember)
-                .build()
-        );
+        return new FileInfo(filename, fileUrl);
     }
 
     @Override
-    public List<FileEntity> uploadFiles(FileData fileData, List<MultipartFile> files) {
-        SubmitFileData submitFileData = (SubmitFileData) fileData;
-        List<FileEntity> fileEntities = new ArrayList<>();
+    public List<FileInfo> uploadFiles(FileData fileData, List<MultipartFile> files, String... id) {
 
-        if (submitFileData.getUserId() == null || submitFileData.getWorkId() == null) {
-            throw new IllegalArgumentException("User ID and Work ID cannot be null");
-        }
-
-        // Find existing WorkMemberEntity
-        WorkMemberEntity workMember = workMemberRepository.findByWorkIdAndUserId(
-            submitFileData.getWorkId().getWorkId(),
-            submitFileData.getUserId().getId()
-        ).orElseThrow(() -> new IllegalArgumentException("WorkMember not found"));
+        List<FileInfo> fileInfos = new ArrayList<>();
 
         for (MultipartFile file : files) {
             if (file == null) {
                 throw new IllegalArgumentException("File cannot be null");
             }
 
-            String filename = makeFilename(
-                    file.getOriginalFilename(),
-                    submitFileData.getUserId().getId(),
-                    submitFileData.getWorkId().getBoardId());
+
+            String filename = makeFilename(file.getOriginalFilename(), id);
 
             try (InputStream inputStream = file.getInputStream()) {
                 ObjectMetadata metadata = new ObjectMetadata();
@@ -121,20 +87,29 @@ public class AwsFileServiceImpl implements CloudFileService {
 
             String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
-            fileEntities.add(
-                    fileRepository.save(
-                        FileEntity.builder()
-                        .filename(file.getOriginalFilename())
-                        .filePath(fileUrl)
-                        .workMember(workMember)
-                        .build()
-                    )
+            fileInfos.add(
+                    new FileInfo(filename, fileUrl)
             );
         }
-        return fileEntities;
+        return fileInfos;
     }
 
     @Override
+    public void deleteFile(FileEntity file) {
+        String fileUrl = file.getFilePath();
+        if (fileUrl == null || fileUrl.isEmpty()) {
+            throw new IllegalArgumentException("File URL cannot be null or empty");
+        }
+
+        String expectedPrefix = "https://" + bucket + ".s3.";
+        if (!fileUrl.startsWith(expectedPrefix)) {
+            throw new IllegalArgumentException("Invalid S3 URL: URL must start with " + expectedPrefix);
+        }
+
+        String objectKey = extractObjectKeyFromUrl(fileUrl);
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, objectKey));
+    }
+
     public void deleteFile(String fileUrl) {
         if (fileUrl == null || fileUrl.isEmpty()) {
             throw new IllegalArgumentException("File URL cannot be null or empty");
@@ -162,8 +137,12 @@ public class AwsFileServiceImpl implements CloudFileService {
         }
     }
 
-    public String makeFilename(String originalFilename, String userId, String workId) {
-        return userId + "/" + workId + "/" + originalFilename;
+    public String makeFilename(String originalFilename, String... id) {
+        StringBuilder filename = new StringBuilder();
+        for (String word : id){
+            filename.append(word).append("/");
+        }
+        return filename.append(originalFilename).toString();
     }
 
     public String makeFilename (String originalFilename, String userId){

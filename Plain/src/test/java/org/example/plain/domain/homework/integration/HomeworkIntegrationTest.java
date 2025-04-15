@@ -6,7 +6,9 @@ import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitListResponse;
+import org.example.plain.domain.homework.dto.request.FeedBackRequset;
 import org.example.plain.domain.homework.entity.WorkEntity;
+import org.example.plain.domain.homework.interfaces.FeedbackService;
 import org.example.plain.domain.homework.interfaces.SubmissionService;
 import org.example.plain.domain.homework.interfaces.WorkMemberService;
 import org.example.plain.domain.homework.interfaces.WorkService;
@@ -87,6 +89,9 @@ public class HomeworkIntegrationTest {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private FeedbackService feedbackService;
 
     private Work testWork;
     private User testInstructor;
@@ -735,6 +740,203 @@ public class HomeworkIntegrationTest {
                     submissionService.submit(submitField),
                     "클래스 멤버가 아닙니다."
             );
+        }
+    }
+
+    @Nested
+    @DisplayName("과제 피드백 통합 테스트")
+    class FeedbackIntegration {
+
+        @Test
+        @DisplayName("피드백 추가 성공")
+        void addFeedback_Success() {
+            // Given
+            // 학생을 과제 멤버로 추가
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            // 학생이 과제 제출
+            WorkSubmitField submitField = WorkSubmitField.builder()
+                    .workId(testWork.getWorkId())
+                    .userId(TEST_STUDENT_ID)
+                    .file(Arrays.asList(testFile))
+                    .build();
+            submissionService.submit(submitField);
+            
+            // 피드백 데이터 준비
+            FeedBackRequset feedbackRequest = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "잘 작성된 과제입니다.",
+                    95
+            );
+            
+            // When
+            feedbackService.addFeedback(feedbackRequest, TEST_INSTRUCTOR_ID);
+            
+            // Then
+            String feedback = feedbackService.getFeedback(testWork.getWorkId(), TEST_STUDENT_ID);
+            int score = feedbackService.getScore(testWork.getWorkId(), TEST_STUDENT_ID);
+            
+            assertThat(feedback).isEqualTo("잘 작성된 과제입니다.");
+            assertThat(score).isEqualTo(95);
+        }
+        
+        @Test
+        @DisplayName("제출되지 않은 과제에 피드백 추가 실패")
+        void addFeedback_Fail_NotSubmitted() {
+            // Given
+            // 학생을 과제 멤버로 추가하되 제출은 하지 않음
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            
+            // 피드백 데이터 준비
+            FeedBackRequset feedbackRequest = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "제출되지 않은 과제입니다.",
+                    0
+            );
+            
+            // When & Then
+            HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () ->
+                feedbackService.addFeedback(feedbackRequest, TEST_INSTRUCTOR_ID)
+            );
+            
+            assertThat(exception.getMessage()).contains("제출되지 않은 과제에는 피드백을 추가할 수 없습니다");
+        }
+        
+        @Test
+        @DisplayName("피드백 조회 성공")
+        void getFeedback_Success() {
+            // Given
+            // 학생을 과제 멤버로 추가
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            
+            // 학생이 과제 제출
+            WorkSubmitField submitField = WorkSubmitField.builder()
+                    .workId(testWork.getWorkId())
+                    .userId(TEST_STUDENT_ID)
+                    .file(Arrays.asList(testFile))
+                    .build();
+            submissionService.submit(submitField);
+
+            // 피드백 추가
+            FeedBackRequset feedbackRequest = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "잘 작성된 과제입니다.",
+                    95
+            );
+            feedbackService.addFeedback(feedbackRequest, TEST_INSTRUCTOR_ID);
+            
+            // When
+            String feedback = feedbackService.getFeedback(testWork.getWorkId(), TEST_STUDENT_ID);
+            
+            // Then
+            assertThat(feedback).isEqualTo("잘 작성된 과제입니다.");
+        }
+        
+        @Test
+        @DisplayName("점수만 조회 성공")
+        void getScore_Success() {
+            // Given
+            // 학생을 과제 멤버로 추가
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            
+            // 학생이 과제 제출
+            WorkSubmitField submitField = WorkSubmitField.builder()
+                    .workId(testWork.getWorkId())
+                    .userId(TEST_STUDENT_ID)
+                    .file(Arrays.asList(testFile))
+                    .build();
+            submissionService.submit(submitField);
+
+            // 피드백 추가
+            FeedBackRequset feedbackRequest = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "잘 작성된 과제입니다.",
+                    85
+            );
+            feedbackService.addFeedback(feedbackRequest, TEST_INSTRUCTOR_ID);
+            
+            // When
+            int score = feedbackService.getScore(testWork.getWorkId(), TEST_STUDENT_ID);
+            
+            // Then
+            assertThat(score).isEqualTo(85);
+        }
+        
+        @Test
+        @DisplayName("피드백 수정 성공")
+        void updateFeedback_Success() {
+            // Given
+            // 학생을 과제 멤버로 추가
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            
+            // 학생이 과제 제출
+            WorkSubmitField submitField = WorkSubmitField.builder()
+                    .workId(testWork.getWorkId())
+                    .userId(TEST_STUDENT_ID)
+                    .file(Arrays.asList(testFile))
+                    .build();
+            submissionService.submit(submitField);
+            
+            // 초기 피드백 추가
+            FeedBackRequset initialFeedback = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "초기 피드백입니다.",
+                    80
+            );
+            feedbackService.addFeedback(initialFeedback, TEST_INSTRUCTOR_ID);
+            
+            // 수정된 피드백 데이터 준비
+            FeedBackRequset updatedFeedback = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "수정된 피드백입니다.",
+                    90
+            );
+            
+            // When
+            feedbackService.addFeedback(updatedFeedback, TEST_INSTRUCTOR_ID);
+            
+            // Then
+            String feedback = feedbackService.getFeedback(testWork.getWorkId(), TEST_STUDENT_ID);
+            int score = feedbackService.getScore(testWork.getWorkId(), TEST_STUDENT_ID);
+            
+            assertThat(feedback).isEqualTo("수정된 피드백입니다.");
+            assertThat(score).isEqualTo(90);
+        }
+        
+        @Test
+        @DisplayName("잘못된 점수 범위로 피드백 추가 실패")
+        void addFeedback_Fail_InvalidScore() {
+            // Given
+            // 학생을 과제 멤버로 추가
+            workMemberService.addHomeworkMember(testWork.getWorkId(), TEST_STUDENT_ID, TEST_INSTRUCTOR_ID);
+            
+            // 학생이 과제 제출
+            WorkSubmitField submitField = WorkSubmitField.builder()
+                    .workId(testWork.getWorkId())
+                    .userId(TEST_STUDENT_ID)
+                    .file(Arrays.asList(testFile))
+                    .build();
+            submissionService.submit(submitField);
+            
+            // 잘못된 점수(101점)로 피드백 데이터 준비
+            FeedBackRequset feedbackRequest = new FeedBackRequset(
+                    testWork.getWorkId(),
+                    TEST_STUDENT_ID,
+                    "점수가 범위를 벗어났습니다.",
+                    101
+            );
+            
+            // When & Then
+            HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () ->
+                feedbackService.addFeedback(feedbackRequest, TEST_INSTRUCTOR_ID)
+            );
+            
+            assertThat(exception.getMessage()).contains("점수는 0점에서 100점 사이여야 합니다");
         }
     }
 } 

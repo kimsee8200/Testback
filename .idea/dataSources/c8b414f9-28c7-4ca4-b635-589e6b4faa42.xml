@@ -1074,7 +1074,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="292" parent="1" name="plain">
-      <LastIntrospectionLocalTimestamp>2025-04-07.23:58:21</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-04-14.11:22:42</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </schema>
     <user id="293" parent="1" name="root">
@@ -1207,1088 +1207,1163 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <column id="325" parent="298" name="b_id">
+    <table id="325" parent="292" name="work_feedback">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <column id="326" parent="298" name="b_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="326" parent="298" name="g_id">
+    <column id="327" parent="298" name="g_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="327" parent="298" name="user_id">
+    <column id="328" parent="298" name="user_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="328" parent="298" name="board_type">
+    <column id="329" parent="298" name="board_type">
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="329" parent="298" name="title">
+    <column id="330" parent="298" name="title">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <column id="330" parent="298" name="context">
+    <column id="331" parent="298" name="context">
       <Position>6</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="331" parent="298" name="create_date">
+    <column id="332" parent="298" name="create_date">
       <Position>7</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="332" parent="298" name="view">
+    <column id="333" parent="298" name="view">
       <Position>8</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="333" parent="298" name="FK_GroupClass_TO_board_1">
+    <foreign-key id="334" parent="298" name="FK_GroupClass_TO_board_1">
       <ColNames>g_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>g_id</RefColNames>
       <RefTableName>groupclass</RefTableName>
     </foreign-key>
-    <foreign-key id="334" parent="298" name="FK_User_TO_Board">
+    <foreign-key id="335" parent="298" name="FK_User_TO_Board">
       <ColNames>user_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <index id="335" parent="298" name="PRIMARY">
+    <index id="336" parent="298" name="PRIMARY">
       <ColNames>b_id
 g_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="336" parent="298" name="FK_GroupClass_TO_board_1">
+    <index id="337" parent="298" name="FK_GroupClass_TO_board_1">
       <ColNames>g_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="337" parent="298" name="FK_User_TO_Board">
+    <index id="338" parent="298" name="FK_User_TO_Board">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="338" parent="298" name="PRIMARY">
+    <key id="339" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="339" parent="299" name="comment_id">
+    <column id="340" parent="299" name="comment_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="340" parent="299" name="b_id">
+    <column id="341" parent="299" name="b_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="341" parent="299" name="user_id">
+    <column id="342" parent="299" name="user_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="342" parent="299" name="comment">
+    <column id="343" parent="299" name="comment">
       <Comment>EX</Comment>
       <Position>4</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="343" parent="299" name="is_secret">
+    <column id="344" parent="299" name="is_secret">
       <Position>5</Position>
       <StoredType>tinyint|0s</StoredType>
     </column>
-    <foreign-key id="344" parent="299" name="FK_board_TO_board_comment_1">
+    <foreign-key id="345" parent="299" name="FK_board_TO_board_comment_1">
       <ColNames>b_id</ColNames>
       <RefColNames>b_id</RefColNames>
       <RefTableName>board</RefTableName>
     </foreign-key>
-    <index id="345" parent="299" name="PRIMARY">
+    <index id="346" parent="299" name="PRIMARY">
       <ColNames>comment_id
 b_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="346" parent="299" name="FK_board_TO_board_comment_1">
+    <index id="347" parent="299" name="FK_board_TO_board_comment_1">
       <ColNames>b_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="347" parent="299" name="PRIMARY">
+    <key id="348" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="348" parent="300" name="c_id">
+    <column id="349" parent="300" name="c_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="349" parent="300" name="user_id">
+    <column id="350" parent="300" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="350" parent="300" name="date_info">
+    <column id="351" parent="300" name="date_info">
       <Position>3</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="351" parent="300" name="title">
+    <column id="352" parent="300" name="title">
       <Position>4</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <column id="352" parent="300" name="content">
+    <column id="353" parent="300" name="content">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="353" parent="300" name="cartegory">
+    <column id="354" parent="300" name="cartegory">
       <Position>6</Position>
       <StoredType>enum(&apos;PERSONAL&apos;, &apos;GROUP&apos;)|0e</StoredType>
     </column>
-    <foreign-key id="354" parent="300" name="FK_User_TO_Calender_1">
+    <foreign-key id="355" parent="300" name="FK_User_TO_Calender_1">
       <ColNames>user_id</ColNames>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <index id="355" parent="300" name="PRIMARY">
+    <index id="356" parent="300" name="PRIMARY">
       <ColNames>c_id
 user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="356" parent="300" name="FK_User_TO_Calender_1">
+    <index id="357" parent="300" name="FK_User_TO_Calender_1">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="357" parent="300" name="PRIMARY">
+    <key id="358" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="358" parent="301" name="chat_id">
+    <column id="359" parent="301" name="chat_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="359" parent="301" name="user_id">
+    <column id="360" parent="301" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="360" parent="302" name="mes_id">
+    <column id="361" parent="302" name="mes_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="361" parent="302" name="chat_id">
+    <column id="362" parent="302" name="chat_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="362" parent="302" name="mes_content">
+    <column id="363" parent="302" name="mes_content">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="363" parent="302" name="mes_stamp">
+    <column id="364" parent="302" name="mes_stamp">
       <Position>4</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="364" parent="302" name="mes_check">
+    <column id="365" parent="302" name="mes_check">
       <Position>5</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <index id="365" parent="302" name="PRIMARY">
+    <index id="366" parent="302" name="PRIMARY">
       <ColNames>mes_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="366" parent="302" name="PRIMARY">
+    <key id="367" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="367" parent="303" name="chat_id">
+    <column id="368" parent="303" name="chat_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="368" parent="303" name="lecture_id">
+    <column id="369" parent="303" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="369" parent="303" name="chat_name">
+    <column id="370" parent="303" name="chat_name">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="370" parent="303" name="chat_status">
+    <column id="371" parent="303" name="chat_status">
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="371" parent="303" name="chat_stamp">
+    <column id="372" parent="303" name="chat_stamp">
       <Position>5</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <index id="372" parent="303" name="PRIMARY">
+    <index id="373" parent="303" name="PRIMARY">
       <ColNames>chat_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="373" parent="303" name="PRIMARY">
+    <key id="374" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="374" parent="304" name="user_id">
+    <column id="375" parent="304" name="user_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="375" parent="304" name="g_id">
+    <column id="376" parent="304" name="g_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="376" parent="304" name="authority">
+    <column id="377" parent="304" name="authority">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <foreign-key id="377" parent="304" name="FK_User_TO_Group_Member_1">
+    <foreign-key id="378" parent="304" name="FK_User_TO_Group_Member_1">
       <ColNames>user_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <foreign-key id="378" parent="304" name="FK_GroupClass_TO_Group_Member_1">
+    <foreign-key id="379" parent="304" name="FK_GroupClass_TO_Group_Member_1">
       <ColNames>g_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>g_id</RefColNames>
       <RefTableName>groupclass</RefTableName>
     </foreign-key>
-    <index id="379" parent="304" name="PRIMARY">
+    <index id="380" parent="304" name="PRIMARY">
       <ColNames>user_id
 g_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="380" parent="304" name="FK_GroupClass_TO_Group_Member_1">
+    <index id="381" parent="304" name="FK_GroupClass_TO_Group_Member_1">
       <ColNames>g_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="381" parent="304" name="PRIMARY">
+    <key id="382" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="382" parent="305" name="c_id">
+    <column id="383" parent="305" name="c_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="383" parent="305" name="g_id">
+    <column id="384" parent="305" name="g_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="384" parent="305" name="date_info">
+    <column id="385" parent="305" name="date_info">
       <Position>3</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="385" parent="305" name="title">
+    <column id="386" parent="305" name="title">
       <Position>4</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <column id="386" parent="305" name="content">
+    <column id="387" parent="305" name="content">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <foreign-key id="387" parent="305" name="FK_GroupClass_TO_CopyOfCalender_1">
+    <foreign-key id="388" parent="305" name="FK_GroupClass_TO_CopyOfCalender_1">
       <ColNames>g_id</ColNames>
       <RefColNames>g_id</RefColNames>
       <RefTableName>groupclass</RefTableName>
     </foreign-key>
-    <index id="388" parent="305" name="PRIMARY">
+    <index id="389" parent="305" name="PRIMARY">
       <ColNames>c_id
 g_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="389" parent="305" name="FK_GroupClass_TO_CopyOfCalender_1">
+    <index id="390" parent="305" name="FK_GroupClass_TO_CopyOfCalender_1">
       <ColNames>g_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="390" parent="305" name="PRIMARY">
+    <key id="391" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="391" parent="306" name="curriculum_id">
+    <column id="392" parent="306" name="curriculum_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="392" parent="306" name="chapter_id">
+    <column id="393" parent="306" name="chapter_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="393" parent="306" name="lecture_id">
+    <column id="394" parent="306" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="394" parent="306" name="title">
+    <column id="395" parent="306" name="title">
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="395" parent="306" name="sequence">
+    <column id="396" parent="306" name="sequence">
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="396" parent="306" name="discription">
+    <column id="397" parent="306" name="discription">
       <Position>6</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <foreign-key id="397" parent="306" name="FK_lecture_chapter_TO_curriculum_1">
+    <foreign-key id="398" parent="306" name="FK_lecture_chapter_TO_curriculum_1">
       <ColNames>chapter_id</ColNames>
       <RefColNames>chapter_id</RefColNames>
       <RefTableName>lecture_chapter</RefTableName>
     </foreign-key>
-    <foreign-key id="398" parent="306" name="FK_lecture_chapter_TO_curriculum_2">
+    <foreign-key id="399" parent="306" name="FK_lecture_chapter_TO_curriculum_2">
       <ColNames>lecture_id</ColNames>
       <RefColNames>lecture_id</RefColNames>
       <RefTableName>lecture_chapter</RefTableName>
     </foreign-key>
-    <index id="399" parent="306" name="PRIMARY">
+    <index id="400" parent="306" name="PRIMARY">
       <ColNames>curriculum_id
 chapter_id
 lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="400" parent="306" name="FK_lecture_chapter_TO_curriculum_1">
+    <index id="401" parent="306" name="FK_lecture_chapter_TO_curriculum_1">
       <ColNames>chapter_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="401" parent="306" name="FK_lecture_chapter_TO_curriculum_2">
+    <index id="402" parent="306" name="FK_lecture_chapter_TO_curriculum_2">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="402" parent="306" name="PRIMARY">
+    <key id="403" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="403" parent="307" name="file_id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="404" parent="307" name="file_id">
+      <AutoIncrement>89</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="404" parent="307" name="h_id">
+    <column id="405" parent="307" name="h_id">
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="405" parent="307" name="user_id">
+    <column id="406" parent="307" name="user_id">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="406" parent="307" name="filename">
+    <column id="407" parent="307" name="filename">
       <Position>4</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="407" parent="307" name="file_path">
+    <column id="408" parent="307" name="file_path">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <foreign-key id="408" parent="307" name="file_homework_member_h_id_fk">
+    <foreign-key id="409" parent="307" name="file_homework_member_h_id_fk">
       <ColNames>h_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>h_id</RefColNames>
       <RefTableName>homework_member</RefTableName>
     </foreign-key>
-    <foreign-key id="409" parent="307" name="file_homework_member_user_id_fk">
+    <foreign-key id="410" parent="307" name="file_homework_member_user_id_fk">
       <ColNames>user_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>homework_member</RefTableName>
     </foreign-key>
-    <index id="410" parent="307" name="PRIMARY">
+    <index id="411" parent="307" name="PRIMARY">
       <ColNames>file_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="411" parent="307" name="file_index">
+    <index id="412" parent="307" name="file_index">
       <ColNames>file_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="412" parent="307" name="file_homework_member_h_id_fk">
+    <index id="413" parent="307" name="file_homework_member_h_id_fk">
       <ColNames>h_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="413" parent="307" name="file_homework_member_user_id_fk">
+    <index id="414" parent="307" name="file_homework_member_user_id_fk">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="414" parent="307" name="PRIMARY">
+    <key id="415" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="415" parent="308" name="g_id">
+    <column id="416" parent="308" name="g_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="416" parent="308" name="creator">
+    <column id="417" parent="308" name="creator">
       <Comment>생성한 유저</Comment>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="417" parent="308" name="lecture_id">
+    <column id="418" parent="308" name="lecture_id">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="418" parent="308" name="g_name">
+    <column id="419" parent="308" name="g_name">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <column id="419" parent="308" name="description">
+    <column id="420" parent="308" name="description">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="420" parent="308" name="g_code">
+    <column id="421" parent="308" name="g_code">
       <Position>6</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="421" parent="308" name="image_url">
+    <column id="422" parent="308" name="image_url">
       <Position>7</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="422" parent="308" name="maxmember">
+    <column id="423" parent="308" name="maxmember">
       <Position>8</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="423" parent="308" name="groupclass___to_user">
+    <foreign-key id="424" parent="308" name="groupclass___to_user">
       <ColNames>creator</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <index id="424" parent="308" name="PRIMARY">
+    <index id="425" parent="308" name="PRIMARY">
       <ColNames>g_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="425" parent="308" name="groupclass___to_user">
+    <index id="426" parent="308" name="groupclass___to_user">
       <ColNames>creator</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="426" parent="308" name="PRIMARY">
+    <key id="427" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="427" parent="309" name="h_id">
+    <column id="428" parent="309" name="h_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="428" parent="309" name="b_id">
+    <column id="429" parent="309" name="b_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="429" parent="309" name="submit_date">
+    <column id="430" parent="309" name="submit_date">
       <Position>3</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="430" parent="309" name="FK_board_TO_homework_1">
+    <foreign-key id="431" parent="309" name="FK_board_TO_homework_1">
       <ColNames>b_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>b_id</RefColNames>
       <RefTableName>board</RefTableName>
     </foreign-key>
-    <index id="431" parent="309" name="PRIMARY">
+    <index id="432" parent="309" name="PRIMARY">
       <ColNames>h_id
 b_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="432" parent="309" name="FK_board_TO_homework_1">
+    <index id="433" parent="309" name="FK_board_TO_homework_1">
       <ColNames>b_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="433" parent="309" name="PRIMARY">
+    <key id="434" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="434" parent="310" name="h_id">
+    <column id="435" parent="310" name="h_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="435" parent="310" name="user_id">
+    <column id="436" parent="310" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="436" parent="310" name="is_submit">
+    <column id="437" parent="310" name="is_submit">
       <Position>3</Position>
       <StoredType>tinyint|0s</StoredType>
     </column>
-    <column id="437" parent="310" name="is_late">
+    <column id="438" parent="310" name="is_late">
       <Position>4</Position>
       <StoredType>tinyint|0s</StoredType>
     </column>
-    <foreign-key id="438" parent="310" name="FK_homework_TO_homework_member_1">
+    <foreign-key id="439" parent="310" name="FK_homework_TO_homework_member_1">
       <ColNames>h_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>b_id</RefColNames>
       <RefTableName>board</RefTableName>
     </foreign-key>
-    <foreign-key id="439" parent="310" name="FK_Group_Member_TO_homework_member_1">
+    <foreign-key id="440" parent="310" name="FK_Group_Member_TO_homework_member_1">
       <ColNames>user_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <index id="440" parent="310" name="PRIMARY">
+    <index id="441" parent="310" name="PRIMARY">
       <ColNames>h_id
 user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="441" parent="310" name="FK_Group_Member_TO_homework_member_1">
+    <index id="442" parent="310" name="FK_Group_Member_TO_homework_member_1">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="442" parent="310" name="PRIMARY">
+    <key id="443" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="443" parent="311" name="lecture_id">
+    <column id="444" parent="311" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="444" parent="311" name="user_id">
+    <column id="445" parent="311" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="445" parent="311" name="lecture_type">
+    <column id="446" parent="311" name="lecture_type">
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="446" parent="311" name="lecture_name">
+    <column id="447" parent="311" name="lecture_name">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <column id="447" parent="311" name="lecture_discription">
+    <column id="448" parent="311" name="lecture_discription">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="448" parent="311" name="lecture_price">
+    <column id="449" parent="311" name="lecture_price">
       <Position>6</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="449" parent="311" name="create_at">
+    <column id="450" parent="311" name="create_at">
       <Position>7</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="450" parent="311" name="update_at">
+    <column id="451" parent="311" name="update_at">
       <Position>8</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <index id="451" parent="311" name="PRIMARY">
+    <index id="452" parent="311" name="PRIMARY">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="452" parent="311" name="PRIMARY">
+    <key id="453" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="453" parent="312" name="cartegory_id">
+    <column id="454" parent="312" name="cartegory_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="454" parent="312" name="lecture_id">
+    <column id="455" parent="312" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="455" parent="312" name="b_id">
+    <column id="456" parent="312" name="b_id">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="456" parent="312" name="cartegory">
+    <column id="457" parent="312" name="cartegory">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>tinytext|0s</StoredType>
     </column>
-    <index id="457" parent="312" name="PRIMARY">
+    <index id="458" parent="312" name="PRIMARY">
       <ColNames>cartegory_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="458" parent="312" name="PRIMARY">
+    <key id="459" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="459" parent="313" name="chapter_id">
+    <column id="460" parent="313" name="chapter_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="460" parent="313" name="unit_id">
+    <column id="461" parent="313" name="unit_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="461" parent="313" name="lecture_id">
+    <column id="462" parent="313" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="462" parent="313" name="type">
+    <column id="463" parent="313" name="type">
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="463" parent="313" name="title">
+    <column id="464" parent="313" name="title">
       <Position>5</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="464" parent="313" name="sequence">
+    <column id="465" parent="313" name="sequence">
       <Position>6</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="465" parent="313" name="FK_lecture_unit_TO_lecture_chapter_1">
+    <foreign-key id="466" parent="313" name="FK_lecture_unit_TO_lecture_chapter_1">
       <ColNames>unit_id</ColNames>
       <RefColNames>unit_id</RefColNames>
       <RefTableName>lecture_unit</RefTableName>
     </foreign-key>
-    <foreign-key id="466" parent="313" name="FK_lecture_unit_TO_lecture_chapter_2">
+    <foreign-key id="467" parent="313" name="FK_lecture_unit_TO_lecture_chapter_2">
       <ColNames>lecture_id</ColNames>
       <RefColNames>lecture_id</RefColNames>
       <RefTableName>lecture_unit</RefTableName>
     </foreign-key>
-    <index id="467" parent="313" name="PRIMARY">
+    <index id="468" parent="313" name="PRIMARY">
       <ColNames>chapter_id
 unit_id
 lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="468" parent="313" name="FK_lecture_unit_TO_lecture_chapter_1">
+    <index id="469" parent="313" name="FK_lecture_unit_TO_lecture_chapter_1">
       <ColNames>unit_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="469" parent="313" name="FK_lecture_unit_TO_lecture_chapter_2">
+    <index id="470" parent="313" name="FK_lecture_unit_TO_lecture_chapter_2">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="470" parent="313" name="PRIMARY">
+    <key id="471" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="471" parent="314" name="user_id">
+    <column id="472" parent="314" name="user_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="472" parent="314" name="lecture_id">
+    <column id="473" parent="314" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <foreign-key id="473" parent="314" name="FK_User_TO_lecture_member_1">
+    <foreign-key id="474" parent="314" name="FK_User_TO_lecture_member_1">
       <ColNames>user_id</ColNames>
       <RefColNames>user_id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <foreign-key id="474" parent="314" name="FK_lecture_TO_lecture_member_1">
+    <foreign-key id="475" parent="314" name="FK_lecture_TO_lecture_member_1">
       <ColNames>lecture_id</ColNames>
       <RefColNames>lecture_id</RefColNames>
       <RefTableName>lecture</RefTableName>
     </foreign-key>
-    <index id="475" parent="314" name="PRIMARY">
+    <index id="476" parent="314" name="PRIMARY">
       <ColNames>user_id
 lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="476" parent="314" name="FK_lecture_TO_lecture_member_1">
+    <index id="477" parent="314" name="FK_lecture_TO_lecture_member_1">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="477" parent="314" name="PRIMARY">
+    <key id="478" parent="314" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="478" parent="315" name="recording_id">
+    <column id="479" parent="315" name="recording_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="479" parent="315" name="lecture_id">
+    <column id="480" parent="315" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="480" parent="315" name="recording_url">
+    <column id="481" parent="315" name="recording_url">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="481" parent="315" name="started_at">
+    <column id="482" parent="315" name="started_at">
       <Position>4</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="482" parent="315" name="stopped_at">
+    <column id="483" parent="315" name="stopped_at">
       <Position>5</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <index id="483" parent="315" name="PRIMARY">
+    <index id="484" parent="315" name="PRIMARY">
       <ColNames>recording_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="484" parent="315" name="PRIMARY">
+    <key id="485" parent="315" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="485" parent="316" name="order_id">
+    <column id="486" parent="316" name="order_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(300)|0s</StoredType>
     </column>
-    <column id="486" parent="316" name="lecture_id">
+    <column id="487" parent="316" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="487" parent="316" name="user_id">
+    <column id="488" parent="316" name="user_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="488" parent="316" name="payment_key">
+    <column id="489" parent="316" name="payment_key">
       <Position>4</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="489" parent="316" name="price">
+    <column id="490" parent="316" name="price">
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="490" parent="316" name="FK_lecture_TO_lecture_revenue_1">
+    <foreign-key id="491" parent="316" name="FK_lecture_TO_lecture_revenue_1">
       <ColNames>lecture_id</ColNames>
       <RefColNames>lecture_id</RefColNames>
       <RefTableName>lecture</RefTableName>
     </foreign-key>
-    <index id="491" parent="316" name="PRIMARY">
+    <index id="492" parent="316" name="PRIMARY">
       <ColNames>order_id
 lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="492" parent="316" name="FK_lecture_TO_lecture_revenue_1">
+    <index id="493" parent="316" name="FK_lecture_TO_lecture_revenue_1">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="493" parent="316" name="PRIMARY">
+    <key id="494" parent="316" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="494" parent="317" name="unit_id">
+    <column id="495" parent="317" name="unit_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="495" parent="317" name="lecture_id">
+    <column id="496" parent="317" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="496" parent="317" name="type">
+    <column id="497" parent="317" name="type">
       <Comment>type은 중단원, 대단원을 구분하기 위해 작성하는 것 입니다.</Comment>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="497" parent="317" name="tutle">
+    <column id="498" parent="317" name="tutle">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="498" parent="317" name="sequence">
+    <column id="499" parent="317" name="sequence">
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="499" parent="317" name="FK_lecture_TO_lecture_unit_1">
+    <foreign-key id="500" parent="317" name="FK_lecture_TO_lecture_unit_1">
       <ColNames>lecture_id</ColNames>
       <RefColNames>lecture_id</RefColNames>
       <RefTableName>lecture</RefTableName>
     </foreign-key>
-    <index id="500" parent="317" name="PRIMARY">
+    <index id="501" parent="317" name="PRIMARY">
       <ColNames>unit_id
 lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="501" parent="317" name="FK_lecture_TO_lecture_unit_1">
+    <index id="502" parent="317" name="FK_lecture_TO_lecture_unit_1">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="502" parent="317" name="PRIMARY">
+    <key id="503" parent="317" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="503" parent="318" name="Pariticipant_id">
+    <column id="504" parent="318" name="Pariticipant_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="504" parent="318" name="user_id">
+    <column id="505" parent="318" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="505" parent="318" name="lecture_id">
+    <column id="506" parent="318" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <index id="506" parent="318" name="PRIMARY">
+    <index id="507" parent="318" name="PRIMARY">
       <ColNames>Pariticipant_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="507" parent="318" name="PRIMARY">
+    <key id="508" parent="318" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="508" parent="319" name="lecture_id">
+    <column id="509" parent="319" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="509" parent="319" name="user_id">
+    <column id="510" parent="319" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="510" parent="319" name="lecture_name">
+    <column id="511" parent="319" name="lecture_name">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="511" parent="319" name="created_at">
+    <column id="512" parent="319" name="created_at">
       <Position>4</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="512" parent="319" name="status">
+    <column id="513" parent="319" name="status">
       <Position>5</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <index id="513" parent="319" name="PRIMARY">
+    <index id="514" parent="319" name="PRIMARY">
       <ColNames>lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="514" parent="319" name="PRIMARY">
+    <key id="515" parent="319" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="515" parent="320" name="stream_id">
+    <column id="516" parent="320" name="stream_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="516" parent="320" name="lecture_id">
+    <column id="517" parent="320" name="lecture_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="517" parent="320" name="stream_url">
+    <column id="518" parent="320" name="stream_url">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="518" parent="320" name="started_at">
+    <column id="519" parent="320" name="started_at">
       <Position>4</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="519" parent="320" name="stopped_at">
+    <column id="520" parent="320" name="stopped_at">
       <Position>5</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <index id="520" parent="320" name="PRIMARY">
+    <index id="521" parent="320" name="PRIMARY">
       <ColNames>stream_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="521" parent="320" name="PRIMARY">
+    <key id="522" parent="320" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="522" parent="321" name="like_lecture_id">
+    <column id="523" parent="321" name="like_lecture_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="523" parent="321" name="user_id">
+    <column id="524" parent="321" name="user_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="524" parent="321" name="lecture_id2">
+    <column id="525" parent="321" name="lecture_id2">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <index id="525" parent="321" name="PRIMARY">
+    <index id="526" parent="321" name="PRIMARY">
       <ColNames>like_lecture_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="526" parent="321" name="PRIMARY">
+    <key id="527" parent="321" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="527" parent="322" name="user_id">
+    <column id="528" parent="322" name="user_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="528" parent="322" name="role">
+    <column id="529" parent="322" name="role">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="529" parent="322" name="name">
+    <column id="530" parent="322" name="name">
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="530" parent="322" name="password">
+    <column id="531" parent="322" name="password">
       <Position>4</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="531" parent="322" name="email">
+    <column id="532" parent="322" name="email">
       <Position>5</Position>
       <StoredType>varchar(150)|0s</StoredType>
     </column>
-    <index id="532" parent="322" name="PRIMARY">
+    <index id="533" parent="322" name="PRIMARY">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="533" parent="322" name="PRIMARY">
+    <key id="534" parent="322" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="534" parent="323" name="curriculum_id">
+    <column id="535" parent="323" name="curriculum_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="535" parent="323" name="play_time">
+    <column id="536" parent="323" name="play_time">
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="536" parent="323" name="video_type">
+    <column id="537" parent="323" name="video_type">
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="537" parent="323" name="video_path">
+    <column id="538" parent="323" name="video_path">
       <Position>4</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <foreign-key id="538" parent="323" name="FK_curriculum_TO_video_curriculum_1">
+    <foreign-key id="539" parent="323" name="FK_curriculum_TO_video_curriculum_1">
       <ColNames>curriculum_id</ColNames>
       <RefColNames>curriculum_id</RefColNames>
       <RefTableName>curriculum</RefTableName>
     </foreign-key>
-    <index id="539" parent="323" name="PRIMARY">
+    <index id="540" parent="323" name="PRIMARY">
       <ColNames>curriculum_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="540" parent="323" name="PRIMARY">
+    <key id="541" parent="323" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="541" parent="324" name="work_cartegory_id">
+    <column id="542" parent="324" name="work_cartegory_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="542" parent="324" name="h_id">
+    <column id="543" parent="324" name="h_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="543" parent="324" name="b_id2">
+    <column id="544" parent="324" name="b_id2">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="544" parent="324" name="cartegory">
+    <column id="545" parent="324" name="cartegory">
       <Position>4</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <foreign-key id="545" parent="324" name="FK_homework_TO_work_cartegory_1">
+    <foreign-key id="546" parent="324" name="FK_homework_TO_work_cartegory_1">
       <ColNames>h_id</ColNames>
       <RefColNames>h_id</RefColNames>
       <RefTableName>homework</RefTableName>
     </foreign-key>
-    <foreign-key id="546" parent="324" name="FK_homework_TO_work_cartegory_2">
+    <foreign-key id="547" parent="324" name="FK_homework_TO_work_cartegory_2">
       <ColNames>b_id2</ColNames>
       <RefColNames>b_id</RefColNames>
       <RefTableName>homework</RefTableName>
     </foreign-key>
-    <index id="547" parent="324" name="PRIMARY">
+    <index id="548" parent="324" name="PRIMARY">
       <ColNames>work_cartegory_id
 h_id
 b_id2</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="548" parent="324" name="FK_homework_TO_work_cartegory_1">
+    <index id="549" parent="324" name="FK_homework_TO_work_cartegory_1">
       <ColNames>h_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="549" parent="324" name="FK_homework_TO_work_cartegory_2">
+    <index id="550" parent="324" name="FK_homework_TO_work_cartegory_2">
       <ColNames>b_id2</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="550" parent="324" name="PRIMARY">
+    <key id="551" parent="324" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="552" parent="325" name="h_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="553" parent="325" name="user_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="554" parent="325" name="instructor_id">
+      <Position>3</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="555" parent="325" name="feedback">
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="556" parent="325" name="score">
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="557" parent="325" name="created_at">
+      <Position>6</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="558" parent="325" name="updated_at">
+      <Position>7</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <foreign-key id="559" parent="325" name="work_feedback_homework_h_id_fk">
+      <ColNames>h_id</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>h_id</RefColNames>
+      <RefTableName>homework</RefTableName>
+    </foreign-key>
+    <foreign-key id="560" parent="325" name="work_feedback_user_user_id_fk_2">
+      <ColNames>user_id</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>user_id</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <foreign-key id="561" parent="325" name="work_feedback_user_user_id_fk">
+      <ColNames>instructor_id</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>user_id</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="562" parent="325" name="PRIMARY">
+      <ColNames>user_id
+h_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="563" parent="325" name="work_feedback_h_id_user_id_index">
+      <ColNames>h_id
+user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="564" parent="325" name="work_feedback_user_user_id_fk">
+      <ColNames>instructor_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="565" parent="325" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

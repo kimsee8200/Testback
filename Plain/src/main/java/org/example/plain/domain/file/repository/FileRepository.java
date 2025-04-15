@@ -1,4 +1,4 @@
-package org.example.plain.domain.homework.repository;
+package org.example.plain.domain.file.repository;
 
 import org.example.plain.domain.file.entity.FileEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

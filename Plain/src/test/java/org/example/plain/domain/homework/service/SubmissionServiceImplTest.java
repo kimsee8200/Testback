@@ -4,16 +4,18 @@ import org.example.plain.domain.classLecture.entity.ClassLecture;
 import org.example.plain.domain.classMember.entity.ClassMember;
 import org.example.plain.domain.classMember.entity.ClassMemberId;
 import org.example.plain.domain.classMember.repository.ClassMemberRepository;
+import org.example.plain.domain.file.dto.FileInfo;
 import org.example.plain.domain.file.dto.SubmitFileData;
-import org.example.plain.domain.file.entity.FileEntity;
+import org.example.plain.domain.file.dto.SubmitFileInfo;
+import org.example.plain.domain.file.entity.WorkFileEntity;
 import org.example.plain.domain.file.interfaces.CloudFileService;
+import org.example.plain.domain.file.interfaces.FileDatabaseService;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;
 import org.example.plain.domain.homework.interfaces.WorkService;
-import org.example.plain.domain.homework.repository.FileRepository;
 import org.example.plain.domain.user.entity.User;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
@@ -58,7 +60,7 @@ class SubmissionServiceImplTest {
     private WorkService workService;
 
     @Mock
-    private FileRepository fileRepository;
+    private FileDatabaseService fileDatabaseService;
 
     private SubmissionServiceImpl submissionService;
 
@@ -68,12 +70,13 @@ class SubmissionServiceImplTest {
     private ClassMember testClassMember;
     private WorkEntity testWork;
     private WorkMemberEntity testWorkMember;
-    private List<FileEntity> testFiles;
+    private List<WorkFileEntity> testFiles;
+    private List<FileInfo> fileInfos;
     private WorkSubmitField testSubmitField;
 
     @BeforeEach
     void setUp() {
-        submissionService = new SubmissionServiceImpl(fileService, workMemberRepository, groupMemberRepository, boardRepository, fileRepository);
+        submissionService = new SubmissionServiceImpl(fileService,fileDatabaseService, workMemberRepository, groupMemberRepository, boardRepository);
 
         testUser = User.builder()
                 .id("testUser")
@@ -117,14 +120,25 @@ class SubmissionServiceImplTest {
                 .build();
 
         testFiles = Arrays.asList(
-            FileEntity.builder()
+            WorkFileEntity.builder()
                     .filename("test1.txt")
                     .filePath("https://test-bucket.s3.amazonaws.com/test1.txt")
                     .build(),
-            FileEntity.builder()
+            WorkFileEntity.builder()
                     .filename("test2.txt")
                     .filePath("https://test-bucket.s3.amazonaws.com/test2.txt")
                     .build()
+        );
+
+        fileInfos = Arrays.asList(
+                SubmitFileInfo.builder()
+                        .filename("test1.txt")
+                        .filePath("https://test-bucket.s3.amazonaws.com/test1.txt")
+                        .build(),
+                SubmitFileInfo.builder()
+                        .filename("test2.txt")
+                        .filePath("https://test-bucket.s3.amazonaws.com/test2.txt")
+                        .build()
         );
 
         testSubmitField = WorkSubmitField.builder()
@@ -150,7 +164,7 @@ class SubmissionServiceImplTest {
         when(groupMemberRepository.findById(any(ClassMemberId.class)))
                 .thenReturn(Optional.of(testClassMember));
         when(fileService.uploadFiles(any(SubmitFileData.class), any()))
-                .thenReturn(testFiles);
+                .thenReturn(fileInfos);
 
         // when
         submissionService.submit(testSubmitField);

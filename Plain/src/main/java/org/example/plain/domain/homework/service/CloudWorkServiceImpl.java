@@ -9,7 +9,7 @@ import org.example.plain.domain.file.interfaces.CloudFileService;
 import org.example.plain.domain.homework.dto.*;
 import org.example.plain.domain.homework.entity.*;
 import org.example.plain.domain.homework.interfaces.WorkService;
-import org.example.plain.domain.homework.repository.FileRepository;
+import org.example.plain.domain.file.repository.FileRepository;
 import org.example.plain.repository.BoardRepository;
 import org.example.plain.repository.WorkMemberRepository;
 import org.springframework.beans.factory.annotation.Value;

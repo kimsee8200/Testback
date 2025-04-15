@@ -4,9 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="refector: token username 추가">
+    <list default="true" id="e1fa4712-9fa8-4056-8fbe-3d440f358067" name="변경" comment="refactor: securityConfig 설정 -&gt; account/check-id permitAll">
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/FileServiceGenericInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/WorkFileEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/FileDatabaseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AssignmentFileDatabaseServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/dto/request/FeedBackRequset.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkFeedbackEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/FeedbackService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plain/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c8b414f9-28c7-4ca4-b635-589e6b4faa42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c8b414f9-28c7-4ca4-b635-589e6b4faa42.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/docker-compose3.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/docker-compose3.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/meeting/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/PlainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/PlainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/common/config/SecurityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/FileData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/FileData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/SubmitFileData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/dto/SubmitFileData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/entity/FileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/CloudFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/CloudFileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/interfaces/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AwsFileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/AwsFileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/FileServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/service/SubmitFileServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/entity/WorkMemberEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/SubmissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/interfaces/SubmissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/repository/FileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/file/repository/FileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/CloudWorkServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/CloudWorkServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/SubmissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/homework/service/SubmissionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/repository/HttpCookieOAuth2AuthorizationRequestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/repository/HttpCookieOAuth2AuthorizationRequestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/CookieUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/main/java/org/example/plain/domain/user/service/CookieUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/file/service/AwsFileServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/file/service/AwsFileServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/integration/HomeworkIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/integration/HomeworkIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/service/SubmissionServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/domain/homework/service/SubmissionServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Plain/src/test/java/org/example/plain/homework/service/WorkServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +73,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="workflow" />
+        <option value="HTML File" />
+        <option value="Record" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -59,7 +95,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/kimsee8200/Testback&quot;,
-    &quot;accountId&quot;: &quot;49e4a3eb-2f47-4579-916e-a259d3b8233d&quot;
+    &quot;accountId&quot;: &quot;57523f15-897e-4909-a52d-85206ca638a5&quot;
   }
 }</component>
   <component name="JpbToolWindowState">
@@ -82,8 +118,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Docker.Plain/Dockerfile.executor": "Run",
     "Docker.Plain/docker-compose.yaml.redis: Compose Deployment.executor": "Run",
+    "Docker.Plain/docker-compose3.yml.api: Compose Deployment.executor": "Run",
+    "Docker.Plain/docker-compose3.yml.mysql: Compose Deployment.executor": "Run",
     "Gradle.AwsFileServiceImplTest.executor": "Run",
     "Gradle.Build Plain.executor": "Run",
     "Gradle.ClassMemberIntegration.executor": "Run",
@@ -91,7 +130,18 @@
     "Gradle.CleanupTest.verifyNoDataAfterCleanup.executor": "Run",
     "Gradle.EmailServiceImplTest.executor": "Run",
     "Gradle.EmailVerificationServiceTest.executor": "Run",
+    "Gradle.FeedbackIntegration.addFeedback_EntityCreation.executor": "Run",
+    "Gradle.FeedbackIntegration.addFeedback_Success.executor": "Run",
+    "Gradle.FeedbackIntegration.executor": "Run",
+    "Gradle.FeedbackServiceImplTest.executor": "Run",
+    "Gradle.HomeworkCRUD.executor": "Run",
+    "Gradle.HomeworkCRUD.getHomework.executor": "Run",
     "Gradle.HomeworkIntegrationTest.executor": "Run",
+    "Gradle.HomeworkSubmission.cancelSubmission.executor": "Run",
+    "Gradle.HomeworkSubmission.executor": "Run",
+    "Gradle.HomeworkSubmission.submitHomework.executor": "Run",
+    "Gradle.HttpCookieOAuth2AuthorizationRequestRepositoryTest.executor": "Run",
+    "Gradle.LoginIntegrationTest.executor": "Run",
     "Gradle.MeetingIntegrationTest.executor": "Run",
     "Gradle.MeetingIntegrationTest.testMeetingRoomLifecycle.executor": "Run",
     "Gradle.MeetingIntegrationTest.testParticipantStateChanges.executor": "Run",
@@ -100,14 +150,19 @@
     "Gradle.Plain [:org.example.plain.PlainApplication.main()].executor": "Run",
     "Gradle.Plain [compileJava].executor": "Run",
     "Gradle.Plain [dependencies].executor": "Run",
+    "Gradle.SignUp.duplicateIdSignUp.executor": "Run",
     "Gradle.SubmissionIntegration.cancelSubmission_Success.executor": "Run",
     "Gradle.SubmissionIntegration.executor": "Run",
+    "Gradle.SubmissionServiceImplTest.executor": "Run",
     "Gradle.WebRtcSignalingIntegrationTest.executor": "Run",
+    "Gradle.WebSocketMeetingIntegrationTest.executor": "Run",
+    "Gradle.WebSocketMeetingIntegrationTest.testWebSocketConnectionWithValidToken.executor": "Run",
     "Gradle.WorkIntegration.deleteWork_Success.executor": "Run",
     "Gradle.WorkIntegration.executor": "Run",
     "Gradle.WorkIntegration.insertWork_Success.executor": "Run",
     "Gradle.WorkIntegration.selectGroupWorks_Success.executor": "Run",
     "Gradle.WorkMemberIntegration.executor": "Run",
+    "Gradle.WorkMemberServiceImplTest.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -146,8 +201,8 @@
       <recent name="org.example.plain.domain.notice.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.PlainApplication">
-    <configuration name="ClassMemberIntegration" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.HomeworkCRUD.getHomework">
+    <configuration name="FeedbackIntegration" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Plain" />
@@ -160,7 +215,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$ClassMemberIntegration&quot;" />
+            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$FeedbackIntegration&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -171,7 +226,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="CleanupTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="FeedbackIntegration.addFeedback_Success" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Plain" />
@@ -184,7 +239,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$CleanupTest&quot;" />
+            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$FeedbackIntegration.addFeedback_Success&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -195,7 +250,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="CleanupTest.verifyNoDataAfterCleanup" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="FeedbackServiceImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Plain" />
@@ -208,7 +263,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$CleanupTest.verifyNoDataAfterCleanup&quot;" />
+            <option value="&quot;org.example.plain.domain.homework.service.FeedbackServiceImplTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -219,7 +274,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="MeetingIntegrationTest.testMeetingRoomLifecycle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HomeworkCRUD" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Plain" />
@@ -232,7 +287,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.plain.domain.meeting.integration.MeetingIntegrationTest.testMeetingRoomLifecycle&quot;" />
+            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$HomeworkCRUD&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -243,7 +298,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="WorkIntegration.selectGroupWorks_Success" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="HomeworkCRUD.getHomework" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Plain" />
@@ -256,7 +311,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$WorkIntegration.selectGroupWorks_Success&quot;" />
+            <option value="&quot;org.example.plain.domain.homework.integration.HomeworkIntegrationTest$HomeworkCRUD.getHomework&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -276,7 +331,9 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
@@ -287,19 +344,19 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.MeetingIntegrationTest.testMeetingRoomLifecycle" />
-        <item itemvalue="Gradle.CleanupTest.verifyNoDataAfterCleanup" />
-        <item itemvalue="Gradle.CleanupTest" />
-        <item itemvalue="Gradle.ClassMemberIntegration" />
-        <item itemvalue="Gradle.WorkIntegration.selectGroupWorks_Success" />
+        <item itemvalue="Gradle.HomeworkCRUD.getHomework" />
+        <item itemvalue="Gradle.HomeworkCRUD" />
+        <item itemvalue="Gradle.FeedbackIntegration" />
+        <item itemvalue="Gradle.FeedbackServiceImplTest" />
+        <item itemvalue="Gradle.FeedbackIntegration.addFeedback_Success" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -318,6 +375,10 @@
       <workItem from="1743643199115" duration="12699000" />
       <workItem from="1743742737747" duration="29782000" />
       <workItem from="1744030143108" duration="1304000" />
+      <workItem from="1744243962834" duration="40271000" />
+      <workItem from="1744425094790" duration="12603000" />
+      <workItem from="1744504816626" duration="43011000" />
+      <workItem from="1744640327900" duration="16188000" />
     </task>
     <task id="LOCAL-00001" summary="변경">
       <option name="closed" value="true" />
@@ -359,7 +420,79 @@
       <option name="project" value="LOCAL" />
       <updated>1744126059999</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="refector: git action 재추가">
+      <option name="closed" value="true" />
+      <created>1744128686431</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744128686431</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refector: MeetingRoomDto 추가">
+      <option name="closed" value="true" />
+      <created>1744129305952</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744129305952</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refector: oauth 오류 해결">
+      <option name="closed" value="true" />
+      <created>1744337328658</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744337328658</updated>
+    </task>
+    <task id="LOCAL-00009" summary="refector: 과제 할당, 실시간 강의 일부">
+      <option name="closed" value="true" />
+      <created>1744351336543</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744351336543</updated>
+    </task>
+    <task id="LOCAL-00010" summary="refector: 과제 할당, 실시간 강의 일부">
+      <option name="closed" value="true" />
+      <created>1744351937497</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744351937497</updated>
+    </task>
+    <task id="LOCAL-00011" summary="refector: oauth2 이슈 수정">
+      <option name="closed" value="true" />
+      <created>1744358725249</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744358725249</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: 아이디 중복 체크 반영">
+      <option name="closed" value="true" />
+      <created>1744439533646</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744439533646</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: 아이디 body 반환">
+      <option name="closed" value="true" />
+      <created>1744518326471</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744518326471</updated>
+    </task>
+    <task id="LOCAL-00014" summary="refactor: securityConfig 설정 -&gt; account/check-id permitAll">
+      <option name="closed" value="true" />
+      <created>1744606110666</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744606110666</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,6 +514,15 @@
     <MESSAGE value="refector: fileEntity, Config 오류 해결" />
     <MESSAGE value="refector: 과제, 실시간 강의 통합테스트 및 리팩토링" />
     <MESSAGE value="refector: token username 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="refector: token username 추가" />
+    <MESSAGE value="refector: git action 재추가" />
+    <MESSAGE value="refector: MeetingRoomDto 추가" />
+    <MESSAGE value="refector: oauth 오류 해결, 추가" />
+    <MESSAGE value="refector: oauth 오류 해결" />
+    <MESSAGE value="refector: 과제 할당, 실시간 강의 일부" />
+    <MESSAGE value="refector: oauth2 이슈 수정" />
+    <MESSAGE value="feat: 아이디 중복 체크 반영" />
+    <MESSAGE value="feat: 아이디 body 반환" />
+    <MESSAGE value="refactor: securityConfig 설정 -&gt; account/check-id permitAll" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: securityConfig 설정 -&gt; account/check-id permitAll" />
   </component>
 </project>

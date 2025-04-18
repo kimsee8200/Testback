@@ -14,24 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class FileEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "file_id")
-    private Integer id;
-
-
     private String filename;
 
     @Column(name = "file_path")
     private String filePath;
 
-
-
-    public FileEntity(String filename, String filePath) {
-        this.filename = filename;
-        this.filePath = filePath;
-    }
 
     public static List<FileEntity> fileEntities(List<File> files) {
         List<FileEntity> fileEntities = new ArrayList<>();

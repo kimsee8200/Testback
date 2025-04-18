@@ -35,7 +35,10 @@ public class AwsFileServiceImpl implements CloudFileService {
 
     private final AmazonS3 amazonS3;
 
-
+    /**
+     * 단일 파일 업로드
+     * 이미 S3에 동일한 파일명이 존재하면 업로드하지 않음
+     */
     @Override
     public FileInfo uploadSingleFile(FileData fileData, String... id) {
         MultipartFile file = fileData.getFile();
@@ -45,6 +48,13 @@ public class AwsFileServiceImpl implements CloudFileService {
         }
 
         String filename = makeFilename(file.getOriginalFilename(), id);
+        
+        // S3에 이미 동일한 키로 파일이 존재하는지 확인
+        if (isFileExists(filename)) {
+            // 이미 존재하는 파일이면 URL만 반환
+            String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
+            return new FileInfo(filename, fileUrl);
+        }
 
         try (InputStream inputStream = file.getInputStream()) {
             ObjectMetadata metadata = new ObjectMetadata();
@@ -58,13 +68,15 @@ public class AwsFileServiceImpl implements CloudFileService {
 
         String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
 
-        // Find existing WorkMemberEntity
         return new FileInfo(filename, fileUrl);
     }
 
+    /**
+     * 다중 파일 업로드
+     * 이미 S3에 동일한 파일명이 존재하면 업로드하지 않음
+     */
     @Override
     public List<FileInfo> uploadFiles(FileData fileData, List<MultipartFile> files, String... id) {
-
         List<FileInfo> fileInfos = new ArrayList<>();
 
         for (MultipartFile file : files) {
@@ -72,8 +84,15 @@ public class AwsFileServiceImpl implements CloudFileService {
                 throw new IllegalArgumentException("File cannot be null");
             }
 
-
             String filename = makeFilename(file.getOriginalFilename(), id);
+            
+            // S3에 이미 동일한 키로 파일이 존재하는지 확인
+            if (isFileExists(filename)) {
+                // 이미 존재하는 파일이면 URL만 반환
+                String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
+                fileInfos.add(new FileInfo(filename, fileUrl));
+                continue;
+            }
 
             try (InputStream inputStream = file.getInputStream()) {
                 ObjectMetadata metadata = new ObjectMetadata();
@@ -86,12 +105,24 @@ public class AwsFileServiceImpl implements CloudFileService {
             }
 
             String fileUrl = String.valueOf(amazonS3.getUrl(bucket, filename));
-
-            fileInfos.add(
-                    new FileInfo(filename, fileUrl)
-            );
+            fileInfos.add(new FileInfo(filename, fileUrl));
         }
+        
         return fileInfos;
+    }
+
+    /**
+     * S3에 파일이 이미 존재하는지 확인
+     * @param filename 확인할 파일명
+     * @return 존재하면 true, 아니면 false
+     */
+    private boolean isFileExists(String filename) {
+        try {
+            return amazonS3.doesObjectExist(bucket, filename);
+        } catch (Exception e) {
+            // 오류 발생 시 파일이 없다고 간주
+            return false;
+        }
     }
 
     @Override

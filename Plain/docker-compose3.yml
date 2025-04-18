@@ -28,7 +28,7 @@ services:
       - redis_data:/var/lib/redis
     networks:
       - backend
-#  뜬금 없는 질문이지만, 혹시 실례가 안된다면 병권님 성씨를 알 수 있을까요?
+
   mysql:
     image: kimsee/plain_mysql
     restart: always

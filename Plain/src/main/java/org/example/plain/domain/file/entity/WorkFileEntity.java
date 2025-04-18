@@ -18,6 +18,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "file", schema = "plain")
 public class WorkFileEntity extends FileEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "file_id")
+    private Integer id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "h_id", referencedColumnName = "h_id"),

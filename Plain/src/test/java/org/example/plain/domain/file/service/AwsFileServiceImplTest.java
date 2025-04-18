@@ -117,19 +117,19 @@ class AwsFileServiceImplTest {
                 .filePath(S3_BASE_URL + "test.txt")
                 .build();
 
-        when(fileRepository.save(any(FileEntity.class))).thenReturn(expectedFileEntity);
+        when(fileRepository.save(any(WorkFileEntity.class))).thenReturn(expectedFileEntity);
 
         // when
         FileInfo result = awsFileService.uploadSingleFile(testFileData);
 
         // then
         assertThat(result).isNotNull();
-        assertThat(result.getFileName()).isEqualTo("test.txt");
+        assertThat(result.getFilename()).isEqualTo("test.txt");
         //assertThat(result.getWorkMember()).isEqualTo(testWorkMember);
 
         verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3).putObject(any(PutObjectRequest.class));
-        verify(fileRepository).save(any(FileEntity.class));
+        verify(fileRepository).save(any(WorkFileEntity.class));
     }
 
     @Test
@@ -145,7 +145,7 @@ class AwsFileServiceImplTest {
 
         verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3, never()).putObject(any(PutObjectRequest.class));
-        verify(fileRepository, never()).save(any(FileEntity.class));
+        verify(fileRepository, never()).save(any(WorkFileEntity.class));
     }
 
     @Test
@@ -166,7 +166,7 @@ class AwsFileServiceImplTest {
                 .workMember(testWorkMember)
                 .build();
 
-        when(fileRepository.save(any(FileEntity.class)))
+        when(fileRepository.save(any(WorkFileEntity.class)))
                 .thenReturn(expectedFileEntity1)
                 .thenReturn(expectedFileEntity2);
 
@@ -175,12 +175,12 @@ class AwsFileServiceImplTest {
 
         // then
         assertThat(results).hasSize(2);
-        assertThat(results.get(0).getFileName()).isEqualTo("test1.txt");
-        assertThat(results.get(1).getFileName()).isEqualTo("test2.txt");
+        assertThat(results.get(0).getFilename()).isEqualTo("test1.txt");
+        assertThat(results.get(1).getFilename()).isEqualTo("test2.txt");
 
         verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3, times(2)).putObject(any(PutObjectRequest.class));
-        verify(fileRepository, times(2)).save(any(FileEntity.class));
+        verify(fileRepository, times(2)).save(any(WorkFileEntity.class));
     }
 
     @Test
@@ -196,7 +196,7 @@ class AwsFileServiceImplTest {
 
         verify(workMemberRepository).findByWorkIdAndUserId(testWork.getWorkId(), testUser.getId());
         verify(amazonS3, never()).putObject(any(PutObjectRequest.class));
-        verify(fileRepository, never()).save(any(FileEntity.class));
+        verify(fileRepository, never()).save(any(WorkFileEntity.class));
     }
 
     @Test

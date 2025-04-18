@@ -1,4 +1,4 @@
-package org.example.plain.domain.file.entity;
+package org.example.plain.domain.file.entity.id;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

@@ -30,16 +30,26 @@ import java.util.List;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class SubmissionServiceImpl implements SubmissionService {
 
     private final CloudFileService fileService;
 
-    @Qualifier("assignmentDatabase")
     private final FileDatabaseService fileDatabaseService;
     private final WorkMemberRepository workMemberRepository;
     private final ClassMemberRepository groupMemberRepository;
     private final BoardRepository boardRepository;
+
+    public SubmissionServiceImpl(CloudFileService fileService,
+                                 @Qualifier("assignmentDatabase") FileDatabaseService fileDatabaseService,
+                                 WorkMemberRepository workMemberRepository,
+                                 ClassMemberRepository groupMemberRepository,
+                                 BoardRepository boardRepository) {
+        this.fileService = fileService;
+        this.fileDatabaseService = fileDatabaseService;
+        this.workMemberRepository = workMemberRepository;
+        this.groupMemberRepository = groupMemberRepository;
+        this.boardRepository = boardRepository;
+    }
 
     @Override
     @Transactional
@@ -71,14 +81,14 @@ public class SubmissionServiceImpl implements SubmissionService {
                         submitFileData,
                         workSubmitField.getFile(),
                         "assingment",
-                        user.getId(),
-                        work.getWorkId()
+                        work.getWorkId(),
+                        user.getId()
                 );
 
                 files.forEach(fileInfo -> {
                     WorkFileEntity fileEntity = (WorkFileEntity) fileDatabaseService.save(
-                            fileInfo.getFileName(),
-                            fileInfo.getFilePath(),
+                            fileInfo.getFilename(),
+                            fileInfo.getFileUrl(),
                             submitFileData
                     );
                     file.add(fileEntity);

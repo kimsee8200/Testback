@@ -12,6 +12,7 @@ import org.example.plain.domain.file.interfaces.CloudFileService;
 import org.example.plain.domain.file.interfaces.FileDatabaseService;
 import org.example.plain.domain.homework.dto.Work;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
+import org.example.plain.domain.homework.dto.response.WorkResponse;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.entity.WorkMemberEntity;
 import org.example.plain.domain.homework.entity.WorkMemberId;
@@ -133,11 +134,11 @@ class SubmissionServiceImplTest {
         fileInfos = Arrays.asList(
                 SubmitFileInfo.builder()
                         .filename("test1.txt")
-                        .filePath("https://test-bucket.s3.amazonaws.com/test1.txt")
+                        .fileUrl("https://test-bucket.s3.amazonaws.com/test1.txt")
                         .build(),
                 SubmitFileInfo.builder()
                         .filename("test2.txt")
-                        .filePath("https://test-bucket.s3.amazonaws.com/test2.txt")
+                        .fileUrl("https://test-bucket.s3.amazonaws.com/test2.txt")
                         .build()
         );
 
@@ -154,11 +155,12 @@ class SubmissionServiceImplTest {
     @Test
     void submit_Success() {
         // given
-        Work work = new Work();
-        work.setWorkId("testWorkId");
-        work.setDeadline(LocalDateTime.now().plusDays(1));
+        WorkResponse workResponse = WorkResponse.builder()
+                .workId("testWorkId")
+                .deadline(LocalDateTime.now().plusDays(1))
+                .build();
 
-        when(workService.selectWork("testWorkId")).thenReturn(work);
+        when(workService.selectWork("testWorkId")).thenReturn(workResponse);
         when(workMemberRepository.findById(any(WorkMemberId.class)))
                 .thenReturn(Optional.of(testWorkMember));
         when(groupMemberRepository.findById(any(ClassMemberId.class)))
@@ -181,11 +183,12 @@ class SubmissionServiceImplTest {
     @Test
     void submit_NotClassMember_ThrowsException() {
         // given
-        Work work = new Work();
-        work.setWorkId("testWorkId");
-        work.setDeadline(LocalDateTime.now().plusDays(1));
+        WorkResponse workResponse = WorkResponse.builder()
+                .workId("testWorkId")
+                .deadline(LocalDateTime.now().plusDays(1))
+                .build();
 
-        when(workService.selectWork("testWorkId")).thenReturn(work);
+        when(workService.selectWork("testWorkId")).thenReturn(workResponse);
         when(workMemberRepository.findById(any(WorkMemberId.class)))
                 .thenReturn(Optional.of(testWorkMember));
         when(groupMemberRepository.findById(any(ClassMemberId.class)))
@@ -203,11 +206,12 @@ class SubmissionServiceImplTest {
     @Test
     void submit_DeadlinePassed_ThrowsException() {
         // given
-        Work work = new Work();
-        work.setWorkId("testWorkId");
-        work.setDeadline(LocalDateTime.now().minusDays(1));
+        WorkResponse workResponse = WorkResponse.builder()
+                .workId("testWorkId")
+                .deadline(LocalDateTime.now().minusDays(1))
+                .build();
 
-        when(workService.selectWork("testWorkId")).thenReturn(work);
+        when(workService.selectWork("testWorkId")).thenReturn(workResponse);
         when(workMemberRepository.findById(any(WorkMemberId.class)))
                 .thenReturn(Optional.of(testWorkMember));
         when(groupMemberRepository.findById(any(ClassMemberId.class)))

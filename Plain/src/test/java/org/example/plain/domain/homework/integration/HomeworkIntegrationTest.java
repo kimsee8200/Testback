@@ -7,6 +7,7 @@ import org.example.plain.domain.homework.dto.WorkMember;
 import org.example.plain.domain.homework.dto.WorkSubmitField;
 import org.example.plain.domain.homework.dto.WorkSubmitListResponse;
 import org.example.plain.domain.homework.dto.request.FeedBackRequset;
+import org.example.plain.domain.homework.dto.response.WorkResponse;
 import org.example.plain.domain.homework.entity.WorkEntity;
 import org.example.plain.domain.homework.interfaces.FeedbackService;
 import org.example.plain.domain.homework.interfaces.SubmissionService;
@@ -44,6 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -185,7 +187,7 @@ public class HomeworkIntegrationTest {
             // 과제 저장
             workService.insertWork(testWork, testClass.getId(), testInstructor.getId());
             // 저장된 과제의 workId를 가져옴
-            testWork = workService.selectWork(TEST_WORK_ID);
+            testWork = workService.selectWorkDto(TEST_WORK_ID);
 
             // 학생용 JWT 토큰 생성
             studentToken = jwtUtil.makeJwtToken(TEST_STUDENT_ID, "student");
@@ -314,7 +316,7 @@ public class HomeworkIntegrationTest {
 
             // then
             result.andExpect(status().isNoContent());
-            Work updatedWork = workService.selectWork(testWork.getWorkId());
+            WorkResponse updatedWork = workService.selectWork(testWork.getWorkId());
             assertThat(updatedWork.getTitle()).isEqualTo("수정된 과제 제목");
         }
     }
@@ -588,19 +590,19 @@ public class HomeworkIntegrationTest {
     @DisplayName("과제 통합 테스트")
     class WorkIntegration {
         @Test
-        @DisplayName("과제 생성 성공")
-        void insertWork_Success() {
+        @DisplayName("과제 생성 성공 - 파일 첨부 포함")
+        void insertWork_Success_WithFiles() {
             // given
-
             classMemberRepository.save(instructorClassMember);
-            // 클래스 멤버 직접 확인
-            System.out.println(classMemberRepository.findAll().get(0).getId().getUserId()+" data "+classMemberRepository.findAll().get(0).getId().getClassId());
-            ClassMemberId instructorMemberId = new ClassMemberId(testClass.getId(), testInstructor.getId());
-            boolean instructorExists = classMemberRepository.findById(instructorMemberId).isPresent();
-            if (!instructorExists) {
-                throw new RuntimeException("강사가 클래스 멤버로 등록되어 있지 않습니다: " + TEST_CLASS_ID + ", " + TEST_INSTRUCTOR_ID);
-            }
             
+            // 테스트 파일 생성
+            MockMultipartFile testFile = new MockMultipartFile(
+                "file",
+                "test.txt",
+                "text/plain",
+                "Test content".getBytes()
+            );
+
             // 테스트 과제 생성
             Work newWork = Work.builder()
                     .boardId("board2")
@@ -610,21 +612,53 @@ public class HomeworkIntegrationTest {
                     .title("Another Work")
                     .content("Another Description")
                     .deadline(LocalDateTime.now().plusDays(7))
+                    .fileList(List.of(testFile))
                     .build();
 
             // when
             workService.insertWork(newWork, testClass.getId(), testInstructor.getId());
 
             // then
-            Work savedWork = workService.selectWork("test-work-2");
+            WorkResponse savedWork = workService.selectWork("test-work-2");
             assertThat(savedWork).isNotNull();
             assertThat(savedWork.getTitle()).isEqualTo("Another Work");
+            assertThat(savedWork.getFileList()).hasSize(1);
+            assertThat(savedWork.getFileList().get(0).getFilename()).isEqualTo("test-work-2/temp/test.txt");
         }
 
         @Test
-        @DisplayName("과제 수정 성공")
-        void updateWork_Success() {
+        @DisplayName("과제 수정 성공 - 파일 첨부 포함")
+        void updateWork_Success_WithFiles() {
             // given
+            // 초기 파일 생성
+            MockMultipartFile initialFile = new MockMultipartFile(
+                "file",
+                "initial.txt",
+                "text/plain",
+                "Initial content".getBytes()
+            );
+
+            Work initialWork = Work.builder()
+                    .boardId(TEST_BOARD_ID)
+                    .groupId(TEST_CLASS_ID)
+                    .writer(TEST_INSTRUCTOR_ID)
+                    .workId(TEST_WORK_ID)
+                    .title("Initial Title")
+                    .content("Initial Description")
+                    .deadline(LocalDateTime.now().plusDays(7))
+                    .fileList(List.of(initialFile))
+                    .build();
+
+            workService.updateWork(initialWork, testWork.getWorkId(), testInstructor.getId());
+
+            // 수정할 파일 생성
+            MockMultipartFile updatedFile = new MockMultipartFile(
+                "file",
+                "updated.txt",
+                "text/plain",
+                "Updated content".getBytes()
+            );
+
             Work updatedWork = Work.builder()
                     .boardId(TEST_BOARD_ID)
                     .groupId(TEST_CLASS_ID)
@@ -633,16 +667,22 @@ public class HomeworkIntegrationTest {
                     .title("Updated Title")
                     .content("Updated Description")
                     .deadline(LocalDateTime.now().plusDays(14))
+                    .fileList(List.of(updatedFile))
                     .build();
 
             // when
             workService.updateWork(updatedWork, TEST_WORK_ID, TEST_INSTRUCTOR_ID);
 
             // then
-            Work savedWork = workService.selectWork(TEST_WORK_ID);
+            WorkResponse savedWork = workService.selectWork(TEST_WORK_ID);
             assertThat(savedWork.getTitle()).isEqualTo("Updated Title");
             assertThat(savedWork.getContent()).isEqualTo("Updated Description");
+            assertThat(savedWork.getFileList()).hasSize(1);
+            assertThat(savedWork.getFileList().get(0).getFilename()).isEqualTo("test-work-1/temp/updated.txt");
         }
+
+
+
 
         @Test
         @DisplayName("과제 삭제 성공")
